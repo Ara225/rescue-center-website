@@ -1,0 +1,2 @@
+var cognitoURL = ""
+var APIEndpoint = ""
