@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!-- Navbar (sit on top) -->
+<div class="w3-top">
+    <div class="w3-bar w3-white w3-card" id="myNavbar">
+      <a href="/" class="w3-bar-item w3-button w3-wide">Leigh Rescue Centre</a>
+      <!-- Right-sided navbar links -->
+      <div class="w3-right w3-hide-small">
+        <a href="rehome.html" class="w3-bar-item w3-button">REHOME</a>
+        <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i>VOLUNTEER</a>
+        <a href="photos.html" class="w3-bar-item w3-button"><i class="fa fa-camera"></i>PHOTO GALLERY</a>
+        <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+      </div>
+      <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+  
+      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+  </div>
+  
+  <!-- Sidebar on small screens when clicking the menu icon -->
+  <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
+    <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
+    <a href="/" class="w3-bar-item w3-button"><i class="fa fa-home"></i>HOME</a>
+    <a href="rehome.html" class="w3-bar-item w3-button">REHOME</a>
+    <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i>VOLUNTEER</a>
+    <a href="photos.html" class="w3-bar-item w3-button"><i class="fa fa-camera"></i>PHOTO GALLERY</a>
+    <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+  </nav>
+ <br>
+ <br>
+ <br>
+<div class="w3-content w3-margin-bottom w3-margin-top" style="position:relative">
+
+<img class="mySlides w3-animate-opacity" src="horse-197199_1920.jpg" style="width:100%">
+<img class="mySlides w3-animate-opacity" src="horse-905534.jpg" style="width:100%">
+
+<video class="mySlides w3-animate-opacity" controls style="width: 100%;">
+    <source src="Pexels Videos 2122952.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+  </video> 
+<a class="w3-btn-floating w3-button w3-hover-dark-grey" style="position:absolute;top:45%;left:0;" onclick="plusDivs(-1)">❮</a>
+<a class="w3-btn-floating w3-button  w3-hover-dark-grey" style="position:absolute;top:45%;right:0;" onclick="plusDivs(+1)">❯</a>
+<div class="w3-center w3-display-bottommiddle" style="width:100%">
+        <span class="dot" onclick="moveToDiv(1)"></span> 
+        <span class="dot" onclick="moveToDiv(2)"></span> 
+        <span class="dot" onclick="moveToDiv(3)"></span> 
+        <span class="dot" onclick="moveToDiv(4)"></span> 
+  </div>
+</div>
+<div class="w3-content w3-margin-bottom w3-margin-top" style="position:relative">
+    <span class="w3-xxlarge w3-hide-small ">Horse Name</span><br>
+    Age: 200  |  Breed: Awful  | Gender: Male
+    
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    
+    <p>
+        <a href="rehoming-form.html" class="w3-button w3-light-green w3-padding-large w3-medium">Apply to Rehome</a>
+        <a href="rehome.html" class="w3-button w3-grey w3-padding-large w3-medium">View Other Horses</a>
+    </p>
+    
+</div>
+    </div>
+
+   <!-- Footer -->
+<footer class="w3-center w3-black w3-padding-64">
+    <p>Copyright Leigh Rescue Centre 2020  |  Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+  </footer>
+   
+  <script>
+  // Modal Image Gallery
+  function onClick(element) {
+    document.getElementById("img01").src = element.src;
+    document.getElementById("modal01").style.display = "block";
+    var captionText = document.getElementById("caption");
+    captionText.innerHTML = element.alt;
+  }
+  
+  
+  // Toggle between showing and hiding the sidebar when clicking the menu icon
+  var mySidebar = document.getElementById("mySidebar");
+  
+  function w3_open() {
+    if (mySidebar.style.display === 'block') {
+      mySidebar.style.display = 'none';
+    } else {
+      mySidebar.style.display = 'block';
+    }
+  }
+  
+  // Close the sidebar with the close button
+  function w3_close() {
+      mySidebar.style.display = "none";
+  }
+  </script>
+  <script>
+// Slideshows
+var slideIndex = 1;
+
+function plusDivs(n) {
+slideIndex = slideIndex + n;
+showDivs(slideIndex);
+}
+
+function moveToDiv(divNo) {
+slideIndex = divNo;
+showDivs(slideIndex);
+}
+
+function showDivs(n) {
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = x.length} ;
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";  
+  }
+  x[slideIndex-1].style.display = "block";  
+}
+
+showDivs(1);
+</script>
+
+</body>
+</html> 
