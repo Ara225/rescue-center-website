@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
-<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="css/index.css">
 
 <body>
 
@@ -56,7 +56,7 @@
     <!-- Contact Container -->
     <div class="w3-container w3-theme-l5 w3-center" id="contact">
             <div class="w3-content w3-left-align">
-                <form class="w3-container w3-card-4 w3-white" action="/action_page.php" target="_blank">
+                <form class="w3-container w3-card-4 w3-white" onSubmit="onSubmit()">
                     <div class="w3-section">
                         <label><h5><b>About You</b></h5></label>
                     </div>
@@ -157,7 +157,7 @@
                     <div class="w3-section">
                         <label for="HorseAddressType"><span style="color:red">*</span>Type of Horse Accommodation</label>
                         <select class="w3-select" id="HorseAddressType" required>
-                            <option>
+                            <option value="" selected>
                                 -- Select Option --
                             </option>
                             <option>
@@ -208,24 +208,24 @@
                         <input class="w3-check" type="checkbox" required id="permanent">
                         <label for="permanent">
                             <span style="color:red">*</span>
-                            I am offering a rescue pony from the charity a permanent home and will not resell it, give it away or attempt to do either. I will meet all welfare needs of the equine and contact the charity if I am ever in need of help or my circumstances should change.
+                            I am offering a rescue pony from the charity a permanent home and will not resell it, give it away or attempt to do either without written permission. I will meet all welfare needs of the equine and contact the charity if I am ever in need of help or my circumstances should change.
                     </div>
                     <div class="w3-section">
                         <input class="w3-check" type="checkbox" required id="seize">
                         <label for="seize">
                             <span style="color:red">*</span>
-                            I understand that the charity reserve the right to seize the rescue pony if there are concerns about welfare, dealing or breeding.</label>
+                            I understand that the charity reserve the right to seize the rescue pony if there are concerns about welfare, dealing, giving away or breeding.</label>
                     </div>
                     <div class="w3-section">
-                        <label><h5><b>GPDR Compliance (see FAQ below for more details)</b></h5></label>
+                        <label><h5><b>GPDR Compliance</b></h5></label>
                     </div>
                     <div class="w3-section">
                         <input class="w3-check" type="checkbox" required id="Compliance">
                         <label for="Compliance">
                             <span style="color:red">*</span>
                             I understand that my data will be stored under the the GPDR legitimate interests ground, and 
-                            will be used to assess my suitability for rehoming, checking up on any horse(s) I rehome, contacting 
-                            me for purposes related to rehoming, and/or informing me about horses I might be interested in.
+                            will be used for purposes related to rehoming and protecting the horse after it's rehomed including 
+                            exercising the charity's legal right to seize the horse (see FAQ below for more details).
                         </label>
                     </div>
                     <div class="w3-section">
@@ -236,7 +236,8 @@
                             reviewed, and that I can request to have it removed.
                         </label>
                     </div>
-                    <button type="submit" class="w3-button w3-right w3-theme">Submit Form</button>
+                    <button type="submit" class="w3-button w3-right w3-green">Submit Form</button>
+                    <button type="reset" class="w3-button w3-right w3-red" style="margin-right:2%">Clear Form</button>
                     <br>
                     <br>
 
@@ -257,7 +258,7 @@
                     </p>
                     <h3>Who can I contact if I have technical problems with this form?</h3>
                     <p>
-                        You can fill in the contact us form or email Anna, the volunteer responsible for this site, directly at 
+                        You can fill in the Contact Us form or email Anna, the volunteer responsible for this site, directly at 
                         anna11199810@hotmail.co.uk
                     </p>
                     <h3>Is my personal data secure?</h3>
@@ -269,8 +270,10 @@
                     <p>
                         We need to be sure that our horses are going to be safe and happy in their new homes. We believe that the 
                         data we request is reasonable in attaining this goal under the GPDR legitimate interests ground. Specifically, 
-                        it is used for assessing suitability for rehoming, checking up/seizing horse(s) rehomed, contacting for purposes 
-                        related to rehoming, and/or informing potential rehomers about horses they might be interested in.
+                        it is used for assessing suitability for rehoming, checking up horse(s) rehomed, contacting for purposes 
+                        related to rehoming, and/or informing potential rehomers about horses they might be interested in. In the unfortunate 
+                        event that evidence of serious misconduct such as abuse or resale is present, the data may also be used to 
+                        exercise the charity's legal right to seize the horse.
                     </p>
                     <h3>Will you send spam or resell my data?</h3>
                     <p>
@@ -293,7 +296,44 @@
         <p>Copyright Leigh Rescue Centre 2020 | Powered by <a href="https://www.w3schools.com/w3css/default.asp"
                 title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
     </footer>
-
+    <script>
+        /**
+         * Convert form to a JSON object
+        */
+        function formToJSON(form) {
+          var data = {}
+          for (var i=0; i < form.length; i++) {
+            // This allows skipping fields
+            if (form[i].name == "") {
+              continue
+            }
+            else {
+              // Assumes all form fields with names must have a value
+              if (form[i].value == "") {
+                return null
+              }
+              else {
+                data[form[i].name] = form[i].value;
+              }
+            }
+          }
+          return data;
+        }
+        function onSubmit(token) {
+          var form = formToJSON(document.getElementById("demo-form"));
+          console.log(form)
+          return
+          if (form) {
+              fetch("http://127.0.0.1:3000/recaptcha_validate", {
+                method: "POST", 
+                body: JSON.stringify(form)
+              }).then(res => {
+                res.json().then(res2 => {console.log(res2)})
+              });
+          }
+          // TODO: Process bad input
+        }
+      </script>
     <script>
         // Modal Image Gallery
         function onClick(element) {

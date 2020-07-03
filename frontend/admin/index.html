@@ -6,23 +6,8 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="../aws-sdk-2.709.0.min.js"></script>
-<script src="../config.js"></script>
-<script>
-// Quick and dirty. API auth does real work so we don't need more
-// cognitoURL should be defined in config.json
-var isUsingTokenAuth = null
-if (document.location.hash && document.location.hash.search('id_token') != -1) {
-  isUsingTokenAuth = true
-}
-else if (document.location.search && document.location.search.search('code') != -1) {
-  isUsingTokenAuth = false
-}
-else {
-  console.log(document.location)
-  //window.location.href = cognitoURL + document.location.href.split("?")[0];
-}
-</script>
+<script src="/js/config.js"></script>
+
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
@@ -184,6 +169,21 @@ function w3_close() {
   overlayBg.style.display = "none";
 }
 </script>
-
+<script>
+  // Quick and dirty. API auth does real work so we don't need more
+  // cognitoURL should be defined in config.json
+  var isUsingTokenAuth = null
+  if (document.location.hash && document.location.hash.search('id_token') != -1) {
+    isUsingTokenAuth = true
+  }
+  else if (document.location.search && document.location.search.search('code') != -1) {
+    isUsingTokenAuth = false
+  }
+  else {
+    document.body.innerHTML = '<h2 class="w3-center">Login Required</h2><p  class="w3-center">If not redirected, please click <a href="' +
+                              cognitoURL + document.location.href.split("?")[0].replace("index.html", "") + '">here</a> to go to the login page</p>'
+    //window.location.href = cognitoURL + document.location.href.split("?")[0].replace("index.html", "");
+  }
+  </script>
 </body>
 </html>
