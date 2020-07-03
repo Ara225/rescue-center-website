@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<title>Leigh Rescue Centre</title>
+<meta charset="UTF-8">
+<meta id="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="index.css">
+
+<body>
+
+    <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+        <div class="w3-bar w3-white w3-card" id="myNavbar">
+            <a href="/" class="w3-bar-item w3-button w3-wide">Leigh Rescue Centre</a>
+            <!-- Right-sided navbar links -->
+            <div class="w3-right w3-hide-small">
+                <a href="rehome.html" class="w3-bar-item w3-button">REHOME</a>
+                <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i>VOLUNTEER</a>
+                <a href="photos.html" class="w3-bar-item w3-button"><i class="fa fa-camera"></i>PHOTO GALLERY</a>
+                <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+            </div>
+            <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+
+            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+                onclick="w3_open()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Sidebar on small screens when clicking the menu icon -->
+    <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large"
+        style="display:none" id="mySidebar">
+        <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close
+            ×</a>
+        <a href="/" class="w3-bar-item w3-button"><i class="fa fa-home"></i>HOME</a>
+        <a href="rehome.html" class="w3-bar-item w3-button">REHOME</a>
+        <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i>VOLUNTEER</a>
+        <a href="photos.html" class="w3-bar-item w3-button"><i class="fa fa-camera"></i>PHOTO GALLERY</a>
+        <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+    </nav>
+    <div class="w3-container w3-theme-l5 w3-center w3-padding-64">
+        <div ><span class="w3-xxlarge w3-hide-small w3-border-teal w3-bottombar">Rehoming Form</span></div>
+        <div><span class="w3-xlarge w3-border-teal w3-bottombar w3-hide-large w3-hide-medium">Rehoming Form</span></div>
+        <div class="w3-content">
+            <p class="w3-medium w3-left-align">    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+              dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non 
+              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </div>
+    </div>
+    <!-- Contact Container -->
+    <div class="w3-container w3-theme-l5 w3-center" id="contact">
+            <div class="w3-content w3-left-align">
+                <form class="w3-container w3-card-4 w3-white" action="/action_page.php" target="_blank">
+                    <div class="w3-section">
+                        <label><h5><b>About You</b></h5></label>
+                    </div>
+                    <div class="w3-half" style="padding-right: 2%;">
+                        <div class="w3-section">
+                            <label for="FullName"><span style="color:red">*</span>Full Name</label>
+                            <input class="w3-input" type="text" id="FullName" required>
+                        </div>
+                        <div class="w3-section">
+                            <label for="EmailAddress"><span style="color:red">*</span>Email Address</label>
+                            <input class="w3-input" type="text" id="EmailAddress" required>
+                        </div>
+                    </div>
+                    <div class="w3-half" style="padding-left: 2%;">
+                        <div class="w3-section">
+                            <label for="PrimaryPhoneNumber"><span style="color:red">*</span>Primary Phone Number</label>
+                            <input class="w3-input" type="text" id="PrimaryPhoneNumber" required>
+                        </div>
+                        <div class="w3-section">
+                            <label for="SecondaryPhoneNumber">Secondary Phone Number</label>
+                            <input class="w3-input" type="text" id="SecondaryPhoneNumber">
+                        </div>
+                    </div>
+                    <div class="w3-section">
+                        <label for="YourHomeAddress"><span style="color:red">*</span>Your Home Address</label>
+                        <input class="w3-input" type="text" id="YourHomeAddress" required>
+                    </div>
+                    <div class="w3-section">
+                        <label><h5><b>Your Preferences</b></h5></label>
+                    </div>
+                    <label><span style="color:red">*</span>I'm interested in a (tick all that apply):</label>
+                    <div class="w3-section">
+                        <input class="w3-check HorseType" type="checkbox" id="RidingHorse">
+                        <label for="RidingHorse">
+                            Riding Horse
+                        </label>
+                        &nbsp;
+                        <input class="w3-check HorseType" type="checkbox" id="CompanionHorse">
+                        <label for="CompanionHorse">
+                            Companion Horse
+                        </label>
+                        &nbsp;
+                        <input class="w3-check HorseType" type="checkbox" id="ProjectHorse">
+                        <label for="ProjectHorse">
+                            Project Horse
+                        </label>
+                        &nbsp;
+                        <input class="w3-check HorseType" type="checkbox" id="Horse">
+                        <label for="Horse">
+                            Horse
+                        </label>
+                        &nbsp;
+                        <input class="w3-check HorseType" type="checkbox" id="Pony">
+                        <label for="Pony">
+                            Pony
+                        </label>
+                        &nbsp;
+                        <input class="w3-check HorseType" type="checkbox" id="Gelding">
+                        <label for="Gelding">
+                            Gelding
+                        </label>
+                        &nbsp;
+                        <input class="w3-check HorseType" type="checkbox" id="Mare">
+                        <label for="Mare">
+                            Mare
+                        </label>
+                        &nbsp;
+                        <input class="w3-check HorseType" type="checkbox" id="Foal">
+                        <label for="Foal">
+                            Foal
+                        </label>
+                    </div>
+                    <div class="w3-half" style="padding-right: 2%;">
+                        <div class="w3-section">
+                            <label for="AgeRange"><span style="color:red">*</span>Age Range</label>
+                            <input class="w3-input" type="text" id="AgeRange" required>
+                        </div>
+                    </div>
+                    <div class="w3-half" style="padding-left: 2%;">
+                        <div class="w3-section">
+                            <label for="HeightRange"><span style="color:red">*</span>Height Range</label>
+                            <input class="w3-input" type="text" id="HeightRange" required>
+                        </div>
+                    </div>
+                    <div class="w3-section">
+                        <label for="OtherHorseDetails">
+                            If you're interested in specific horse(s) or have other requirements, please let us know
+                        </label>
+                        <textarea class="w3-input" id="OtherHorseDetails"></textarea>
+                    </div>
+                    <div class="w3-section">
+                        <label><h5><b>Your stabling/grazing facilities</b></h5></label>
+                    </div>
+                    <div class="w3-section">
+                        <label for="HorseAddress"><span style="color:red">*</span>Location You Plan to Keep the Horse</label>
+                        <input class="w3-input" type="text" id="HorseAddress" required>
+                    </div>
+                    <div class="w3-section">
+                        <label for="HorseAddressType"><span style="color:red">*</span>Type of Horse Accommodation</label>
+                        <select class="w3-select" id="HorseAddressType" required>
+                            <option>
+                                -- Select Option --
+                            </option>
+                            <option>
+                                Owned
+                            </option>
+                            <option>
+                                Rented
+                            </option>
+                            <option>
+                                Livery
+                            </option>
+                        </select>
+                    </div>
+                    <div class="w3-section">
+                        <label><h5><b>Providing Care</b></h5></label>
+                    </div>
+                    <div class="w3-section">
+                        <label for="FarrierDetails"><span style="color:red">*</span>Name and Contact Number of Farrier</label>
+                        <input class="w3-input" type="text" id="FarrierDetails" required>
+                    </div>
+                    <div class="w3-section">
+                        <label for="VetDetails"><span style="color:red">*</span>Name and Contact Number of Vet</label>
+                        <input class="w3-input" type="text" id="VetDetails" required>
+                    </div>
+                    <div class="w3-section">
+                        <label for="experience"><span style="color:red">*</span>Please tell us about your experience with horses and if you currently own horses.</label>
+                        <textarea class="w3-input" type="text" id="experience" required></textarea>
+                    </div>
+                    <div class="w3-section">
+                        <label><h5><b>Other</b></h5></label>
+                    </div>
+                    <div class="w3-section">
+                        <label for="notes">Please tell us anything else you'd like us to know.</label>
+                        <textarea class="w3-input" type="text" id="notes"></textarea>
+                    </div>
+                    <div class="w3-section">
+                        <input class="w3-check" type="checkbox" required id="Over18">
+                        <label for="Over18"><span style="color:red">*</span>I confirm I am over 18yrs and the details in this form are mine.</label>
+                    </div>
+                    <div class="w3-section">
+                    <input class="w3-check" type="checkbox" required id="castration">
+                    <label for="castration">
+                        <span style="color:red">*</span>
+                        If I rehome a colt too young for castration I agree to have him castrated as soon as he is ready.
+                    </label>
+                    </div>
+                    <div class="w3-section">
+                        <input class="w3-check" type="checkbox" required id="permanent">
+                        <label for="permanent">
+                            <span style="color:red">*</span>
+                            I am offering a rescue pony from the charity a permanent home and will not resell it, give it away or attempt to do either. I will meet all welfare needs of the equine and contact the charity if I am ever in need of help or my circumstances should change.
+                    </div>
+                    <div class="w3-section">
+                        <input class="w3-check" type="checkbox" required id="seize">
+                        <label for="seize">
+                            <span style="color:red">*</span>
+                            I understand that the charity reserve the right to seize the rescue pony if there are concerns about welfare, dealing or breeding.</label>
+                    </div>
+                    <div class="w3-section">
+                        <label><h5><b>GPDR Compliance (see FAQ below for more details)</b></h5></label>
+                    </div>
+                    <div class="w3-section">
+                        <input class="w3-check" type="checkbox" required id="Compliance">
+                        <label for="Compliance">
+                            <span style="color:red">*</span>
+                            I understand that my data will be stored under the the GPDR legitimate interests ground, and 
+                            will be used to assess my suitability for rehoming, checking up on any horse(s) I rehome, contacting 
+                            me for purposes related to rehoming, and/or informing me about horses I might be interested in.
+                        </label>
+                    </div>
+                    <div class="w3-section">
+                        <input class="w3-check" type="checkbox" required id="Compliance2">
+                        <label for="Compliance2">
+                            <span style="color:red">*</span>
+                            I understand that my data will be retained until no longer required, that the grounds for keeping it will be regularly 
+                            reviewed, and that I can request to have it removed.
+                        </label>
+                    </div>
+                    <button type="submit" class="w3-button w3-right w3-theme">Submit Form</button>
+                    <br>
+                    <br>
+
+                </form>
+        </div>
+        <div class="w3-row">
+            <div class="w3-content w3-left-align">
+                    <h3>FAQ</h3>
+                    <h3>Does filling in this form entitle me to a horse?</h3>
+                    <p>
+                        No. This is merely the first step in the process; we're just finding out about you so that we know you can care 
+                        for the horse.
+                    </p>
+                    <h3>What happens next?</h3>
+                    <p>
+                        When you submit this form, if you've indicated interest in a specific horse, we'll try to phone and/or email you as soon as possible to discuss and arrange a 
+                        meeting. Otherwise, we'll try to reach out when we have a suitable horse, though we have no obligation do so.
+                    </p>
+                    <h3>Who can I contact if I have technical problems with this form?</h3>
+                    <p>
+                        You can fill in the contact us form or email Anna, the volunteer responsible for this site, directly at 
+                        anna11199810@hotmail.co.uk
+                    </p>
+                    <h3>Is my personal data secure?</h3>
+                    <p>
+                        We make the best possible efforts to secure your data in accordance with the GPDR. It will be sent over HTTPS, 
+                        stored in a secure cloud database, and encrypted at rest. You can request to have us delete it at any time.
+                    </p>
+                    <h3>Why do you need this data?</h3>
+                    <p>
+                        We need to be sure that our horses are going to be safe and happy in their new homes. We believe that the 
+                        data we request is reasonable in attaining this goal under the GPDR legitimate interests ground. Specifically, 
+                        it is used for assessing suitability for rehoming, checking up/seizing horse(s) rehomed, contacting for purposes 
+                        related to rehoming, and/or informing potential rehomers about horses they might be interested in.
+                    </p>
+                    <h3>Will you send spam or resell my data?</h3>
+                    <p>
+                        No; we will use the data only for the purposes listed above.
+                    </p>
+                    <h3>How long will my data be kept for?</h3>
+                    <p>
+                        It's difficult to give an exact timescale; it really depends on the situation. However, we will review 
+                        the data we have regularly and delete any unnecessary data. Specifically, if we turn you down for rehoming, 
+                        we will try to delete your data within a month. You can ask us about the data we have or ask us to remove it 
+                        at any time via the Contact Us form or authorized email addresses.
+                    </p>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!-- Footer -->
+    <footer class="w3-center w3-black w3-padding-64">
+        <p>Copyright Leigh Rescue Centre 2020 | Powered by <a href="https://www.w3schools.com/w3css/default.asp"
+                title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+    </footer>
+
+    <script>
+        // Modal Image Gallery
+        function onClick(element) {
+            document.getElementById("img01").src = element.src;
+            document.getElementById("modal01").style.display = "block";
+            var captionText = document.getElementById("caption");
+            captionText.innerHTML = element.alt;
+        }
+
+
+        // Toggle between showing and hiding the sidebar when clicking the menu icon
+        var mySidebar = document.getElementById("mySidebar");
+
+        function w3_open() {
+            if (mySidebar.style.display === 'block') {
+                mySidebar.style.display = 'none';
+            } else {
+                mySidebar.style.display = 'block';
+            }
+        }
+
+        // Close the sidebar with the close button
+        function w3_close() {
+            mySidebar.style.display = "none";
+        }
+    </script>
+
+</body>
+
+</html>
