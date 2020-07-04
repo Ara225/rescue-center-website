@@ -109,24 +109,40 @@ function onContactFormSubmit(token) {
 
 function displayResult(result) {
     if (result.success) {
-        document.getElementById("alertDiv").style.borderStyle = "solid"
-        document.getElementById("alertDiv").innerHTML = "<span class='w3-large'>Form Submitted Successfully </span><br>Your reference is: " +
-            result.id + " We'll try to get back to you within seven working days."
-        document.getElementById("submit").innerText = 'Submit'
-        window.scrollTo(0, 0)
-        document.getElementById("Form").reset()
+        displaySuccess(result.id)
     }
     else if (!result.success) {
         displayError(result.error)
     }
 }
 
+function displaySuccess(text) {
+    document.getElementById("alertDiv").innerHTML = "<header class=\"w3-container w3-teal\"> " +
+                                                    "  <span onclick=\"document.getElementById('alertBox').style.display='none'\" " +
+                                                    "  class=\"w3-button w3-display-topright\">&times;</span>" +
+                                                    "  <h2>Form Submitted Successfully</h2>" +
+                                                    "</header>" +
+                                                    "<div class=\"w3-container\">" +
+                                                    "  <p>Thanks for your query. Your reference is: " + text + "</p>" +
+                                                    "  <p>We'll try to get back to you within seven working days.</p>" +
+                                                    "</div>" 
+    document.getElementById("submit").innerText = 'Submit'
+    document.getElementById('alertBox').style.display='block'
+    document.getElementById("Form").reset()
+}
+
 function displayError(e) {
     console.log(e)
-    window.scrollTo(0, 0)
     document.getElementById("submit").innerText = 'Submit'
-    document.getElementById("alertDiv").style.borderColor = "red"
-    document.getElementById("alertDiv").style.borderStyle = "solid"
-    document.getElementById("alertDiv").innerHTML = "<span class='w3-large'>Form Failed to Submit</span><br>Submission failed due to this error: " +
-    e + " <br>Feel free to try again or contact us with the error"
+    document.getElementById("alertDiv").innerHTML = "<header class=\"w3-container w3-red\"> " +
+                                                    "  <span onclick=\"document.getElementById('alertBox').style.display='none'\" " +
+                                                    "  class=\"w3-button w3-display-topright\">&times;</span>" +
+                                                    "  <h2>Form submission failed</h2>" +
+                                                    "</header>" +
+                                                    "<div class=\"w3-container\">" +
+                                                    "  <p>Form submission failed due to the following error: " + e + "</p>" +
+                                                    "  <p>Please ensure that you're connected to the internet, and reach " +
+                                                    "out to us if the behaviour continues</p>" +
+                                                    "</div>" 
+    document.getElementById('alertBox').style.display='block'
 }
