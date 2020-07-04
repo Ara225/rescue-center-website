@@ -120,6 +120,6 @@ def lambda_handler(event, context):
         "statusCode": 200,
         "body": json.dumps({
             "success": True,
-            "rehomingApplicationId": rehomingApplication["id"]
+            "id": rehomingApplication["id"]
         }),
     }

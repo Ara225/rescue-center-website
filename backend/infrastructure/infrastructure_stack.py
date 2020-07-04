@@ -5,7 +5,7 @@ from aws_cdk import aws_s3
 from aws_cdk import aws_dynamodb
 from aws_cdk import aws_s3_deployment
 from aws_cdk import aws_cloudfront
-
+from os import environ
 
 class InfrastructureStack(core.Stack):
 
@@ -181,11 +181,11 @@ class InfrastructureStack(core.Stack):
                                                                 )
                                                                 ]
                                                                 )
-
-        # ******* Deploy to bucket
-        deployment = aws_s3_deployment.BucketDeployment(self, "deployStaticWebsite",
-                                                        sources=[aws_s3_deployment.Source.asset(
-                                                            "../frontend")],
-                                                        destination_bucket=websiteBucket,
-                                                        distribution=distribution
-                                                        )
+        if not environ.get("lambdaOnly"):
+            # ******* Deploy to bucket
+            deployment = aws_s3_deployment.BucketDeployment(self, "deployStaticWebsite",
+                                                            sources=[aws_s3_deployment.Source.asset(
+                                                                "../frontend")],
+                                                            destination_bucket=websiteBucket,
+                                                            distribution=distribution
+                                                            )

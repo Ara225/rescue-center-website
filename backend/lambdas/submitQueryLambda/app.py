@@ -45,9 +45,10 @@ def lambda_handler(event, context):
             "FullName": body["FullName"],
             "EmailAddress": body["EmailAddress"],
             "Message": body["Message"],
+            "QueryReason": body["QueryReason"],
             "id": body["FullName"] + ":" + randomString,
             "date": Decimal(datetime.now().timestamp()),
-            "expires": expiresIn
+            "expires": Decimal(expiresIn)
         }
     except KeyError as e:
         print(event)
@@ -108,6 +109,6 @@ def lambda_handler(event, context):
         "statusCode": 200,
         "body": json.dumps({
             "success": True,
-            "queryId": query["id"]
+            "id": query["id"]
         }),
     }

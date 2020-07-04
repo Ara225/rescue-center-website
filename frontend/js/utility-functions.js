@@ -79,8 +79,6 @@ function onRehomerFormSubmit(token) {
                 form.HorseUse.push(HorseUse[i].id)
             }
         }
-        alert(JSON.stringify(form))
-    
         fetch(APIEndpoint + "rehomers", {
                   method: "POST", 
                   body: JSON.stringify(form)
@@ -97,7 +95,6 @@ function onContactFormSubmit(token) {
     try {
         document.getElementById("submit").innerHTML = 'Submitting <i class="fa fa-spinner fa-spin"></i>'
         var form = formToJSON(document.getElementsByClassName('FormField'));
-        alert(JSON.stringify(form))
         fetch(APIEndpoint + "queries", {
                   method: "POST", 
                   body: JSON.stringify(form)
@@ -114,7 +111,7 @@ function displayResult(result) {
     if (result.success) {
         document.getElementById("alertDiv").style.borderStyle = "solid"
         document.getElementById("alertDiv").innerHTML = "<span class='w3-large'>Form Submitted Successfully </span><br>Your reference is: " +
-            result.rehomingApplicationId
+            result.id + " We'll try to get back to you within seven working days."
         document.getElementById("submit").innerText = 'Submit'
         window.scrollTo(0, 0)
         document.getElementById("Form").reset()
