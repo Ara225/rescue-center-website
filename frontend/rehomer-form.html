@@ -51,80 +51,80 @@
               dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non 
               proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
+            <p class="w3-medium w3-round-medium" id="alertDiv" style="border-width: 5%; border-color: teal; border-style: none;"></p>  
         </div>
     </div>
-    <!-- Contact Container -->
-    <div class="w3-container w3-theme-l5 w3-center" id="contact">
+    <div class="w3-container w3-theme-l5 w3-center" id="RehomerForm">
             <div class="w3-content w3-left-align">
-                <form class="w3-container w3-card-4 w3-white" onSubmit="onSubmit()">
+                <form class="w3-container w3-card-4 w3-white" onSubmit="onSubmit('sdsd');return false;">
                     <div class="w3-section">
                         <label><h5><b>About You</b></h5></label>
                     </div>
                     <div class="w3-half" style="padding-right: 2%;">
                         <div class="w3-section">
                             <label for="FullName"><span style="color:red">*</span>Full Name</label>
-                            <input class="w3-input" type="text" id="FullName" required>
+                            <input class="w3-input RehomerFormField" type="text" id="FullName" required>
                         </div>
                         <div class="w3-section">
                             <label for="EmailAddress"><span style="color:red">*</span>Email Address</label>
-                            <input class="w3-input" type="text" id="EmailAddress" required>
+                            <input class="w3-input RehomerFormField" type="text" id="EmailAddress" required>
                         </div>
                     </div>
                     <div class="w3-half" style="padding-left: 2%;">
                         <div class="w3-section">
                             <label for="PrimaryPhoneNumber"><span style="color:red">*</span>Primary Phone Number</label>
-                            <input class="w3-input" type="text" id="PrimaryPhoneNumber" required>
+                            <input class="w3-input RehomerFormField" type="text" id="PrimaryPhoneNumber" required>
                         </div>
                         <div class="w3-section">
                             <label for="SecondaryPhoneNumber">Secondary Phone Number</label>
-                            <input class="w3-input" type="text" id="SecondaryPhoneNumber">
+                            <input class="w3-input RehomerFormField" type="text" id="SecondaryPhoneNumber">
                         </div>
                     </div>
                     <div class="w3-section">
                         <label for="YourHomeAddress"><span style="color:red">*</span>Your Home Address</label>
-                        <input class="w3-input" type="text" id="YourHomeAddress" required>
+                        <input class="w3-input RehomerFormField" type="text" id="YourHomeAddress" required>
                     </div>
                     <div class="w3-section">
                         <label><h5><b>Your Preferences</b></h5></label>
                     </div>
                     <label><span style="color:red">*</span>I'm interested in a (tick all that apply):</label>
                     <div class="w3-section">
-                        <input class="w3-check HorseType" type="checkbox" id="RidingHorse">
+                        <input class="w3-check RehomerFormFieldGroup HorseUse" type="checkbox" id="RidingHorse">
                         <label for="RidingHorse">
                             Riding Horse
                         </label>
                         &nbsp;
-                        <input class="w3-check HorseType" type="checkbox" id="CompanionHorse">
+                        <input class="w3-check RehomerFormFieldGroup HorseUse" type="checkbox" id="CompanionHorse">
                         <label for="CompanionHorse">
                             Companion Horse
                         </label>
                         &nbsp;
-                        <input class="w3-check HorseType" type="checkbox" id="ProjectHorse">
+                        <input class="w3-check RehomerFormFieldGroup HorseUse" type="checkbox" id="ProjectHorse">
                         <label for="ProjectHorse">
                             Project Horse
                         </label>
                         &nbsp;
-                        <input class="w3-check HorseType" type="checkbox" id="Horse">
+                        <input class="w3-check RehomerFormFieldGroup HorseType" type="checkbox" id="Horse">
                         <label for="Horse">
                             Horse
                         </label>
                         &nbsp;
-                        <input class="w3-check HorseType" type="checkbox" id="Pony">
+                        <input class="w3-check RehomerFormFieldGroup HorseType" type="checkbox" id="Pony">
                         <label for="Pony">
                             Pony
                         </label>
                         &nbsp;
-                        <input class="w3-check HorseType" type="checkbox" id="Gelding">
+                        <input class="w3-check RehomerFormFieldGroup HorseType" type="checkbox" id="Gelding">
                         <label for="Gelding">
                             Gelding
                         </label>
                         &nbsp;
-                        <input class="w3-check HorseType" type="checkbox" id="Mare">
+                        <input class="w3-check RehomerFormFieldGroup HorseType" type="checkbox" id="Mare">
                         <label for="Mare">
                             Mare
                         </label>
                         &nbsp;
-                        <input class="w3-check HorseType" type="checkbox" id="Foal">
+                        <input class="w3-check RehomerFormFieldGroup HorseType" type="checkbox" id="Foal">
                         <label for="Foal">
                             Foal
                         </label>
@@ -132,31 +132,31 @@
                     <div class="w3-half" style="padding-right: 2%;">
                         <div class="w3-section">
                             <label for="AgeRange"><span style="color:red">*</span>Age Range</label>
-                            <input class="w3-input" type="text" id="AgeRange" required>
+                            <input class="w3-input RehomerFormField" type="text" id="AgeRange" required>
                         </div>
                     </div>
                     <div class="w3-half" style="padding-left: 2%;">
                         <div class="w3-section">
                             <label for="HeightRange"><span style="color:red">*</span>Height Range</label>
-                            <input class="w3-input" type="text" id="HeightRange" required>
+                            <input class="w3-input RehomerFormField" type="text" id="HeightRange" required>
                         </div>
                     </div>
                     <div class="w3-section">
                         <label for="OtherHorseDetails">
                             If you're interested in specific horse(s) or have other requirements, please let us know
                         </label>
-                        <textarea class="w3-input" id="OtherHorseDetails"></textarea>
+                        <textarea class="w3-input RehomerFormField" id="OtherHorseDetails"></textarea>
                     </div>
                     <div class="w3-section">
                         <label><h5><b>Your stabling/grazing facilities</b></h5></label>
                     </div>
                     <div class="w3-section">
                         <label for="HorseAddress"><span style="color:red">*</span>Location You Plan to Keep the Horse</label>
-                        <input class="w3-input" type="text" id="HorseAddress" required>
+                        <input class="w3-input RehomerFormField" type="text" id="HorseAddress" required>
                     </div>
                     <div class="w3-section">
                         <label for="HorseAddressType"><span style="color:red">*</span>Type of Horse Accommodation</label>
-                        <select class="w3-select" id="HorseAddressType" required>
+                        <select class="w3-select RehomerFormField" id="HorseAddressType" required>
                             <option value="" selected>
                                 -- Select Option --
                             </option>
@@ -176,42 +176,42 @@
                     </div>
                     <div class="w3-section">
                         <label for="FarrierDetails"><span style="color:red">*</span>Name and Contact Number of Farrier</label>
-                        <input class="w3-input" type="text" id="FarrierDetails" required>
+                        <input class="w3-input RehomerFormField" type="text" id="FarrierDetails" required>
                     </div>
                     <div class="w3-section">
                         <label for="VetDetails"><span style="color:red">*</span>Name and Contact Number of Vet</label>
-                        <input class="w3-input" type="text" id="VetDetails" required>
+                        <input class="w3-input RehomerFormField" type="text" id="VetDetails" required>
                     </div>
                     <div class="w3-section">
                         <label for="experience"><span style="color:red">*</span>Please tell us about your experience with horses and if you currently own horses.</label>
-                        <textarea class="w3-input" type="text" id="experience" required></textarea>
+                        <textarea class="w3-input RehomerFormField" type="text" id="experience" required></textarea>
                     </div>
                     <div class="w3-section">
                         <label><h5><b>Other</b></h5></label>
                     </div>
                     <div class="w3-section">
                         <label for="notes">Please tell us anything else you'd like us to know.</label>
-                        <textarea class="w3-input" type="text" id="notes"></textarea>
+                        <textarea class="w3-input RehomerFormField" type="text" id="notes"></textarea>
                     </div>
                     <div class="w3-section">
-                        <input class="w3-check" type="checkbox" required id="Over18">
+                        <input class="w3-check RehomerFormFieldConfirmation" type="checkbox" required id="Over18">
                         <label for="Over18"><span style="color:red">*</span>I confirm I am over 18yrs and the details in this form are mine.</label>
                     </div>
                     <div class="w3-section">
-                    <input class="w3-check" type="checkbox" required id="castration">
+                    <input class="w3-check RehomerFormFieldConfirmation" type="checkbox" required id="castration">
                     <label for="castration">
                         <span style="color:red">*</span>
                         If I rehome a colt too young for castration I agree to have him castrated as soon as he is ready.
                     </label>
                     </div>
                     <div class="w3-section">
-                        <input class="w3-check" type="checkbox" required id="permanent">
+                        <input class="w3-check RehomerFormFieldConfirmation" type="checkbox" required id="permanent">
                         <label for="permanent">
                             <span style="color:red">*</span>
                             I am offering a rescue pony from the charity a permanent home and will not resell it, give it away or attempt to do either without written permission. I will meet all welfare needs of the equine and contact the charity if I am ever in need of help or my circumstances should change.
                     </div>
                     <div class="w3-section">
-                        <input class="w3-check" type="checkbox" required id="seize">
+                        <input class="w3-check RehomerFormFieldConfirmation" type="checkbox" required id="seize">
                         <label for="seize">
                             <span style="color:red">*</span>
                             I understand that the charity reserve the right to seize the rescue pony if there are concerns about welfare, dealing, giving away or breeding.</label>
@@ -220,7 +220,7 @@
                         <label><h5><b>GPDR Compliance</b></h5></label>
                     </div>
                     <div class="w3-section">
-                        <input class="w3-check" type="checkbox" required id="Compliance">
+                        <input class="w3-check RehomerFormFieldConfirmation" type="checkbox" required id="Compliance">
                         <label for="Compliance">
                             <span style="color:red">*</span>
                             I understand that my data will be stored under the the GPDR legitimate interests ground, and 
@@ -229,14 +229,14 @@
                         </label>
                     </div>
                     <div class="w3-section">
-                        <input class="w3-check" type="checkbox" required id="Compliance2">
+                        <input class="w3-check RehomerFormFieldConfirmation" type="checkbox" required id="Compliance2">
                         <label for="Compliance2">
                             <span style="color:red">*</span>
                             I understand that my data will be retained until no longer required, that the grounds for keeping it will be regularly 
                             reviewed, and that I can request to have it removed.
                         </label>
                     </div>
-                    <button type="submit" class="w3-button w3-right w3-green">Submit Form</button>
+                    <button type="submit" id="submit" class="w3-button w3-right w3-green">Submit Form</button>
                     <button type="reset" class="w3-button w3-right w3-red" style="margin-right:2%">Clear Form</button>
                     <br>
                     <br>
@@ -301,37 +301,83 @@
          * Convert form to a JSON object
         */
         function formToJSON(form) {
+          console.log(form)
+          console.log(form.length)
           var data = {}
           for (var i=0; i < form.length; i++) {
+            console.log(form[i].id)
             // This allows skipping fields
-            if (form[i].name == "") {
+            if (form[i].id == "") {
               continue
             }
             else {
-              // Assumes all form fields with names must have a value
-              if (form[i].value == "") {
-                return null
+              if (form[i].value == "" && form[i].required) {
+                document.getElementById("submit").innerText = 'Submit'
+                alert("Unable to validate form. Please ensure all required fields are completed")
+                return false;
               }
               else {
-                data[form[i].name] = form[i].value;
+                data[form[i].id] = form[i].value;
+                console.log(data)
               }
             }
           }
           return data;
         }
         function onSubmit(token) {
-          var form = formToJSON(document.getElementById("demo-form"));
-          console.log(form)
-          return
-          if (form) {
-              fetch("http://127.0.0.1:3000/recaptcha_validate", {
-                method: "POST", 
-                body: JSON.stringify(form)
-              }).then(res => {
-                res.json().then(res2 => {console.log(res2)})
-              });
+            document.getElementById("submit").innerHTML = 'Submitting <i class="fa fa-spinner fa-spin"></i>'
+            var horseTypeCheckBoxGroup = document.getElementsByClassName('RehomerFormFieldGroup')
+            var oneChecked = false
+            for (i in horseTypeCheckBoxGroup) {
+                if (horseTypeCheckBoxGroup[i].checked) {
+                    oneChecked = true
+                }
+            }
+            if (!oneChecked) {
+                document.getElementById("submit").innerText = 'Submit'
+                alert("Please tick a box in the \"I'm interested in a\" section")
+                return false;
+            }
+          var form = formToJSON(document.getElementsByClassName('RehomerFormField'));
+          form.HorseType = []
+          var HorseType = document.getElementsByClassName('HorseType')
+          for (i in HorseType) {
+            if (HorseType[i].checked) {
+                form.HorseType.push(HorseType[i].id)
+            }
           }
-          // TODO: Process bad input
+          form.HorseUse = []
+          var HorseUse = document.getElementsByClassName('HorseUse')
+          for (i in HorseUse) {
+            if (HorseUse[i].checked) {
+                form.HorseUse.push(HorseUse[i].id)
+            }
+          }
+          alert(JSON.stringify(form))
+          window.location.href = window.location.href.split("?")[0] + "?response_id=yyy"
+
+          /*
+                           fetch("http://127.0.0.1:3000/recaptcha_validate", {
+                    method: "POST", 
+                    body: JSON.stringify(form)
+                  }).then(res => {
+                    res.json().then(res2 => {console.log(res2)})
+                  });
+          */
+          document.getElementById("submit").innerText = 'Submit'
+
+        }
+        if (document.location.search && document.location.search.search('response_id') != -1) {
+            document.getElementById("alertDiv").style.borderStyle = "solid"
+            document.getElementById("alertDiv").innerHTML = "<span class='w3-large'>Form Submitted Successfully </span><br>Your reference is: " + 
+                document.location.search.split('response_id=')[1]
+        }
+        else if (document.location.search && document.location.search.search('error') != -1) {
+            document.getElementById("alertDiv").style.borderColor = "red"
+            document.getElementById("alertDiv").style.borderStyle = "solid"
+            document.getElementById("alertDiv").innerHTML = "<span class='w3-large'>Form Failed to Submit</span><br>Submission failed due to this error:" + 
+                document.location.search.split('error=')[1] + " <br>Feel free to try again or contact anna11199810@hotmail.co.uk " +
+                " with the error"
         }
       </script>
     <script>

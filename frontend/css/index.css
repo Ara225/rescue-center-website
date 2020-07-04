@@ -9,7 +9,7 @@ body, html {
 .bgimg-1 {
   background-position: center;
   background-size: cover;
-  background-image: url("horse-905534.jpg");
+  background-image: url("/media/horse-905534.jpg");
   min-height: 100%;
 }
 

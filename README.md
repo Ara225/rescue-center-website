@@ -20,6 +20,7 @@ If I rehome a colt too young for castration I agree to have him castrated as soo
 * farrierDetails - Address/Name/Number - STRING NOT NULL
 * vetDetails - Address/Name/Number - STRING NOT NULL
 * horsesTypesInterestedIn -  - ARRAY NOT NULL
+* horsesUseInterestedIn -  - ARRAY NOT NULL
 * horsesInterestedIn - Name of horses other details - String POSSIBLE NULL
 * preferredHeightRange 
 * preferredAgeRange 
