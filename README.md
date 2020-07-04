@@ -30,19 +30,27 @@ Checkboxes
 * internalNotes - blah whatever - STRING NOT NULL
 
 Contact Us/volunteer flow
-* id
-* message
-* name 
-* email
-* volunteerReason
+{
+            "FullName": body["FullName"],
+            "EmailAddress": body["EmailAddress"],
+            "Message": body["Message"],
+            "QueryReason": body["QueryReason"],
+            "id": body["FullName"] + ":" + randomString,
+            "date": Decimal(datetime.now().timestamp()),
+            "expires": Decimal(expiresIn)
+        }
 
 Horses DB schema
 * id
+* name
 * age
 * breed
 * sex
 * description
+* uses
 * rehomingFee
+* images
+* videos
 
 Remove data
 

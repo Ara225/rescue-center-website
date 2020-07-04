@@ -119,7 +119,6 @@ function displayResult(result) {
     else if (!result.success) {
         displayError(result.error)
     }
-
 }
 
 function displayError(e) {
