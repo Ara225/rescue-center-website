@@ -79,31 +79,27 @@ function onSubmit(token) {
         }
     }
     alert(JSON.stringify(form))
-    displayResult("ssss", false)
 
-    /*
-                     fetch("http://127.0.0.1:3000/recaptcha_validate", {
+    fetch(APIEndpoint + "rehomers", {
               method: "POST", 
               body: JSON.stringify(form)
-            }).then(res => {
-              res.json().then(res2 => {console.log(res2);displayResult(result, false)})
+            }).then(res => { console.log(res);
+              res.json().then(jsonResult => {console.log(jsonResult);displayResult(jsonResult)})
             });
-    */
-
 }
-function displayResult(result, error) {
+function displayResult(result) {
     window.scrollTo(0, 0)
     document.getElementById("RehomerForm").reset()
-    if (!error) {
+    if (result.success) {
         document.getElementById("alertDiv").style.borderStyle = "solid"
         document.getElementById("alertDiv").innerHTML = "<span class='w3-large'>Form Submitted Successfully </span><br>Your reference is: " +
-            result
+            result.rehomingApplicationId
     }
-    else if (error) {
+    else if (!result.success) {
         document.getElementById("alertDiv").style.borderColor = "red"
         document.getElementById("alertDiv").style.borderStyle = "solid"
         document.getElementById("alertDiv").innerHTML = "<span class='w3-large'>Form Failed to Submit</span><br>Submission failed due to this error:" +
-            result + " <br>Feel free to try again or contact us with the error"
+            result.error + " <br>Feel free to try again or contact us with the error"
     }
     document.getElementById("submit").innerText = 'Submit'
 }
