@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 <link rel="stylesheet" href="css/index.css">
+<script src="/js/utility-functions.js"></script>
+
 </head>
 <body>
     <!-- Navbar (sit on top) -->
@@ -43,11 +45,11 @@
  <br>
 <div class="w3-content w3-margin-bottom w3-margin-top" style="position:relative">
 
-<img class="mySlides w3-animate-opacity" src="media/horse-197199_1920.jpg" style="width:100%">
-<img class="mySlides w3-animate-opacity" src="media/horse-905534.jpg" style="width:100%">
+<img class="mySlides w3-animate-opacity" src="/media/horse-197199_1920.jpg" style="width:100%">
+<img class="mySlides w3-animate-opacity" src="/media/horse-905534.jpg" style="width:100%">
 
 <video class="mySlides w3-animate-opacity" controls style="width: 100%;">
-    <source src="media/Pexels Videos 2122952.mp4" type="video/mp4">
+    <source src="/media/Pexels Videos 2122952.mp4" type="video/mp4">
   Your browser does not support the video tag.
   </video> 
 <a class="w3-btn-floating w3-button w3-hover-dark-grey" style="position:absolute;top:45%;left:0;" onclick="plusDivs(-1)">❮</a>
@@ -56,12 +58,11 @@
         <span class="dot" onclick="moveToDiv(1)"></span> 
         <span class="dot" onclick="moveToDiv(2)"></span> 
         <span class="dot" onclick="moveToDiv(3)"></span> 
-        <span class="dot" onclick="moveToDiv(4)"></span> 
   </div>
 </div>
 <div class="w3-content w3-margin-bottom w3-margin-top" style="position:relative">
     <span class="w3-xxlarge w3-hide-small ">Horse Name</span><br>
-    Age: 200  |  Breed: Awful  | Gender: Male
+    Age: 200  |  Breed: Awful  | Gender: Male | Use: blah
     
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -78,59 +79,7 @@
 <footer class="w3-center w3-black w3-padding-64">
     <p>Copyright Leigh Rescue Centre 2020  |  Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
   </footer>
-   
-  <script>
-  // Modal Image Gallery
-  function onClick(element) {
-    document.getElementById("img01").src = element.src;
-    document.getElementById("modal01").style.display = "block";
-    var captionText = document.getElementById("caption");
-    captionText.innerHTML = element.alt;
-  }
-  
-  
-  // Toggle between showing and hiding the sidebar when clicking the menu icon
-  var mySidebar = document.getElementById("mySidebar");
-  
-  function w3_open() {
-    if (mySidebar.style.display === 'block') {
-      mySidebar.style.display = 'none';
-    } else {
-      mySidebar.style.display = 'block';
-    }
-  }
-  
-  // Close the sidebar with the close button
-  function w3_close() {
-      mySidebar.style.display = "none";
-  }
-  </script>
-  <script>
-// Slideshows
-var slideIndex = 1;
-
-function plusDivs(n) {
-slideIndex = slideIndex + n;
-showDivs(slideIndex);
-}
-
-function moveToDiv(divNo) {
-slideIndex = divNo;
-showDivs(slideIndex);
-}
-
-function showDivs(n) {
-  var x = document.getElementsByClassName("mySlides");
-  if (n > x.length) {slideIndex = 1}    
-  if (n < 1) {slideIndex = x.length} ;
-  for (i = 0; i < x.length; i++) {
-     x[i].style.display = "none";  
-  }
-  x[slideIndex-1].style.display = "block";  
-}
-
-showDivs(1);
-</script>
+  <script src="/js/slideshow.js"></script>
 
 </body>
 </html> 

@@ -7,7 +7,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="/js/config.js"></script>
-
+<script src="/js/utility-functions.js"></script>
+<script src="/js/addmin.js"></script>
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
@@ -145,45 +146,5 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <!-- End page content -->
 </div>
 
-<script>
-// Get the Sidebar
-var mySidebar = document.getElementById("mySidebar");
-
-// Get the DIV with overlay effect
-var overlayBg = document.getElementById("myOverlay");
-
-// Toggle between showing and hiding the sidebar, and add overlay effect
-function w3_open() {
-  if (mySidebar.style.display === 'block') {
-    mySidebar.style.display = 'none';
-    overlayBg.style.display = "none";
-  } else {
-    mySidebar.style.display = 'block';
-    overlayBg.style.display = "block";
-  }
-}
-
-// Close the sidebar with the close button
-function w3_close() {
-  mySidebar.style.display = "none";
-  overlayBg.style.display = "none";
-}
-</script>
-<script>
-  // Quick and dirty. API auth does real work so we don't need more
-  // cognitoURL should be defined in config.json
-  var isUsingTokenAuth = null
-  if (document.location.hash && document.location.hash.search('id_token') != -1) {
-    isUsingTokenAuth = true
-  }
-  else if (document.location.search && document.location.search.search('code') != -1) {
-    isUsingTokenAuth = false
-  }
-  else {
-    document.body.innerHTML = '<h2 class="w3-center">Login Required</h2><p  class="w3-center">If not redirected, please click <a href="' +
-                              cognitoURL + document.location.href.split("?")[0].replace("index.html", "") + '">here</a> to go to the login page</p>'
-    //window.location.href = cognitoURL + document.location.href.split("?")[0].replace("index.html", "");
-  }
-  </script>
 </body>
 </html>
