@@ -47,3 +47,7 @@ Horses DB schema
 Remove data
 
 Admin page
+
+## Installing Lambda packages
+(Linux (inc WSL and Docker container) only)
+python3 -m pip install --system -r requirements.txt -t ./

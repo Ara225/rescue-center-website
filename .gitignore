@@ -10,3 +10,4 @@ __pycache__
 cdk.out
 .vscode
 config.js
+simplejson*

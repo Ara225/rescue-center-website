@@ -3,11 +3,11 @@ import boto3
 import os
 import random
 import string
-from datetime import datetime
+from datetime import datetime, timedelta
 from decimal import Decimal
 def lambda_handler(event, context):
     """
-    Add a rehoming application. See README.md for more
+    Add a query. See README.md for more
 
     Parameters
     ----------
@@ -36,31 +36,18 @@ def lambda_handler(event, context):
         dynamodb = boto3.resource('dynamodb')
         table = dynamodb.Table(os.environ["TABLE_NAME"])
 
-    # Create unique ID for the rehomingApplication
+    # Create unique ID for the query
     randomString = ''.join([random.choice(string.ascii_letters 
             + string.digits) for n in range(32)]) 
     try:
-        rehomingApplication = {
+        expiresIn = (datetime.now() + timedelta(days=30)).timestamp()
+        query = {
             "FullName": body["FullName"],
             "EmailAddress": body["EmailAddress"],
-            "PrimaryPhoneNumber": body["PrimaryPhoneNumber"],
-            "SecondaryPhoneNumber": body["SecondaryPhoneNumber"],
-            "HomeAddress": body["HomeAddress"],
-            "AgeRange": body["AgeRange"],
-            "HeightRange": body["HeightRange"],
-            "OtherHorseDetails": body["OtherHorseDetails"],
-            "HorseAddress": body["HorseAddress"],
-            "HorseAddressType": body["HorseAddressType"],
-            "FarrierDetails": body["FarrierDetails"],
-            "VetDetails": body["VetDetails"],
-            "experience": body["experience"],
-            "notes": body["notes"],
-            "HorseType": body["HorseType"],
-            "HorseUse": body["HorseUse"],
+            "Message": body["Message"],
             "id": body["FullName"] + ":" + randomString,
             "date": Decimal(datetime.now().timestamp()),
-            "accepted": "N/A",
-            "internalNotes": ""
+            "expires": expiresIn
         }
     except KeyError as e:
         print(event)
@@ -94,8 +81,9 @@ def lambda_handler(event, context):
         }
     try:
         response = table.put_item(
-            Item=rehomingApplication
+            Item=query
         )
+        print(response)
     except Exception as e:
         print(event)
         print(e)
@@ -120,6 +108,6 @@ def lambda_handler(event, context):
         "statusCode": 200,
         "body": json.dumps({
             "success": True,
-            "rehomingApplicationId": rehomingApplication["id"]
+            "queryId": query["id"]
         }),
     }
