@@ -34,7 +34,7 @@ class InfrastructureStack(core.Stack):
             billing_mode=aws_dynamodb.BillingMode.PROVISIONED,
             time_to_live_attribute="expires"
         )
-        '''
+
         horsesTable = aws_dynamodb.Table(
             self, "horsesTable",
             partition_key=aws_dynamodb.Attribute(
@@ -44,7 +44,7 @@ class InfrastructureStack(core.Stack):
             read_capacity=2,
             write_capacity=2,
             billing_mode=aws_dynamodb.BillingMode.PROVISIONED
-        )'''
+        )
 
         # ******* Lambdas and API gateway
         # Create simple, publically available API gateway resource. The CORS stuff is only for preflight requests
@@ -73,7 +73,7 @@ class InfrastructureStack(core.Stack):
         # ******* Public API
         # Create URL paths
         rehomers_resource = rescue_centre_api.root.add_resource('rehomers')
-        #horses_resource = rescue_centre_api.root.add_resource('horses')
+        horses_resource = rescue_centre_api.root.add_resource('horses')
         queries_resource = rescue_centre_api.root.add_resource('queries')
 
         rehomers_lambda_function = aws_lambda.Function(self, "rehomerApplicationLambda",
@@ -83,12 +83,12 @@ class InfrastructureStack(core.Stack):
                                                            "lambdas/rehomerApplicationLambda"),
                                                        )
 
-        '''horses_lambda_function = aws_lambda.Function(self, "getHorsesLambda",
+        horses_lambda_function = aws_lambda.Function(self, "getHorsesLambda",
                                                      handler='app.lambda_handler',
                                                      runtime=aws_lambda.Runtime.PYTHON_3_8,
                                                      code=aws_lambda.Code.from_asset(
                                                          "lambdas/getHorsesLambda"),
-                                                     )'''
+                                                     )
 
         queries_lambda_function = aws_lambda.Function(self, "submitQueryLambda",
                                                       handler='app.lambda_handler',
@@ -100,9 +100,9 @@ class InfrastructureStack(core.Stack):
         rehomers_lambda_integration = aws_apigateway.LambdaIntegration(
             rehomers_lambda_function, proxy=True)
         rehomers_resource.add_method('POST', rehomers_lambda_integration)
-        #horses_lambda_integration = aws_apigateway.LambdaIntegration(
-        #    horses_lambda_function, proxy=True)
-        #horses_resource.add_method('GET', horses_lambda_integration)
+        horses_lambda_integration = aws_apigateway.LambdaIntegration(
+            horses_lambda_function, proxy=True)
+        horses_resource.add_method('GET', horses_lambda_integration)
         queries_lambda_integration = aws_apigateway.LambdaIntegration(
             queries_lambda_function, proxy=True)
         queries_resource.add_method('POST', queries_lambda_integration)
@@ -110,14 +110,14 @@ class InfrastructureStack(core.Stack):
         # ******* environment variables
         rehomers_lambda_function.add_environment(
             "TABLE_NAME", rehomersTable.table_name)
-        #horses_lambda_function.add_environment(
-        #    "TABLE_NAME", horsesTable.table_name)
+        horses_lambda_function.add_environment(
+            "TABLE_NAME", horsesTable.table_name)
         queries_lambda_function.add_environment(
             "TABLE_NAME", queriesTable.table_name)
 
         # ******* function permissions
         rehomersTable.grant_write_data(rehomers_lambda_function)
-        #horsesTable.grant_read_data(horses_lambda_function)
+        horsesTable.grant_read_data(horses_lambda_function)
         queriesTable.grant_write_data(queries_lambda_function)
         '''
         get_rehomers_lambda_function = aws_lambda.Function(self, "getRehomersLambda",
@@ -181,6 +181,8 @@ class InfrastructureStack(core.Stack):
                                                                 )
                                                                 ]
                                                                 )
+        # Don't want to deploy frontend everytime we tweak a lambda while we're developing
+        #TODO REMOVE THIS BEFORE PROD
         if not environ.get("lambdaOnly"):
             # ******* Deploy to bucket
             deployment = aws_s3_deployment.BucketDeployment(self, "deployStaticWebsite",
