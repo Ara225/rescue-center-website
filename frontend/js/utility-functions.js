@@ -49,57 +49,88 @@ function formToJSON(form) {
     }
     return data;
 }
-function onSubmit(token) {
+function onRehomerFormSubmit(token) {
     document.getElementById("submit").innerHTML = 'Submitting <i class="fa fa-spinner fa-spin"></i>'
-    var horseTypeCheckBoxGroup = document.getElementsByClassName('RehomerFormFieldGroup')
-    var oneChecked = false
-    for (i in horseTypeCheckBoxGroup) {
-        if (horseTypeCheckBoxGroup[i].checked) {
-            oneChecked = true
+    try {
+        var horseTypeCheckBoxGroup = document.getElementsByClassName('FormFieldGroup')
+        var oneChecked = false
+        for (i in horseTypeCheckBoxGroup) {
+            if (horseTypeCheckBoxGroup[i].checked) {
+                oneChecked = true
+            }
         }
-    }
-    if (!oneChecked) {
-        document.getElementById("submit").innerText = 'Submit'
-        alert("Please tick a box in the \"I'm interested in a\" section")
-        return false;
-    }
-    var form = formToJSON(document.getElementsByClassName('RehomerFormField'));
-    form.HorseType = []
-    var HorseType = document.getElementsByClassName('HorseType')
-    for (i in HorseType) {
-        if (HorseType[i].checked) {
-            form.HorseType.push(HorseType[i].id)
+        if (!oneChecked) {
+            document.getElementById("submit").innerText = 'Submit'
+            alert("Please tick a box in the \"I'm interested in a\" section")
+            return false;
         }
-    }
-    form.HorseUse = []
-    var HorseUse = document.getElementsByClassName('HorseUse')
-    for (i in HorseUse) {
-        if (HorseUse[i].checked) {
-            form.HorseUse.push(HorseUse[i].id)
+        var form = formToJSON(document.getElementsByClassName('FormField'));
+        form.HorseType = []
+        var HorseType = document.getElementsByClassName('HorseType')
+        for (i in HorseType) {
+            if (HorseType[i].checked) {
+                form.HorseType.push(HorseType[i].id)
+            }
         }
+        form.HorseUse = []
+        var HorseUse = document.getElementsByClassName('HorseUse')
+        for (i in HorseUse) {
+            if (HorseUse[i].checked) {
+                form.HorseUse.push(HorseUse[i].id)
+            }
+        }
+        alert(JSON.stringify(form))
+    
+        fetch(APIEndpoint + "rehomers", {
+                  method: "POST", 
+                  body: JSON.stringify(form)
+                }).then(res => { console.log(res);
+                  res.json().then(jsonResult => {console.log(jsonResult);displayResult(jsonResult)})
+                });
     }
-    alert(JSON.stringify(form))
-
-    fetch(APIEndpoint + "rehomers", {
-              method: "POST", 
-              body: JSON.stringify(form)
-            }).then(res => { console.log(res);
-              res.json().then(jsonResult => {console.log(jsonResult);displayResult(jsonResult)})
-            });
+    catch(e) {
+        displayError(e.message)
+    }
 }
+
+function onContactFormSubmit(token) {
+    try {
+        document.getElementById("submit").innerHTML = 'Submitting <i class="fa fa-spinner fa-spin"></i>'
+        var form = formToJSON(document.getElementsByClassName('FormField'));
+        alert(JSON.stringify(form))
+        fetch(APIEndpoint + "queries", {
+                  method: "POST", 
+                  body: JSON.stringify(form)
+                }).then(res => { 
+                  res.json().then(jsonResult => {displayResult(jsonResult)}).catch(e => displayError(e.message))
+                }).catch(e => displayError(e.message));
+    }
+    catch(e) {
+        displayError(e.message)
+    }
+}
+
 function displayResult(result) {
-    window.scrollTo(0, 0)
-    document.getElementById("RehomerForm").reset()
     if (result.success) {
         document.getElementById("alertDiv").style.borderStyle = "solid"
         document.getElementById("alertDiv").innerHTML = "<span class='w3-large'>Form Submitted Successfully </span><br>Your reference is: " +
             result.rehomingApplicationId
+        document.getElementById("submit").innerText = 'Submit'
+        window.scrollTo(0, 0)
+        document.getElementById("Form").reset()
     }
     else if (!result.success) {
-        document.getElementById("alertDiv").style.borderColor = "red"
-        document.getElementById("alertDiv").style.borderStyle = "solid"
-        document.getElementById("alertDiv").innerHTML = "<span class='w3-large'>Form Failed to Submit</span><br>Submission failed due to this error:" +
-            result.error + " <br>Feel free to try again or contact us with the error"
+        displayError(result.error)
     }
+
+}
+
+function displayError(e) {
+    console.log(e)
+    window.scrollTo(0, 0)
     document.getElementById("submit").innerText = 'Submit'
+    document.getElementById("alertDiv").style.borderColor = "red"
+    document.getElementById("alertDiv").style.borderStyle = "solid"
+    document.getElementById("alertDiv").innerHTML = "<span class='w3-large'>Form Failed to Submit</span><br>Submission failed due to this error: " +
+    e + " <br>Feel free to try again or contact us with the error"
 }
