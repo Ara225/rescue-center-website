@@ -20,10 +20,9 @@ class InfrastructureStack(core.Stack):
             ),
             read_capacity=2,
             write_capacity=2,
-            billing_mode=aws_dynamodb.BillingMode.PROVISIONED,
-            time_to_live_attribute="expires"
+            billing_mode=aws_dynamodb.BillingMode.PROVISIONED
         )
-
+        '''
         queriesTable = aws_dynamodb.Table(
             self, "queriesTable",
             partition_key=aws_dynamodb.Attribute(
@@ -45,7 +44,7 @@ class InfrastructureStack(core.Stack):
             read_capacity=2,
             write_capacity=2,
             billing_mode=aws_dynamodb.BillingMode.PROVISIONED
-        )
+        )'''
 
         # ******* Lambdas and API gateway
         # Create simple, publically available API gateway resource. The CORS stuff is only for preflight requests
@@ -54,7 +53,7 @@ class InfrastructureStack(core.Stack):
                                                        "allow_origins": ["*"],
                                                        "allow_methods": ["GET", "POST", "OPTIONS"]
                                                    })
-        aws_apigateway.CfnAuthorizer(self, "adminSectionAuth", rest_api_id=rescue_centre_api.rest_api_id(),
+        '''aws_apigateway.CfnAuthorizer(self, "adminSectionAuth", rest_api_id=rescue_centre_api.rest_api_id(),
                                      type='COGNITO_USER_POOLS', identity_source='method.request.header.Authorization',
                                      provider_arns=[
                                          'arn:aws:cognito-idp:eu-west-2:040684591284:userpool/eu-west-2_3T4vtfKJE']
@@ -65,81 +64,81 @@ class InfrastructureStack(core.Stack):
                                                    handler='app.lambda_handler',
                                                    runtime=aws_lambda.Runtime.PYTHON_3_8,
                                                    code=aws_lambda.Code.from_asset(
-                                                       "../lambdas/authLambda"),
+                                                       "lambdas/authLambda"),
                                                    )
         auth_lambda_integration = aws_apigateway.LambdaIntegration(
             auth_lambda_function, proxy=True)
-        auth_resource.add_method('GET', auth_lambda_integration)
+        auth_resource.add_method('GET', auth_lambda_integration)'''
 
         # ******* Public API
         # Create URL paths
         rehomers_resource = rescue_centre_api.root.add_resource('rehomers')
-        horses_resource = rescue_centre_api.root.add_resource('horses')
-        queries_resource = rescue_centre_api.root.add_resource('queries')
+        #horses_resource = rescue_centre_api.root.add_resource('horses')
+        #queries_resource = rescue_centre_api.root.add_resource('queries')
 
         rehomers_lambda_function = aws_lambda.Function(self, "rehomerApplicationLambda",
                                                        handler='app.lambda_handler',
                                                        runtime=aws_lambda.Runtime.PYTHON_3_8,
                                                        code=aws_lambda.Code.from_asset(
-                                                           "../lambdas/rehomerApplicationLambda"),
+                                                           "lambdas/rehomerApplicationLambda"),
                                                        )
 
-        horses_lambda_function = aws_lambda.Function(self, "getHorsesLambda",
+        '''horses_lambda_function = aws_lambda.Function(self, "getHorsesLambda",
                                                      handler='app.lambda_handler',
                                                      runtime=aws_lambda.Runtime.PYTHON_3_8,
                                                      code=aws_lambda.Code.from_asset(
-                                                         "../lambdas/getHorsesLambda"),
+                                                         "lambdas/getHorsesLambda"),
                                                      )
 
         queries_lambda_function = aws_lambda.Function(self, "submitQueryLambda",
                                                       handler='app.lambda_handler',
                                                       runtime=aws_lambda.Runtime.PYTHON_3_8,
                                                       code=aws_lambda.Code.from_asset(
-                                                          "../lambdas/submitQueryLambda"),
-                                                      )
+                                                          "lambdas/submitQueryLambda"),
+                                                      )'''
         # Make intergrations
         rehomers_lambda_integration = aws_apigateway.LambdaIntegration(
             rehomers_lambda_function, proxy=True)
         rehomers_resource.add_method('POST', rehomers_lambda_integration)
-        horses_lambda_integration = aws_apigateway.LambdaIntegration(
-            horses_lambda_function, proxy=True)
-        horses_resource.add_method('GET', horses_lambda_integration)
-        queries_lambda_integration = aws_apigateway.LambdaIntegration(
-            queries_lambda_function, proxy=True)
-        queries_resource.add_method('POST', queries_lambda_integration)
+        #horses_lambda_integration = aws_apigateway.LambdaIntegration(
+        #    horses_lambda_function, proxy=True)
+        #horses_resource.add_method('GET', horses_lambda_integration)
+        #queries_lambda_integration = aws_apigateway.LambdaIntegration(
+        #    queries_lambda_function, proxy=True)
+        #queries_resource.add_method('POST', queries_lambda_integration)
 
         # ******* environment variables
         rehomers_lambda_function.add_environment(
             "TABLE_NAME", rehomersTable.table_name)
-        horses_lambda_function.add_environment(
-            "TABLE_NAME", horsesTable.table_name)
-        queries_lambda_function.add_environment(
-            "TABLE_NAME", queriesTable.table_name)
+        #horses_lambda_function.add_environment(
+        #    "TABLE_NAME", horsesTable.table_name)
+        #queries_lambda_function.add_environment(
+        #    "TABLE_NAME", queriesTable.table_name)
 
         # ******* function permissions
         rehomersTable.grant_write_data(rehomers_lambda_function)
-        horsesTable.grant_read_data(horses_lambda_function)
-        queriesTable.grant_write_data(queries_lambda_function)
-
+        #horsesTable.grant_read_data(horses_lambda_function)
+        #queriesTable.grant_write_data(queries_lambda_function)
+        '''
         get_rehomers_lambda_function = aws_lambda.Function(self, "getRehomersLambda",
                                                            handler='app.lambda_handler',
                                                            runtime=aws_lambda.Runtime.PYTHON_3_8,
                                                            code=aws_lambda.Code.from_asset(
-                                                               "../lambdas/getRehomersLambda"),
+                                                               "lambdas/getRehomersLambda"),
                                                            )
 
         edit_horses_lambda_function = aws_lambda.Function(self, "editHorsesLambda",
                                                           handler='app.lambda_handler',
                                                           runtime=aws_lambda.Runtime.PYTHON_3_8,
                                                           code=aws_lambda.Code.from_asset(
-                                                              "../lambdas/editHorsesLambda"),
+                                                              "lambdas/editHorsesLambda"),
                                                           )
 
         get_queries_lambda_function = aws_lambda.Function(self, "getQueriesLambda",
                                                           handler='app.lambda_handler',
                                                           runtime=aws_lambda.Runtime.PYTHON_3_8,
                                                           code=aws_lambda.Code.from_asset(
-                                                              "../lambdas/getQueriesLambda"),
+                                                              "lambdas/getQueriesLambda"),
                                                           )
         # Make intergrations
         get_rehomers_lambda_integration = aws_apigateway.LambdaIntegration(
@@ -163,8 +162,16 @@ class InfrastructureStack(core.Stack):
         # ******* function permissions
         rehomersTable.grant_read_data(get_rehomers_lambda_function)
         horsesTable.grant_write_data(edit_horses_lambda_function)
-        queriesTable.grant_read_data(get_queries_lambda_function)
-
+        queriesTable.grant_read_data(get_queries_lambda_function)'''
+        
+        with open("frontend/js/config.js") as f:
+            content = f.readlines()
+        with open("frontend/js/config.js", "w") as f:
+            for i in content:
+                if "APIEndpoint" in i:
+                    f.write('var APIEndpoint = "' + rescue_centre_api.url + "'")
+                else:
+                    f.write(i)
         # ******* S3 bucket
         websiteBucket = aws_s3.Bucket(self, "websiteBucket",
                                       public_read_access=True,
@@ -186,7 +193,7 @@ class InfrastructureStack(core.Stack):
         # ******* Deploy to bucket
         deployment = aws_s3_deployment.BucketDeployment(self, "deployStaticWebsite",
                                                         sources=[aws_s3_deployment.Source.asset(
-                                                            "../frontend")],
+                                                            "frontend")],
                                                         destination_bucket=websiteBucket,
                                                         distribution=distribution
                                                         )
