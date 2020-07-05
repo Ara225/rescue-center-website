@@ -167,7 +167,13 @@ class InfrastructureStack(core.Stack):
         # ******* S3 bucket
         websiteBucket = aws_s3.Bucket(self, "websiteBucket",
                                       public_read_access=True,
-                                      website_index_document="index.html"
+                                      website_index_document="index.html",
+                                      cors=[{
+                                          "allowedMethods" : [aws_s3.HttpMethods.GET, aws_s3.HttpMethods.PUT, aws_s3.HttpMethods.HEAD, aws_s3.HttpMethods.POST, aws_s3.HttpMethods.DELETE ],
+                                          "allowedOrigins" : [ "*"],
+                                          "allowedHeader": ["*"],
+                                          "exposeHeader": ["ETag"]
+                                        }]
                                       )
 
         # ******* CloudFront distribution
