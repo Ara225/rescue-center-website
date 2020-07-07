@@ -53,23 +53,7 @@ class InfrastructureStack(core.Stack):
                                                        "allow_origins": ["*"],
                                                        "allow_methods": ["GET", "POST", "OPTIONS"]
                                                    })
-        '''aws_apigateway.CfnAuthorizer(self, "adminSectionAuth", rest_api_id=rescue_centre_api.rest_api_id(),
-                                     type='COGNITO_USER_POOLS', identity_source='method.request.header.Authorization',
-                                     provider_arns=[
-                                         'arn:aws:cognito-idp:eu-west-2:040684591284:userpool/eu-west-2_3T4vtfKJE']
-                                     )
-
-        auth_resource = rescue_centre_api.root.add_resource('auth')
-        auth_lambda_function = aws_lambda.Function(self, "authLambda",
-                                                   handler='app.lambda_handler',
-                                                   runtime=aws_lambda.Runtime.PYTHON_3_8,
-                                                   code=aws_lambda.Code.from_asset(
-                                                       "lambdas/authLambda"),
-                                                   )
-        auth_lambda_integration = aws_apigateway.LambdaIntegration(
-            auth_lambda_function, proxy=True)
-        auth_resource.add_method('GET', auth_lambda_integration)'''
-
+                                                   
         # ******* Public API
         # Create URL paths
         rehomers_resource = rescue_centre_api.root.add_resource('rehomers')
@@ -119,51 +103,7 @@ class InfrastructureStack(core.Stack):
         rehomersTable.grant_write_data(rehomers_lambda_function)
         horsesTable.grant_read_data(horses_lambda_function)
         queriesTable.grant_write_data(queries_lambda_function)
-        '''
-        get_rehomers_lambda_function = aws_lambda.Function(self, "getRehomersLambda",
-                                                           handler='app.lambda_handler',
-                                                           runtime=aws_lambda.Runtime.PYTHON_3_8,
-                                                           code=aws_lambda.Code.from_asset(
-                                                               "lambdas/getRehomersLambda"),
-                                                           )
 
-        edit_horses_lambda_function = aws_lambda.Function(self, "editHorsesLambda",
-                                                          handler='app.lambda_handler',
-                                                          runtime=aws_lambda.Runtime.PYTHON_3_8,
-                                                          code=aws_lambda.Code.from_asset(
-                                                              "lambdas/editHorsesLambda"),
-                                                          )
-
-        get_queries_lambda_function = aws_lambda.Function(self, "getQueriesLambda",
-                                                          handler='app.lambda_handler',
-                                                          runtime=aws_lambda.Runtime.PYTHON_3_8,
-                                                          code=aws_lambda.Code.from_asset(
-                                                              "lambdas/getQueriesLambda"),
-                                                          )
-        # Make intergrations
-        get_rehomers_lambda_integration = aws_apigateway.LambdaIntegration(
-            get_rehomers_lambda_function, proxy=True)
-        rehomers_resource.add_method('GET', get_rehomers_lambda_integration)
-        edit_horses_lambda_integration = aws_apigateway.LambdaIntegration(
-            edit_horses_lambda_function, proxy=True)
-        horses_resource.add_method('POST', edit_horses_lambda_integration)
-        get_queries_lambda_integration = aws_apigateway.LambdaIntegration(
-            get_queries_lambda_function, proxy=True)
-        queries_resource.add_method('GET', get_queries_lambda_integration)
-
-        # ******* environment variables
-        get_rehomers_lambda_function.add_environment(
-            "TABLE_NAME", rehomersTable.table_name)
-        edit_horses_lambda_function.add_environment(
-            "TABLE_NAME", horsesTable.table_name)
-        get_queries_lambda_function.add_environment(
-            "TABLE_NAME", queriesTable.table_name)
-
-        # ******* function permissions
-        rehomersTable.grant_read_data(get_rehomers_lambda_function)
-        horsesTable.grant_write_data(edit_horses_lambda_function)
-        queriesTable.grant_read_data(get_queries_lambda_function)'''
-        
         # ******* S3 bucket
         websiteBucket = aws_s3.Bucket(self, "websiteBucket",
                                       public_read_access=True,
@@ -189,11 +129,11 @@ class InfrastructureStack(core.Stack):
                                                                 )
         # Don't want to deploy frontend everytime we tweak a lambda while we're developing
         #TODO REMOVE THIS BEFORE PROD
-        if not environ.get("lambdaOnly"):
-            # ******* Deploy to bucket
-            deployment = aws_s3_deployment.BucketDeployment(self, "deployStaticWebsite",
-                                                            sources=[aws_s3_deployment.Source.asset(
-                                                                "../frontend")],
-                                                            destination_bucket=websiteBucket,
-                                                            distribution=distribution
-                                                            )
+        #if not environ.get("lambdaOnly"):
+        # ******* Deploy to bucket
+        deployment = aws_s3_deployment.BucketDeployment(self, "deployStaticWebsite",
+                                                        sources=[aws_s3_deployment.Source.asset(
+                                                            "../frontend")],
+                                                        destination_bucket=websiteBucket,
+                                                        distribution=distribution
+                                                        )

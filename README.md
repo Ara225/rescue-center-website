@@ -4,26 +4,27 @@ Submit >> API call >> Details entered into DB >> email sent to us >>
 Customer receives thank you and ref no on screen 
 
 Checkboxes
-{
-    "FullName": "d",
-    "EmailAddress": "d",
-    "PrimaryPhoneNumber": "d",
-    "SecondaryPhoneNumber": "",
-    "HomeAddress": "d",
-    "AgeRange": "d",
-    "HeightRange": "d",
-    "OtherHorseDetails": "",
-    "HorseAddress": "d",
-    "HorseAddressType": "Owned",
-    "FarrierDetails": "d",
-    "VetDetails": "d",
-    "experience": "d",
-    "notes": "",
-    "HorseType": [],
-    "HorseUse": [
-        "RidingHorse"
-    ]
-}
+        rehomingApplication = {
+            "FullName": body["FullName"],
+            "EmailAddress": body["EmailAddress"],
+            "PrimaryPhoneNumber": body["PrimaryPhoneNumber"],
+            "SecondaryPhoneNumber": body["SecondaryPhoneNumber"],
+            "HomeAddress": body["HomeAddress"],
+            "AgeRange": body["AgeRange"],
+            "HeightRange": body["HeightRange"],
+            "OtherHorseDetails": body["OtherHorseDetails"],
+            "HorseAddress": body["HorseAddress"],
+            "HorseAddressType": body["HorseAddressType"],
+            "FarrierDetails": body["FarrierDetails"],
+            "VetDetails": body["VetDetails"],
+            "experience": body["experience"],
+            "notes": body["notes"],
+            "HorsePreferences": body["HorsePreferences"],
+            "id": body["FullName"] + ":" + randomString,
+            "date": Decimal(datetime.now().timestamp()),
+            "accepted": "N/A",
+            "internalNotes": ""
+        }
 * id - Name colon then random ID - STRING NOT NULL
 * date - date query submitted
 * accepted - Have we accepted them - bool/null
@@ -49,8 +50,6 @@ Horses DB schema
 * description
 * uses
 * rehomingFee
-* images
-* videos
 
 Remove data
 

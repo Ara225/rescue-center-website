@@ -65,18 +65,11 @@ function onRehomerFormSubmit(token) {
             return false;
         }
         var form = formToJSON(document.getElementsByClassName('FormField'));
-        form.HorseType = []
-        var HorseType = document.getElementsByClassName('HorseType')
-        for (i in HorseType) {
-            if (HorseType[i].checked) {
-                form.HorseType.push(HorseType[i].id)
-            }
-        }
-        form.HorseUse = []
-        var HorseUse = document.getElementsByClassName('HorseUse')
-        for (i in HorseUse) {
-            if (HorseUse[i].checked) {
-                form.HorseUse.push(HorseUse[i].id)
+        form.HorsePreferences = []
+        var HorsePreferences = document.getElementsByClassName('HorsePreferences')
+        for (i in HorsePreferences) {
+            if (HorsePreferences[i].checked) {
+                form.HorsePreferences.push(HorsePreferences[i].id)
             }
         }
         fetch(APIEndpoint + "rehomers", {
