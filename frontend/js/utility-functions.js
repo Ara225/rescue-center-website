@@ -1,4 +1,5 @@
 
+var authType = null
 // Modal Image Gallery
 function onClick(element) {
     document.getElementById("img01").src = element.src;
@@ -102,7 +103,8 @@ function onContactFormSubmit(token) {
 
 function displayResult(result) {
     if (result.success) {
-        displaySuccess(result.id)
+        displaySuccess("  <p>Thanks for your query. Your reference is: " + result.id + "</p>" +
+                       "  <p>We'll try to get back to you within seven working days.</p>")
     }
     else if (!result.success) {
         displayError(result.error)
@@ -116,8 +118,7 @@ function displaySuccess(text) {
                                                     "  <h2>Form Submitted Successfully</h2>" +
                                                     "</header>" +
                                                     "<div class=\"w3-container\">" +
-                                                    "  <p>Thanks for your query. Your reference is: " + text + "</p>" +
-                                                    "  <p>We'll try to get back to you within seven working days.</p>" +
+                                                    text +
                                                     "</div>" 
     document.getElementById("submit").innerText = 'Submit'
     document.getElementById('alertBox').style.display='block'

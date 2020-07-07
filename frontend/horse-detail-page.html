@@ -2,18 +2,22 @@
 <meta charset="UTF-8">
 
 <html>
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
-<link rel="stylesheet" href="css/index.css">
-<script src="/js/utility-functions.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+  <link rel="stylesheet" href="css/index.css">
+  <script src="/js/utility-functions.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.709.0.min.js"></script>
+  <script src="/js/config.js"></script>
 
 </head>
+
 <body>
-    <!-- Navbar (sit on top) -->
-<div class="w3-top">
+  <!-- Navbar (sit on top) -->
+  <div class="w3-top">
     <div class="w3-bar w3-white w3-card" id="myNavbar">
       <a href="/" class="w3-bar-item w3-button w3-wide">Leigh Rescue Centre</a>
       <!-- Right-sided navbar links -->
@@ -23,61 +27,126 @@
         <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
       </div>
       <!-- Hide right-floated links on small screens and replace them with a menu icon -->
-  
-      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
+
+      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+        onclick="w3_open()">
         <i class="fa fa-bars"></i>
       </a>
     </div>
   </div>
-  
+
   <!-- Sidebar on small screens when clicking the menu icon -->
-  <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
+  <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large"
+    style="display:none" id="mySidebar">
     <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
     <a href="/" class="w3-bar-item w3-button"><i class="fa fa-home"></i>HOME</a>
     <a href="rehome.html" class="w3-bar-item w3-button">REHOME</a>
     <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i>VOLUNTEER</a>
     <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
   </nav>
- <br>
- <br>
- <br>
-<div class="w3-content w3-margin-bottom w3-margin-top" style="position:relative">
+  <br>
+  <br>
+  <br>
+  <div class="w3-content w3-margin-bottom w3-margin-top" style="position:relative">
+    <span id="media">
+    
+    </span>
+    <a class="w3-btn-floating w3-button w3-hover-dark-grey" style="position:absolute;top:45%;left:0;"
+      onclick="plusDivs(-1)">❮</a>
+    <a class="w3-btn-floating w3-button  w3-hover-dark-grey" style="position:absolute;top:45%;right:0;"
+      onclick="plusDivs(+1)">❯</a>
+    <div class="w3-center w3-display-bottommiddle" id="dots" style="width:100%">
 
-<img class="mySlides w3-animate-opacity" src="/media/horse-197199_1920.jpg" style="width:100%">
-<img class="mySlides w3-animate-opacity" src="/media/horse-905534.jpg" style="width:100%">
-
-<video class="mySlides w3-animate-opacity" controls style="width: 100%;">
-    <source src="/media/Pexels Videos 2122952.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-  </video> 
-<a class="w3-btn-floating w3-button w3-hover-dark-grey" style="position:absolute;top:45%;left:0;" onclick="plusDivs(-1)">❮</a>
-<a class="w3-btn-floating w3-button  w3-hover-dark-grey" style="position:absolute;top:45%;right:0;" onclick="plusDivs(+1)">❯</a>
-<div class="w3-center w3-display-bottommiddle" style="width:100%">
-        <span class="dot" onclick="moveToDiv(1)"></span> 
-        <span class="dot" onclick="moveToDiv(2)"></span> 
-        <span class="dot" onclick="moveToDiv(3)"></span> 
-  </div>
-</div>
-<div class="w3-content w3-margin-bottom w3-margin-top" style="position:relative">
-    <span class="w3-xxlarge w3-hide-small ">Horse Name</span><br>
-    Age: 200  |  Breed: Awful  | Gender: Male | Suitable as a: blah | Rehoming Fee: 777
-    
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    
-    <p>
-        <a href="rehoming-form.html" class="w3-button w3-light-green w3-padding-large w3-medium">Apply to Rehome</a>
-        <a href="rehome.html" class="w3-button w3-grey w3-padding-large w3-medium">View Other Horses</a>
-    </p>
-    
-</div>
     </div>
+  </div>
+  <div class="w3-content w3-margin-bottom w3-margin-top" style="position:relative">
+    <span class="w3-xxlarge" id="name"></span><br>
+    <span id="details"></span>
 
-   <!-- Footer -->
-<footer class="w3-center w3-black w3-padding-64">
-    <p>Copyright Leigh Rescue Centre 2020  |  Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+    <span id="description">
+
+    </span>
+    <p>
+      <a href="/rehoming-form.html" class="w3-button w3-light-green w3-padding-large w3-medium">Apply to Rehome</a>
+      &nbsp;
+      <a href="/rehome.html" class="w3-button w3-grey w3-padding-large w3-medium">View Other Horses</a>
+    </p>
+
+  </div>
+  </div>
+  <script>
+    console.log("Here")
+    function getCreds() {
+      if (AWS.config.credentials.expired) {
+        console.log("Unsuccessful auth")
+        // If we come here from /admin, auth doesn't work properly unless the page is reloaded, so this is a work around.
+        // Assume the AWS stuff is being cached
+        window.location.reload(true)
+      }
+      else {
+        console.log("Successful auth")
+        readItem(horsesTableName, document.location.search.split("id=")[1])
+      }
+    }
+    AWS.config.region = 'eu-west-2';
+
+    // Configure the credentials provider to use your identity pool
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: 'eu-west-2:62a15244-4f5a-4f12-b9e6-cb87ce7b5806'
+    });
+    AWS.config.credentials.get(getCreds);
+    var docClient = new AWS.DynamoDB.DocumentClient();
+
+    function readItem(tableName, id) {
+      var params = {
+        TableName: tableName,
+        Key: {
+          "id": decodeURIComponent(id),
+        }
+      };
+      docClient.get(params, function (err, data) {
+        if (err) {
+          console.log("Unable to read item: " + JSON.stringify(err, undefined, 2))
+        }
+        else if (Object.keys(data).length == 0) {
+          alert("Invalid ID. Please go back to the rehoming page and try again ")
+        } 
+        else {
+          console.log("GetItem succeeded: ")
+          console.log(data)
+          renderItem(data)
+        }
+      });
+    }
+    async function renderItem(data) {
+      document.getElementById("name").innerText = data.Item.Name
+      for (image in data.Item.images) {
+        document.getElementById("media").innerHTML += '<img class="mySlides w3-animate-opacity"src="http://backend-websitebucket74b0f9e5-gayttyln7n1k.s3-website.eu-west-2.amazonaws.com' + encodeURI(data.Item.images[image]) + '" style="width:100%">'
+      }
+      showDivs(1);
+      for (video in data.Item.videos) {
+        document.getElementById("media").innerHTML += '<video class="mySlides w3-animate-opacity" controls style="width: 100%;">' +
+                                                      '    <source src="http://backend-websitebucket74b0f9e5-gayttyln7n1k.s3-website.eu-west-2.amazonaws.com' + encodeURI(data.Item.videos[video]) + '">' +
+                                                      '    Your browser does not support the video tag.' +
+                                                      '</video>' 
+
+      }
+
+      document.getElementById("details").innerText = "Age: " + data.Item.Age + " | Breed: " + data.Item.Breed + " | "  + data.Item.Sex + " | Height: " +  
+      data.Item.Height + " | Suitable as a: " + data.Item.SuitableFor + " | Rehoming Fee: " + data.Item.RehomingFee 
+      for (var i = 1; i < (data.Item.videos.length + data.Item.images.length + 1); i++) {
+        document.getElementById("dots").innerHTML += '<span class="dot" onclick="moveToDiv(' + i.toString() + ')"></span>'
+      }
+      document.getElementById("description").innerHTML = "<br><br>" + data.Item.Description.replace("\n\n", "<br>") + "<br><br>"
+    }
+  </script>
+  <!-- Footer -->
+  <footer class="w3-center w3-black w3-padding-64">
+    <p>Copyright Leigh Rescue Centre 2020 | Powered by <a href="https://www.w3schools.com/w3css/default.asp"
+        title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
   </footer>
   <script src="/js/slideshow.js"></script>
 
 </body>
-</html> 
+
+</html>

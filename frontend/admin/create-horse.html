@@ -1,12 +1,11 @@
 <div id="createHorse">
-    <header class="w3-container w3-teal">
-        <span onclick="document.getElementById('alertBox').style.display='none'"
-            class="w3-button w3-display-topright w3-xlarge">&times;</span>
-        <h2>Create Horse</h2>
+    <header class="w3-container w3-center">
+        <div ><span class="w3-xxlarge w3-hide-small w3-border-teal w3-bottombar">Create Horse</span></div>
+        <div ><span class="w3-xlarge w3-border-teal w3-bottombar w3-hide-large w3-hide-medium">Create Horse</span></div>
     </header>
     <div class="w3-container w3-padding-16 w3-theme-l5" id="contact">
         <div class="w3-row">
-            <div class="w3-col m4">
+            <div class="w3-col m3">
                 <h3>Images and Videos</h3>
                 <input id="imageSelect" type="file" accept="image/*|video/*" oninput="handleFileSelect(event)">
                 <h5>Selected Images and Videos</h5>
@@ -14,10 +13,10 @@
 
                 </p>
             </div>
-            <div class="w3-col m8">
+            <div class="w3-col m9">
                 <h3>Horse Details</h3>
                 <form class="w3-container w3-card-4 w3-padding-16 w3-white" id="Form"
-                    onSubmit="onCreateHorseFormSubmit('sdsd');return false;">
+                    onSubmit="onCreateHorseFormSubmit(event);return false;">
                     <div class="w3-section">
                         <label for="Name"><span style="color:red">*</span>Name</label>
                         <input class="w3-input FormField" type="text" id="Name" required>
@@ -72,6 +71,9 @@
                                 Project Horse
                             </option>
                             <option>
+                                Family Horse
+                            </option>
+                            <option>
                                 Other
                             </option>
                         </select>
@@ -79,6 +81,10 @@
                     <div class="w3-section">
                         <label for="Height"><span style="color:red">*</span>Height</label>
                         <input class="w3-input FormField" type="text" id="Height" required>
+                    </div>
+                    <div class="w3-section">
+                        <label for="RehomingFee"><span style="color:red">*</span>Rehoming Fee</label>
+                        <input class="w3-input FormField" type="text" id="RehomingFee" required>
                     </div>
                     <div class="w3-section">
                         <label for="Description"><span style="color:red">*</span>Description</label>

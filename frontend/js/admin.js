@@ -57,7 +57,7 @@ function listFiles() {
     filesDiv.innerHTML = ""
     for (file in filesToUpload) {
         filesDiv.innerHTML += '<button class="w3-button w3-red" onclick="filesToUpload.splice(\'' + file + '\', 1);listFiles();">' +
-            '&times;</button><div class="w3-button w3-light-grey">' + filesToUpload[file].name + "</div><br>"
+            '&times;</button><div class="w3-button w3-light-grey">' + filesToUpload[file].name + "</div><br><br>"
     }
     event.originalTarget.value = null
 }
@@ -135,7 +135,7 @@ async function onCreateHorseFormSubmit(event) {
         }
         return
     }
-    var fileResults = await processFileList()
+    var fileResults = await processFileList(horseName)
     if (fileResults) {
         var uploadedPhotoURLs = fileResults[0]
         var uploadedVideoURLs = fileResults[1]
@@ -146,7 +146,7 @@ async function onCreateHorseFormSubmit(event) {
     }
     try {
         var params = {
-            TableName: tableName,
+            TableName: horsesTableName,
             Item: {
                 'id': { S: document.getElementById("Name").value + ":" + makeid(32) },
                 'Name': { S: document.getElementById("Name").value },
@@ -156,6 +156,7 @@ async function onCreateHorseFormSubmit(event) {
                 'SuitableFor': { S: document.getElementById("SuitableFor").value },
                 'Height': { S: document.getElementById("Height").value },
                 'Description': { S: document.getElementById("Description").value },
+                'RehomingFee': { S: document.getElementById("RehomingFee").value },
                 'images': { L: uploadedPhotoURLs },
                 'videos': { L: uploadedVideoURLs }
             }
@@ -164,6 +165,7 @@ async function onCreateHorseFormSubmit(event) {
         statusField.innerText = "Status: Attempting database insert"
         var tableResult = await insertIntoTable(params)
         statusField.innerText = "Status: Database insert succeeded "
+        displaySuccess("<p>You can view the result <a href='/horse-detail-page.html?id=" + encodeURIComponent(params.id) + "'> here</a>")
 
     }
     catch (e) {
@@ -180,14 +182,14 @@ async function processFileList(prefix) {
         try {
             console.log("Status: Uploading " + filesToUpload[i].name)
             statusField.innerText = "Status: Uploading " + filesToUpload[i].name
-            var upload = await copyFileToS3(prefix, filesToUpload[i].name)
+            var upload = await copyFileToS3(prefix, filesToUpload[i])
             console.log("Status: Upload of " + filesToUpload[i].name + " has completed")
             statusField.innerText = "Status: Upload of " + filesToUpload[i].name + " has completed"
             if (filesToUpload[i].type.search("image") != -1) {
-                uploadedPhotoURLs.push({ S: "media/" + encodeURIComponent(prefix) + "/" + filesToUpload[i].name })
+                uploadedPhotoURLs.push({ S: "/media/" + encodeURIComponent(prefix) + "/" + filesToUpload[i].name })
             }
             else if (filesToUpload[i].type.search("video") != -1) {
-                uploadedVideoURLs.push({ S: "media/" + encodeURIComponent(prefix) + "/" + filesToUpload[i].name })
+                uploadedVideoURLs.push({ S: "/media/" + encodeURIComponent(prefix) + "/" + filesToUpload[i].name })
             }
             //TODO Else branch here 
         }
@@ -230,10 +232,10 @@ function insertIntoTable(params) {
 }
 
 
-function copyFileToS3(horseName, fileName) {
+function copyFileToS3(horseName, file) {
     var horsePhotosKey = encodeURIComponent(horseName) + "/";
 
-    var photoKey = "media/" + horsePhotosKey + fileName;
+    var photoKey = "media/" + horsePhotosKey + file.name;
 
     // Use S3 ManagedUpload class as it supports multipart uploads
     var upload = new AWS.S3.ManagedUpload({
@@ -247,7 +249,8 @@ function copyFileToS3(horseName, fileName) {
 
     return upload.promise();
 }
-function displaySection(sectionName) {
+
+function includeHTML(sectionName) {
     if (document.getElementsByTagName("input").length != 0) {
         if (!confirm("There might be unsaved changes on this page. Click OK to continue or cancel to cancel")) {
             return
