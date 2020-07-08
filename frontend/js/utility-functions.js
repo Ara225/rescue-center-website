@@ -21,11 +21,14 @@ function getCognitoCreds(callback, withAuth) {
         });
     }
     else {
-        if (document.location.hash && document.location.hash.search('id_token') != -1) {
+        if ((document.location.hash && document.location.hash.search('id_token') != -1) || window.sessionStorage.id_token) {
             // Configure the credentials provider to use your identity pool
             AWS.config.credentials = new AWS.CognitoIdentityCredentials({
                 IdentityPoolId: 'eu-west-2:62a15244-4f5a-4f12-b9e6-cb87ce7b5806',
-                Logins: { "cognito-idp.eu-west-2.amazonaws.com/eu-west-2_3T4vtfKJE": document.location.hash.split('id_token=')[1].split('&access_token=')[0] }
+                Logins: { "cognito-idp.eu-west-2.amazonaws.com/eu-west-2_3T4vtfKJE": 
+                document.location.hash ?
+                document.location.hash.split('id_token=')[1].split('&access_token=')[0] :
+                window.sessionStorage.id_token }
             });
         }
         else {
