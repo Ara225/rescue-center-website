@@ -16,46 +16,45 @@
 <body class="w3-light-grey">
     <!-- Navbar (sit on top) -->
     <div class="w3-top">
-      <div class="w3-bar w3-white w3-card" id="myNavbar">
-        <a href="/" class="w3-bar-item w3-button w3-wide">Leigh Rescue Centre</a>
-          <!-- Right-sided navbar links -->
-          <div class="w3-right w3-hide-small">
-              <a onclick="scanData(horsesTableName, true, horseHeader);" class="w3-bar-item w3-button">HORSES</a>
-              <a onclick="scanData(rehomersTableName, true);" class="w3-bar-item w3-button"><i class="fa fa-user"></i>  APPLICATIONS</a>
-              <a onclick="scanData(queriesTableName, true);" class="w3-bar-item w3-button"><i class="fa fa-comment"></i>  QUERIES</a>
-          </div>
-          <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+        <div class="w3-bar w3-white w3-card" id="myNavbar">
+            <a href="/" class="w3-bar-item w3-button w3-wide">Leigh Rescue Centre</a>
+            <!-- Right-sided navbar links -->
+            <div class="w3-right w3-hide-small">
+                <a onclick="scanData(horsesTableName, true, horseHeader);" class="w3-bar-item w3-button">HORSES</a>
+                <a onclick="scanDataList(rehomersTableName, true, applicationsHeader);" class="w3-bar-item w3-button"><i class="fa fa-user"></i>
+                    APPLICATIONS</a>
+                <a onclick="scanDataList(queriesTableName, true, queriesHeader);" class="w3-bar-item w3-button"><i
+                        class="fa fa-comment"></i> QUERIES</a>
+            </div>
+            <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
-          <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
-              onclick="w3_open()">
-              <i class="fa fa-bars"></i>
-          </a>
-      </div>
-  </div>
+            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+                onclick="w3_open()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
 
-  <!-- Sidebar on small screens when clicking the menu icon -->
-  <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large"
-      style="display:none" id="mySidebar">
-      <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close
-          ×</a>
-      <a href="/" class="w3-bar-item w3-button"><i class="fa fa-home"></i>BACK TO SITE</a>
-      <a onclick="scanData(horsesTableName, true, horseHeader);" class="w3-bar-item w3-button">HORSES</a>
-      <a onclick="scanData(rehomersTableName, true);" class="w3-bar-item w3-button"><i class="fa fa-user"></i>  APPLICATIONS</a>
-      <a onclick="scanData(queriesTableName, true);" class="w3-bar-item w3-button"><i class="fa fa-comment"></i>  QUERIES</a>
-  </nav>
-  <div id="renderTarget" class="w3-padding-64" style="overflow: hidden;">
-  </div>
-  <script src="/js/admin.js"></script>
-  <script>
-      var horseHeader = '<header class="w3-container w3-center">' +
-                        '    <div ><span class="w3-xxlarge w3-hide-small w3-border-teal w3-bottombar">Horses</span></div>' +
-                        '    <div ><span class="w3-xlarge w3-border-teal w3-bottombar w3-hide-large w3-hide-medium">Horses</span></div>' +
-                        '<br><button class="w3-button w3-large w3-white"><i class="fa fa-plus" aria-hidden="true"></i>Create Horse</button>' +
-                        '&nbsp;&nbsp;' +
-                        '<button class="w3-button w3-large w3-white"><i class="fa fa-trash" aria-hidden="true"></i>Delete Horse</button>' +
-                        '<br><br></header>';
-      getCognitoCreds(getCredsAuth, true)
-  </script>
+    <!-- Sidebar on small screens when clicking the menu icon -->
+    <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large"
+        style="display:none" id="mySidebar">
+        <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close
+            ×</a>
+        <a href="/" class="w3-bar-item w3-button"><i class="fa fa-home"></i>BACK TO SITE</a>
+        <a onclick="scanData(horsesTableName, true, horseHeader);" class="w3-bar-item w3-button">HORSES</a>
+        <a onclick="scanDataList(rehomersTableName, true, applicationsHeader);" class="w3-bar-item w3-button"><i class="fa fa-user"></i>
+            APPLICATIONS</a>
+        <a onclick="scanDataList(queriesTableName, true, queriesHeader);" class="w3-bar-item w3-button"><i class="fa fa-comment"></i>
+            QUERIES</a>
+    </nav>
+
+
+    <div id="renderTarget" class="w3-padding-64" style="overflow: hidden;">
+    </div>
+    <script src="/js/admin.js"></script>
+    <script>
+        getCognitoCreds(getCredsAuth, true)
+    </script>
 </body>
 
 </html>

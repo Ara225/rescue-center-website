@@ -9,5 +9,4 @@ __pycache__
 .cdk.staging
 cdk.out
 .vscode
-config.js
 simplejson*
