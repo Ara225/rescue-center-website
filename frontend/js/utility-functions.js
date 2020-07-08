@@ -42,6 +42,9 @@ function getCredsAuth(callback) {
         redirect()
     }
     else {
+        window.sessionStorage.id_token = document.location.hash ?
+        document.location.hash.split('id_token=')[1].split('&access_token=')[0] :
+        window.sessionStorage.id_token
         console.log("Successful auth")
         setTimeout(function () {
             if (confirm("Your credentials will expire in two minutes. Would you like to re-login now? ")) {

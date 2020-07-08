@@ -1,7 +1,12 @@
 function redirect() {
-    document.body.innerHTML = '<h2 class="w3-center">Login Required</h2><p  class="w3-center">If not redirected, please click <a href="' +
+    if (document.location.pathname.endsWith("index.html") || document.location.pathname.endsWith("/admin/")) {
+        document.body.innerHTML = '<h2 class="w3-center">Login Required</h2><p  class="w3-center">If not redirected, please click <a href="' +
         cognitoURL + document.location.href.split("?")[0].replace("index.html", "") + '">here</a> to go to the login page</p>'
-    window.location.href = cognitoURL + document.location.href.split("#")[0].replace("index.html", "");
+        window.location.href = cognitoURL + document.location.href.split("#")[0].replace("index.html", "");
+    }
+    else {
+        window.location.href = document.location.origin + "/admin/";
+    }
 }
 
 function getHtml(template) {
@@ -47,8 +52,6 @@ function createFolder(horseName) {
                 return reject("Horse folder already exists.");
             }
             if (err.code !== "NotFound") {
-                console.log("zzz")
-
                 console.log(err)
                 return reject("There was an error creating a folder for the horse's images/videos: " + err.message);
             }
@@ -101,10 +104,13 @@ async function onCreateHorseFormSubmit(event) {
         if (e.toString().search("Missing credentials in config, if using AWS_CONFIG_FILE, set AWS_SDK_LOAD_CONFIG=1") != -1) {
             redirect()
         }
-        else {
+        else if (e.toString().search("Horse folder already exists.") != -1 && document.location.search.search("id") != -1) {
             statusField.innerText = e
         }
-        return
+        else {
+            statusField.innerText = e
+           return
+        }
     }
     var fileResults = await processFileList(horseName)
     if (fileResults) {
@@ -119,7 +125,10 @@ async function onCreateHorseFormSubmit(event) {
         var params = {
             TableName: horsesTableName,
             Item: {
-                'id': { S: document.getElementById("Name").value + ":" + makeid(32) },
+                'id': { S: document.location.search.search("id") != -1 ?
+                           decodeURIComponent(document.location.search.split("id=")[1]) :
+                           document.getElementById("Name").value + ":" + makeid(32) 
+                      },
                 'Name': { S: document.getElementById("Name").value },
                 'Age': { S: document.getElementById("Age").value },
                 'Breed': { S: document.getElementById("Breed").value },
@@ -219,19 +228,4 @@ function copyFileToS3(horseName, file) {
     });
 
     return upload.promise();
-}
-
-function includeHTML(sectionName) {
-    if (document.getElementsByTagName("input").length != 0) {
-        if (!confirm("There might be unsaved changes on this page. Click OK to continue or cancel to cancel")) {
-            return
-        }
-    }
-    fetch(sectionName)
-        .then(response => {
-            return response.text()
-        })
-        .then(data => {
-            document.getElementById("renderTarget").innerHTML = data;
-        });
 }

@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
   <link rel="stylesheet" href="css/index.css">
   <script src="/js/utility-functions.js"></script>
+  <script src="/js/db-functions.js"></script>
   <script src="https://sdk.amazonaws.com/js/aws-sdk-2.709.0.min.js"></script>
   <script src="/js/config.js"></script>
 
@@ -75,51 +76,7 @@
   </div>
   </div>
   <script>
-    getCognitoCreds(() => { getCredsUnAuth(() => {readItem(horsesTableName, document.location.search.split("id=")[1])}) }, false)
-    var docClient = new AWS.DynamoDB.DocumentClient();
-
-    function readItem(tableName, id) {
-      var params = {
-        TableName: tableName,
-        Key: {
-          "id": decodeURIComponent(id),
-        }
-      };
-      docClient.get(params, function (err, data) {
-        if (err) {
-          console.log("Unable to read item: " + JSON.stringify(err, undefined, 2))
-        }
-        else if (Object.keys(data).length == 0) {
-          alert("Invalid ID. Please go back to the rehoming page and try again ")
-        } 
-        else {
-          console.log("GetItem succeeded: ")
-          console.log(data)
-          renderItem(data)
-        }
-      });
-    }
-    async function renderItem(data) {
-      document.getElementById("name").innerText = data.Item.Name
-      for (image in data.Item.images) {
-        document.getElementById("media").innerHTML += '<img class="mySlides w3-animate-opacity"src="http://backend-websitebucket74b0f9e5-gayttyln7n1k.s3-website.eu-west-2.amazonaws.com' + encodeURI(data.Item.images[image]) + '" style="width:100%">'
-      }
-      showDivs(1);
-      for (video in data.Item.videos) {
-        document.getElementById("media").innerHTML += '<video class="mySlides w3-animate-opacity" controls style="width: 100%;">' +
-                                                      '    <source src="http://backend-websitebucket74b0f9e5-gayttyln7n1k.s3-website.eu-west-2.amazonaws.com' + encodeURI(data.Item.videos[video]) + '">' +
-                                                      '    Your browser does not support the video tag.' +
-                                                      '</video>' 
-
-      }
-
-      document.getElementById("details").innerText = "Age: " + data.Item.Age + " | Breed: " + data.Item.Breed + " | "  + data.Item.Sex + " | Height: " +  
-      data.Item.Height + " | Suitable as a: " + data.Item.SuitableFor + " | Rehoming Fee: " + data.Item.RehomingFee 
-      for (var i = 1; i < (data.Item.videos.length + data.Item.images.length + 1); i++) {
-        document.getElementById("dots").innerHTML += '<span class="dot" onclick="moveToDiv(' + i.toString() + ')"></span>'
-      }
-      document.getElementById("description").innerHTML = "<br><br>" + data.Item.Description.replace("\n\n", "<br>") + "<br><br>"
-    }
+    getCognitoCreds(() => { getCredsUnAuth(() => {readItem(horsesTableName, document.location.search.split("id=")[1], renderItem)}) }, false)
   </script>
   <!-- Footer -->
   <footer class="w3-center w3-black w3-padding-64">
