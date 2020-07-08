@@ -20,7 +20,7 @@
         <a href="/" class="w3-bar-item w3-button w3-wide">Leigh Rescue Centre</a>
           <!-- Right-sided navbar links -->
           <div class="w3-right w3-hide-small">
-              <a onclick="scanData(horsesTableName, true);" class="w3-bar-item w3-button">HORSES</a>
+              <a onclick="scanData(horsesTableName, true, horseHeader);" class="w3-bar-item w3-button">HORSES</a>
               <a onclick="scanData(rehomersTableName, true);" class="w3-bar-item w3-button"><i class="fa fa-user"></i>  APPLICATIONS</a>
               <a onclick="scanData(queriesTableName, true);" class="w3-bar-item w3-button"><i class="fa fa-comment"></i>  QUERIES</a>
           </div>
@@ -39,15 +39,23 @@
       <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close
           ×</a>
       <a href="/" class="w3-bar-item w3-button"><i class="fa fa-home"></i>BACK TO SITE</a>
-      <a onclick="scanData(horsesTableName, true);" class="w3-bar-item w3-button">HORSES</a>
+      <a onclick="scanData(horsesTableName, true, horseHeader);" class="w3-bar-item w3-button">HORSES</a>
       <a onclick="scanData(rehomersTableName, true);" class="w3-bar-item w3-button"><i class="fa fa-user"></i>  APPLICATIONS</a>
       <a onclick="scanData(queriesTableName, true);" class="w3-bar-item w3-button"><i class="fa fa-comment"></i>  QUERIES</a>
   </nav>
-  
   <div id="renderTarget" class="w3-padding-64" style="overflow: hidden;">
-    
   </div>
   <script src="/js/admin.js"></script>
+  <script>
+      var horseHeader = '<header class="w3-container w3-center">' +
+                        '    <div ><span class="w3-xxlarge w3-hide-small w3-border-teal w3-bottombar">Horses</span></div>' +
+                        '    <div ><span class="w3-xlarge w3-border-teal w3-bottombar w3-hide-large w3-hide-medium">Horses</span></div>' +
+                        '<br><button class="w3-button w3-large w3-white"><i class="fa fa-plus" aria-hidden="true"></i>Create Horse</button>' +
+                        '&nbsp;&nbsp;' +
+                        '<button class="w3-button w3-large w3-white"><i class="fa fa-trash" aria-hidden="true"></i>Delete Horse</button>' +
+                        '<br><br></header>';
+      getCognitoCreds(getCredsAuth, true)
+  </script>
 </body>
 
 </html>

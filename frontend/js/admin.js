@@ -3,41 +3,12 @@ function redirect() {
         cognitoURL + document.location.href.split("?")[0].replace("index.html", "") + '">here</a> to go to the login page</p>'
     window.location.href = cognitoURL + document.location.href.split("#")[0].replace("index.html", "");
 }
-function getCreds() {
-    if (AWS.config.credentials.expired) {
-        redirect()
-    }
-    else {
-        console.log("Successful auth")
-        setTimeout(function () {
-            if (confirm("Your credentials will expire in two minutes. Would you like to re-login now? ")) {
-                document.body.innerHTML = '<h2 class="w3-center">Login Required</h2><p  class="w3-center">If not redirected, please click <a href="' +
-                    cognitoURL + document.location.href.split("?")[0].replace("index.html", "") + '">here</a> to go to the login page</p>'
-                window.location.href = cognitoURL + document.location.href.split("#")[0].replace("index.html", "");
-            }
-        }, 3480000);
-    }
-}
-// Set the region where your identity pool exists (us-east-1, eu-west-1)
-AWS.config.region = 'eu-west-2';
-
-if (document.location.hash && document.location.hash.search('id_token') != -1) {
-    // Configure the credentials provider to use your identity pool
-    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: 'eu-west-2:62a15244-4f5a-4f12-b9e6-cb87ce7b5806',
-        Logins: { "cognito-idp.eu-west-2.amazonaws.com/eu-west-2_3T4vtfKJE": document.location.hash.split('id_token=')[1].split('&access_token=')[0] }
-    });
-    AWS.config.credentials.get(getCreds);
-}
-else {
-    redirect()
-}
 
 function getHtml(template) {
     console.log(template.join('\n'))
     return template.join('\n');
 }
-//document.getElementById("imageSelect").value = null
+
 var ddb = null
 var s3 = null
 var filesToUpload = []
