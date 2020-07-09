@@ -18,7 +18,7 @@ var ddb = null
 var s3 = null
 var filesToUpload = []
 var statusField
-
+var filesToDelete = []
 function handleFileSelect(event) {
     for (i in event.originalTarget.files) {
         console.log((event.originalTarget.files[i]))
@@ -32,11 +32,39 @@ function listFiles() {
     var filesDiv = document.getElementById("files")
     filesDiv.innerHTML = ""
     for (file in filesToUpload) {
-        filesDiv.innerHTML += '<button class="w3-button w3-red" onclick="filesToUpload.splice(\'' + file + '\', 1);listFiles();">' +
+        filesDiv.innerHTML += '<button class="w3-button w3-red" onclick="removeFileFromList(' + file + ')">' +
             '&times;</button><div class="w3-button w3-light-grey">' + filesToUpload[file].name + "</div><br><br>"
     }
     event.originalTarget.value = null
 }
+
+async function removeFileFromList(fileNumber) {
+    if (filesToUpload[fileNumber].alreadyUploaded) {
+        if (confirm("This file is already uploaded. It would be deleted when you submit this form. Is that OK?")) {
+            filesToDelete.push(filesToUpload[fileNumber])
+        }
+        else {
+            return
+        }
+    }
+    filesToUpload.splice(fileNumber, 1)
+    listFiles()
+}
+
+function deleteS3Object(key) {
+    return new Promise((resolve, reject) => {
+        s3.deleteObject({ Key: key }, function (err, data) {
+            if (err) {
+                console.log("There was an error deleting your photo: ", err.message);
+                reject(err)
+            }
+            console.log("Successfully deleted " + key);
+            resolve(data)
+        })
+    })
+}
+
+
 function createFolder(horseName) {
     horseName = horseName.trim();
     if (!horseName) {
@@ -45,7 +73,7 @@ function createFolder(horseName) {
     if (horseName.indexOf("/") !== -1) {
         return alert("Horse name cannot contain slashes.");
     }
-    var horseKey = 'media/' + encodeURIComponent(horseName) + "/";
+    var horseKey = 'media/' + horseName + "/";
     return new Promise((resolve, reject) => {
         s3.headObject({ Key: horseKey }, function (err, data) {
             if (!err) {
@@ -68,6 +96,25 @@ function createFolder(horseName) {
         })
     })
 }
+
+function listS3Objects(prefix) {
+    return new Promise((resolve, reject) => {
+        s3.listObjects((prefix ? { Prefix: prefix } : { }), function(err, data) {
+            if (err) {
+              return reject("There was an error viewing your album: " + err.message);
+            }
+            else {
+                if (data.Contents.length == 0) {
+                   resolve(false)
+                }
+                else {
+                   resolve(data)
+                }
+            }
+        })
+    })
+}
+
 function makeid(length) {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -145,8 +192,9 @@ async function onCreateHorseFormSubmit(event) {
         statusField.innerText = "Status: Attempting database insert"
         var tableResult = await insertIntoTable(params)
         statusField.innerText = "Status: Database insert succeeded "
-        displaySuccess("<p>You can view the result <a href='/horse-detail-page.html?id=" + encodeURIComponent(params.id) + "'> here</a>")
-
+        displaySuccess("<p>You can view the result <a href='/horse-detail-page.html?id=" + encodeURI(params.id) + "'> here</a>")
+        document.getElementById("files").innerHTML = ""
+        filesToUpload = []
     }
     catch (e) {
         console.log(e)
@@ -158,18 +206,31 @@ async function processFileList(prefix) {
     var uploadedPhotoURLs = []
     var uploadedVideoURLs = []
     var failedFiles = []
+    for (i in filesToDelete) {
+        try {
+            console.log("Status: Deleting " + filesToDelete[i].name)
+            statusField.innerText = "Status: Deleting " + filesToDelete[i].name
+            await deleteS3Object("/media/" + prefix + "/" + filesToDelete[i].name)
+        }
+        catch(e) {
+            console.log("Status: Error " + e.toString() + " while deleting " + filesToDelete[i].name)
+            statusField.innerText = "Status: Error " + e.toString() + " while deleting " + filesToDelete[i].name
+        }
+    }
     for (i in filesToUpload) {
         try {
-            console.log("Status: Uploading " + filesToUpload[i].name)
-            statusField.innerText = "Status: Uploading " + filesToUpload[i].name
-            var upload = await copyFileToS3(prefix, filesToUpload[i])
-            console.log("Status: Upload of " + filesToUpload[i].name + " has completed")
-            statusField.innerText = "Status: Upload of " + filesToUpload[i].name + " has completed"
+            if (!filesToUpload[i].alreadyUploaded) {
+                console.log("Status: Uploading " + filesToUpload[i].name)
+                statusField.innerText = "Status: Uploading " + filesToUpload[i].name
+                var upload = await copyFileToS3(prefix, filesToUpload[i])
+                console.log("Status: Upload of " + filesToUpload[i].name + " has completed")
+                statusField.innerText = "Status: Upload of " + filesToUpload[i].name + " has completed"
+            }
             if (filesToUpload[i].type.search("image") != -1) {
-                uploadedPhotoURLs.push({ S: "/media/" + encodeURIComponent(prefix) + "/" + filesToUpload[i].name })
+                uploadedPhotoURLs.push({ S: "/media/" + prefix + "/" + filesToUpload[i].name })
             }
             else if (filesToUpload[i].type.search("video") != -1) {
-                uploadedVideoURLs.push({ S: "/media/" + encodeURIComponent(prefix) + "/" + filesToUpload[i].name })
+                uploadedVideoURLs.push({ S: "/media/" + prefix + "/" + filesToUpload[i].name })
             }
             //TODO Else branch here 
         }
@@ -213,7 +274,7 @@ function insertIntoTable(params) {
 
 
 function copyFileToS3(horseName, file) {
-    var horsePhotosKey = encodeURIComponent(horseName) + "/";
+    var horsePhotosKey = horseName + "/";
 
     var photoKey = "media/" + horsePhotosKey + file.name;
 

@@ -48,9 +48,7 @@ function getCredsAuth(callback) {
         console.log("Successful auth")
         setTimeout(function () {
             if (confirm("Your credentials will expire in two minutes. Would you like to re-login now? ")) {
-                document.body.innerHTML = '<h2 class="w3-center">Login Required</h2><p  class="w3-center">If not redirected, please click <a href="' +
-                    cognitoURL + document.location.href.split("?")[0].replace("index.html", "") + '">here</a> to go to the login page</p>'
-                window.location.href = cognitoURL + document.location.href.split("#")[0].replace("index.html", "");
+                redirect()
             }
         }, 3480000);
         if (callback) {

@@ -34,7 +34,7 @@ function scanData(tableName, isAdmin, html) {
                     '          <div class="w3-container">' +
                     '            <h3>' + horse.Name + '</h3>' +
                     '            <p style="overflow: hidden;height:7em">' + horse.Description + '</p>' +
-                    '            <p><a href="/horse-detail-page.html?id=' + encodeURIComponent(horse.id) + '" class="w3-button w3-light-grey w3-block">' + actionButton + '</a></p>' +
+                    '            <p><a href="' + (isAdmin ? 'create-horse.html' : '/horse-detail-page.html') + '?id=' + encodeURI(horse.id) + '" class="w3-button w3-light-grey w3-block">' + actionButton + '</a></p>' +
                     '          </div>' +
                     '        </div>' +
                     '      </div>'
@@ -128,7 +128,7 @@ function readItem(tableName, id, callback) {
 async function renderItem(data) {
     document.getElementById("name").innerText = data.Item.Name
     for (image in data.Item.images) {
-        document.getElementById("media").innerHTML += '<img class="mySlides w3-animate-opacity"src="http://backend-websitebucket74b0f9e5-gayttyln7n1k.s3-website.eu-west-2.amazonaws.com' + encodeURI(data.Item.images[image]) + '" style="width:100%">'
+        document.getElementById("media").innerHTML += '<img class="mySlides w3-animate-opacity" src="http://backend-websitebucket74b0f9e5-gayttyln7n1k.s3-website.eu-west-2.amazonaws.com' + encodeURI(data.Item.images[image]) + '" style="width:100%">'
     }
     showDivs(1);
     for (video in data.Item.videos) {
@@ -155,5 +155,7 @@ function preFillFormFields(data) {
             document.getElementById(dbCols[i]).value = data.Item[dbCols[i]]
         }
     }
-
+    data.Item.videos.forEach(item => {  filesToUpload.push({name: item.split("/")[item.split("/").length-1], alreadyUploaded: true, type: "video"})})
+    data.Item.images.forEach(item => { filesToUpload.push({name: item.split("/")[item.split("/").length-1], alreadyUploaded: true, type: "image"})})
+    listFiles()
 }
