@@ -51,6 +51,9 @@ function getCredsAuth(callback) {
                 redirect()
             }
         }, 3480000);
+        setTimeout(function () {
+            redirect()
+        }, 3600000);
         if (callback) {
             callback()
         }
@@ -111,26 +114,46 @@ function formToJSON(form) {
 function onRehomerFormSubmit(token) {
     document.getElementById("submit").innerHTML = 'Submitting <i class="fa fa-spinner fa-spin"></i>'
     try {
-        var horseTypeCheckBoxGroup = document.getElementsByClassName('FormFieldGroup')
+        var SuitableForCheckBoxGroup = document.getElementsByClassName('preferredSuitableFor')
         var oneChecked = false
-        for (i in horseTypeCheckBoxGroup) {
-            if (horseTypeCheckBoxGroup[i].checked) {
+        for (i in SuitableForCheckBoxGroup) {
+            if (SuitableForCheckBoxGroup[i].checked) {
                 oneChecked = true
             }
         }
         if (!oneChecked) {
             document.getElementById("submit").innerText = 'Submit'
-            alert("Please tick a box in the \"I'm interested in a\" section")
+            alert("Please tick a box in the \"Planned horse use\" section")
+            return false;
+        }
+        var SexCheckBoxGroup = document.getElementsByClassName('preferredSex')
+        var oneChecked = false
+        for (i in SexCheckBoxGroup) {
+            if (SexCheckBoxGroup[i].checked) {
+                oneChecked = true
+            }
+        }
+        if (!oneChecked) {
+            document.getElementById("submit").innerText = 'Submit'
+            alert("Please tick a box in the \"I'm looking for a\" section")
             return false;
         }
         var form = formToJSON(document.getElementsByClassName('FormField'));
-        form.HorsePreferences = []
-        var HorsePreferences = document.getElementsByClassName('HorsePreferences')
-        for (i in HorsePreferences) {
-            if (HorsePreferences[i].checked) {
-                form.HorsePreferences.push(HorsePreferences[i].id)
+        form.SuitableFor = []
+        var SuitableFor = document.getElementsByClassName('SuitableFor')
+        for (i in SuitableFor) {
+            if (SuitableFor[i].checked) {
+                form.SuitableFor.push(SuitableFor[i].id)
             }
         }
+        form.Sex = []
+        var Sex = document.getElementsByClassName('Sex')
+        for (i in Sex) {
+            if (Sex[i].checked) {
+                form.Sex.push(Sex[i].id)
+            }
+        }
+        console.log(form)
         fetch(APIEndpoint + "rehomers", {
                   method: "POST", 
                   body: JSON.stringify(form)

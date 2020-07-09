@@ -192,7 +192,7 @@ async function onCreateHorseFormSubmit(event) {
         statusField.innerText = "Status: Attempting database insert"
         var tableResult = await insertIntoTable(params)
         statusField.innerText = "Status: Database insert succeeded "
-        displaySuccess("<p>You can view the result <a href='/horse-detail-page.html?id=" + encodeURI(params.id) + "'> here</a>")
+        displaySuccess("<p>You can view the result <a href='/horse-detail-page.html?id=" + encodeURI(params.Item.id.S) + "'> here</a>")
         document.getElementById("files").innerHTML = ""
         filesToUpload = []
     }

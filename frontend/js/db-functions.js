@@ -25,12 +25,13 @@ function scanData(tableName, isAdmin, html) {
         if (err) {
             console.log("Unable to scan the table: " + JSON.stringify(err, undefined, 2))
         } else {
-            console.log("Scan succeeded. ")
             data.Items.forEach(function (horse) {
+            console.log(horse)
+
                 document.getElementById('row').innerHTML +=
                     '      <div class="w3-col l3 m6 w3-margin-bottom" style="height:100%;">' +
                     '        <div class="w3-card w3-white">' +
-                    '          <img src="http://backend-websitebucket74b0f9e5-gayttyln7n1k.s3-website.eu-west-2.amazonaws.com' + encodeURI(horse.images[0]) + '" style="width:100%">' +
+                    '          <img src="http://backend-websitebucket74b0f9e5-gayttyln7n1k.s3-website.eu-west-2.amazonaws.com' + encodeURI(horse.images[0]) + '" onerror="this.onerror=null; this.src=\'\'" style="width:100%">' +
                     '          <div class="w3-container">' +
                     '            <h3>' + horse.Name + '</h3>' +
                     '            <p style="overflow: hidden;height:7em">' + horse.Description + '</p>' +
@@ -133,7 +134,8 @@ async function renderItem(data) {
     showDivs(1);
     for (video in data.Item.videos) {
         document.getElementById("media").innerHTML += '<video class="mySlides w3-animate-opacity" controls style="width: 100%;">' +
-            '    <source src="http://backend-websitebucket74b0f9e5-gayttyln7n1k.s3-website.eu-west-2.amazonaws.com' + encodeURI(data.Item.videos[video]) + '">' +
+            '    <source src="http://backend-websitebucket74b0f9e5-gayttyln7n1k.s3-website.eu-west-2.amazonaws.com' + 
+            encodeURI(data.Item.videos[video]) + '" type="video/' + data.Item.videos[video].split(".")[data.Item.videos[video].split(".").length-1] + '">' +
             '    Your browser does not support the video tag.' +
             '</video>'
 
@@ -155,7 +157,9 @@ function preFillFormFields(data) {
             document.getElementById(dbCols[i]).value = data.Item[dbCols[i]]
         }
     }
-    data.Item.videos.forEach(item => {  filesToUpload.push({name: item.split("/")[item.split("/").length-1], alreadyUploaded: true, type: "video"})})
-    data.Item.images.forEach(item => { filesToUpload.push({name: item.split("/")[item.split("/").length-1], alreadyUploaded: true, type: "image"})})
-    listFiles()
+    if (data.Item.videos || data.Item.images) {
+        data.Item.videos.forEach(item => {  filesToUpload.push({name: item.split("/")[item.split("/").length-1], alreadyUploaded: true, type: "video"})})
+        data.Item.images.forEach(item => { filesToUpload.push({name: item.split("/")[item.split("/").length-1], alreadyUploaded: true, type: "image"})})
+        listFiles()
+    }
 }

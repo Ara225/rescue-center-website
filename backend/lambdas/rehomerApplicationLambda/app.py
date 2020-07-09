@@ -41,7 +41,7 @@ def lambda_handler(event, context):
             + string.digits) for n in range(32)]) 
     try:
         rehomingApplication = {
-            "FullName": body["FullName"],
+            "Name": body["Name"],
             "EmailAddress": body["EmailAddress"],
             "PrimaryPhoneNumber": body["PrimaryPhoneNumber"],
             "SecondaryPhoneNumber": body["SecondaryPhoneNumber"],
@@ -56,10 +56,13 @@ def lambda_handler(event, context):
             "experience": body["experience"],
             "notes": body["notes"],
             "HorsePreferences": body["HorsePreferences"],
-            "id": body["FullName"] + ":" + randomString,
+            "id": body["Name"] + ":" + randomString,
             "date": Decimal(datetime.now().timestamp()),
             "accepted": "N/A",
-            "internalNotes": ""
+            "internalNotes": "",
+            "preferredSex": body["preferredSex"],
+            "preferredSuitableFor": body["preferredSuitableFor"],
+            "OtherRefreeDetails": body["OtherRefreeDetails"],
         }
     except KeyError as e:
         print(event)

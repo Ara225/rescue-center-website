@@ -67,8 +67,8 @@
                 </div>
                 <div class="w3-half" style="padding-right: 2%;">
                     <div class="w3-section">
-                        <label for="FullName"><span style="color:red">*</span>Full Name</label>
-                        <input class="w3-input FormField" type="text" id="FullName" required>
+                        <label for="Name"><span style="color:red">*</span>Full Name</label>
+                        <input class="w3-input FormField" type="text" id="Name" required>
                     </div>
                     <div class="w3-section">
                         <label for="EmailAddress"><span style="color:red">*</span>Email Address</label>
@@ -94,58 +94,80 @@
                         <h5><b>Your Preferences</b></h5>
                     </label>
                 </div>
+                <label><span style="color:red">*</span>Planned horse use (tick all that apply):</label>
+                <div class="w3-section">
+                    <input class="w3-check preferredSuitableFor" type="checkbox" id="RidingHorse">
+                    <label for="RidingHorse">
+                        Riding
+                    </label>
+                    &nbsp;
+                    <input class="w3-check preferredSuitableFor" type="checkbox" id="CompanionHorse">
+                    <label for="CompanionHorse">
+                        Companion
+                    </label>
+                    &nbsp;
+                    <input class="w3-check preferredSuitableFor" type="checkbox" id="ProjectHorse">
+                    <label for="ProjectHorse">
+                        Project
+                    </label>
+                    &nbsp;
+                    <input class="w3-check preferredSuitableFor" type="checkbox" id="FamilyHorse">
+                    <label for="FamilyHorse">
+                        Family/Child's Horse
+                    </label>
+                    &nbsp;
+                    <input class="w3-check preferredSuitableFor" type="checkbox" id="OtherUse">
+                    <label for="OtherUse">
+                        Other
+                    </label>
+                    &nbsp;
+                    <input class="w3-check preferredSuitableFor" type="checkbox" id="NoPreferenceUse">
+                    <label for="NoPreferenceUse">
+                        No Preference
+                    </label>
+                </div>
                 <label><span style="color:red">*</span>I'm looking for a (tick all that apply):</label>
                 <div class="w3-section">
-                    <input class="w3-check FormFieldGroup HorsePreferences" type="checkbox" id="RidingHorse">
-                    <label for="RidingHorse">
-                        Riding Horse
-                    </label>
-                    &nbsp;
-                    <input class="w3-check FormFieldGroup HorsePreferences" type="checkbox" id="CompanionHorse">
-                    <label for="CompanionHorse">
-                        Companion Horse
-                    </label>
-                    &nbsp;
-                    <input class="w3-check FormFieldGroup HorsePreferences" type="checkbox" id="ProjectHorse">
-                    <label for="ProjectHorse">
-                        Project Horse
-                    </label>
-                    &nbsp;
-                    <input class="w3-check FormFieldGroup HorsePreferences" type="checkbox" id="Gelding">
+                    <input class="w3-check preferredSex" type="checkbox" id="Gelding">
                     <label for="Gelding">
                         Gelding
                     </label>
                     &nbsp;
-                    <input class="w3-check FormFieldGroup HorsePreferences" type="checkbox" id="Mare">
+                    <input class="w3-check preferredSex" type="checkbox" id="Mare">
                     <label for="Mare">
                         Mare
                     </label>
                     &nbsp;
-                    <input class="w3-check FormFieldGroup HorsePreferences" type="checkbox" id="COlt">
+                    <input class="w3-check preferredSex" type="checkbox" id="Colt">
                     <label for="Colt">
                         Colt
                     </label>
                     &nbsp;
-                    <input class="w3-check FormFieldGroup HorsePreferences" type="checkbox" id="Filly">
+                    <input class="w3-check preferredSex" type="checkbox" id="Filly">
                     <label for="Filly">
                         Filly
                     </label>
                     &nbsp;
-                    <input class="w3-check FormFieldGroup HorsePreferences" type="checkbox" id="Other">
-                    <label for="Other">
+                    <input class="w3-check preferredSex" type="checkbox" id="OtherGender">
+                    <label for="OtherGender">
                         Other
+                    </label>
+                    &nbsp;
+                    <input class="w3-check FormFieldGroup" type="checkbox" id="NoPreferenceGender">
+                    <label for="NoPreferenceGender">
+                        No Preference
                     </label>
                 </div>
                 <div class="w3-half" style="padding-right: 2%;">
                     <div class="w3-section">
-                        <label for="AgeRange"><span style="color:red">*</span>Age Range</label>
-                        <input class="w3-input FormField" type="text" id="AgeRange" required>
+                        <label for="AgeRange">Age Range</label>
+                        <input class="w3-input FormField" type="text" id="AgeRange">
                     </div>
                 </div>
                 <div class="w3-half" style="padding-left: 2%;">
                     <div class="w3-section">
-                        <label for="HeightRange"><span style="color:red">*</span>Height Range</label>
-                        <input class="w3-input FormField" type="text" id="HeightRange" required>
+                        <label for="HeightRange">Height Range</label>
+                        <input class="w3-input FormField" type="text" id="HeightRange">
                     </div>
                 </div>
                 <div class="w3-section">
@@ -194,6 +216,10 @@
                 <div class="w3-section">
                     <label for="VetDetails"><span style="color:red">*</span>Name and Contact Number of Vet</label>
                     <input class="w3-input FormField" type="text" id="VetDetails" required>
+                </div>
+                <div class="w3-section">
+                    <label for="OtherRefreeDetails">Details of anybody else you'd like us to get a reference from</label>
+                    <input class="w3-input FormField" type="text" id="OtherRefreeDetails" required>
                 </div>
                 <div class="w3-section">
                     <label for="experience"><span style="color:red">*</span>Please tell us about your experience with

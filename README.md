@@ -3,9 +3,8 @@ Views horse page >> Clicks apply to rehome >> Form for rehoming >>
 Submit >> API call >> Details entered into DB >> email sent to us >>
 Customer receives thank you and ref no on screen 
 
-Checkboxes
         rehomingApplication = {
-            "FullName": body["FullName"],
+            "Name": body["Name"],
             "EmailAddress": body["EmailAddress"],
             "PrimaryPhoneNumber": body["PrimaryPhoneNumber"],
             "SecondaryPhoneNumber": body["SecondaryPhoneNumber"],
@@ -20,10 +19,13 @@ Checkboxes
             "experience": body["experience"],
             "notes": body["notes"],
             "HorsePreferences": body["HorsePreferences"],
-            "id": body["FullName"] + ":" + randomString,
+            "id": body["Name"] + ":" + randomString,
             "date": Decimal(datetime.now().timestamp()),
             "accepted": "N/A",
-            "internalNotes": ""
+            "internalNotes": "",
+            "preferredSex": body["preferredSex"],
+            "preferredSuitableFor": body["preferredSuitableFor"],
+            "OtherRefreeDetails": body["OtherRefreeDetails"],
         }
 * id - Name colon then random ID - STRING NOT NULL
 * date - date query submitted
