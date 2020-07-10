@@ -51,8 +51,197 @@
     </header>
     <div id="renderTarget" style="overflow: hidden;">
     </div>
+    <div class="w3-container w3-theme-l5 w3-center" id="details" style="display: none;">
+        <div class="w3-content w3-left-align">
+            <div ><span class="w3-xlarge w3-hide-small ">Query Details</span></div> 
+            <div ><span class="w3-large w3-hide-large w3-hide-medium">Query Details</span></div> 
+            <br>
+                <div class="w3-container w3-card-4 w3-white" id="Form">
+                    <div class="w3-section">
+                        <label>
+                            <h5><b>About You</b></h5>
+                        </label>
+                    </div>
+                    <div class="w3-half" style="padding-right: 2%;">
+                        <div class="w3-section">
+                            <label for="Name">Full Name</label>
+                            <input class="w3-input FormField" type="text" id="Name" required disabled>
+                        </div>
+                        <div class="w3-section">
+                            <label for="EmailAddress">Email Address</label>
+                            <input class="w3-input FormField" type="text" id="EmailAddress" required disabled>
+                        </div>
+                    </div>
+                    <div class="w3-half" style="padding-left: 2%;">
+                        <div class="w3-section">
+                            <label for="PrimaryPhoneNumber">Primary Phone Number</label>
+                            <input class="w3-input FormField" type="text" id="PrimaryPhoneNumber" required disabled>
+                        </div>
+                        <div class="w3-section">
+                            <label for="SecondaryPhoneNumber">Secondary Phone Number</label>
+                            <input class="w3-input FormField" type="text" id="SecondaryPhoneNumber" disabled>
+                        </div>
+                    </div>
+                    <div class="w3-section">
+                        <label for="HomeAddress">Your Home Address</label>
+                        <input class="w3-input FormField" type="text" id="HomeAddress" required disabled>
+                    </div>
+                    <div class="w3-section">
+                        <label>
+                            <h5><b>Your Preferences</b></h5>
+                        </label>
+                    </div>
+                    <label>Planned horse use (tick all that apply):</label>
+                    <div class="w3-section">
+                        <input class="w3-check preferredSuitableFor" type="checkbox" id="RidingHorse" disabled>
+                        <label for="RidingHorse">
+                            Riding
+                        </label>
+                        &nbsp;
+                        <input class="w3-check preferredSuitableFor" type="checkbox" id="CompanionHorse" disabled>
+                        <label for="CompanionHorse">
+                            Companion
+                        </label>
+                        &nbsp;
+                        <input class="w3-check preferredSuitableFor" type="checkbox" id="ProjectHorse" disabled>
+                        <label for="ProjectHorse">
+                            Project
+                        </label>
+                        &nbsp;
+                        <input class="w3-check preferredSuitableFor" type="checkbox" id="FamilyHorse" disabled>
+                        <label for="FamilyHorse">
+                            Family/Child's Horse
+                        </label>
+                        &nbsp;
+                        <input class="w3-check preferredSuitableFor" type="checkbox" id="OtherUse" disabled>
+                        <label for="OtherUse">
+                            Other
+                        </label>
+                        &nbsp;
+                        <input class="w3-check preferredSuitableFor" type="checkbox" id="NoPreferenceUse" disabled>
+                        <label for="NoPreferenceUse">
+                            No Preference
+                        </label>
+                    </div>
+                    <label>I'm looking for a (tick all that apply):</label>
+                    <div class="w3-section">
+                        <input class="w3-check preferredSex" type="checkbox" id="Gelding" disabled>
+                        <label for="Gelding">
+                            Gelding
+                        </label>
+                        &nbsp;
+                        <input class="w3-check preferredSex" type="checkbox" id="Mare" disabled>
+                        <label for="Mare">
+                            Mare
+                        </label>
+                        &nbsp;
+                        <input class="w3-check preferredSex" type="checkbox" id="Colt" disabled>
+                        <label for="Colt">
+                            Colt
+                        </label>
+                        &nbsp;
+                        <input class="w3-check preferredSex" type="checkbox" id="Filly" disabled>
+                        <label for="Filly">
+                            Filly
+                        </label>
+                        &nbsp;
+                        <input class="w3-check preferredSex" type="checkbox" id="OtherGender" disabled>
+                        <label for="OtherGender">
+                            Other
+                        </label>
+                        &nbsp;
+                        <input class="w3-check preferredSex" type="checkbox" id="NoPreferenceGender" disabled>
+                        <label for="NoPreferenceGender">
+                            No Preference
+                        </label>
+                    </div>
+                    <div class="w3-half" style="padding-right: 2%;">
+                        <div class="w3-section">
+                            <label for="AgeRange">Age Range</label>
+                            <input class="w3-input FormField" type="text" id="AgeRange" disabled>
+                        </div>
+                    </div>
+                    <div class="w3-half" style="padding-left: 2%;">
+                        <div class="w3-section">
+                            <label for="HeightRange">Height Range</label>
+                            <input class="w3-input FormField" type="text" id="HeightRange" disabled>
+                        </div>
+                    </div>
+                    <div class="w3-section">
+                        <label for="OtherHorseDetails">
+                            If you're interested in specific horse(s) or have other requirements, please let us know
+                        </label>
+                        <textarea class="w3-input FormField" id="OtherHorseDetails" disabled></textarea>
+                    </div>
+                    <div class="w3-section">
+                        <label>
+                            <h5><b>Your stabling/grazing facilities</b></h5>
+                        </label>
+                    </div>
+                    <div class="w3-section">
+                        <label for="HorseAddress">Location You Plan to Keep the
+                            Horse</label>
+                        <input class="w3-input FormField" type="text" id="HorseAddress" required  disabled>
+                    </div>
+                    <div class="w3-section">
+                        <label for="HorseAddressType">Type of Horse Accommodation</label>
+                        <input class="w3-input FormField" type="text" id="HorseAddressType" required disabled>
+                    </div>
+                    <div class="w3-section">
+                        <label>
+                            <h5><b>Providing Care</b></h5>
+                        </label>
+                    </div>
+                    <div class="w3-section">
+                        <label for="FarrierDetails">Name and Contact Number of
+                            Farrier</label>
+                        <input class="w3-input FormField" type="text" id="FarrierDetails" required disabled>
+                    </div>
+                    <div class="w3-section">
+                        <label for="VetDetails">Name and Contact Number of Vet</label>
+                        <input class="w3-input FormField" type="text" id="VetDetails" required  disabled>
+                    </div>
+                    <div class="w3-section">
+                        <label for="OtherRefreeDetails">Details of anybody else you'd like us to get a reference from</label>
+                        <input class="w3-input FormField" type="text" id="OtherRefreeDetails" required disabled>
+                    </div>
+                    <div class="w3-section">
+                        <label for="experience">Please tell us about your experience with
+                            horses and if you currently own horses.</label>
+                        <textarea class="w3-input FormField" type="text" id="experience" required disabled></textarea>
+                    </div>
+                    <div class="w3-section">
+                        <label>
+                            <h5><b>Other</b></h5>
+                        </label>
+                    </div>
+                    <div class="w3-section">
+                        <label for="notes">Please tell us anything else you'd like us to know.</label>
+                        <textarea class="w3-input FormField" type="text" id="notes" disabled></textarea>
+                    </div>
+                    <div class="w3-section">
+                        <label>
+                            <h4><b>Internal Only Fields</b></h4>
+                        </label>
+                    </div>
+                    <div class="w3-section">
+                        <label for="internalNotes">Internal Notes</label>
+                        <textarea class="w3-input FormField" type="text" id="internalNotes" disabled></textarea>
+                    </div>
+                    <div class="w3-section">
+                        <label for="accepted">Has been accepted</label>
+                        <input class="w3-input FormField" type="text" id="accepted" disabled>
+                    </div>
+                    <div class="w3-section">
+                        <label for="id">id</label>
+                        <input class="w3-input FormField" type="text" id="id" disabled>
+                    </div>
+                </div>
+        </div>
+    </div>
     <script src="/js/admin.js"></script>
     <script>
+
         getCognitoCreds(() => {getCredsAuth(() => {scanDataList(rehomersTableName)})}, true);
     </script>
 </body>

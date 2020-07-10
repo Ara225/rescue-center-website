@@ -79,11 +79,12 @@ function scanDataList(tableName) {
                     innerList += "<b>" + Object.keys(item)[i] + ":</b> " + item[Object.keys(item)[i]] + "<br>"
                 }
                 document.getElementById('row').innerHTML +=
-                    '<li class="w3-container">' +
-                    '        <span class="w3-large">' + (item.Name ? item.Name : item.FullName) + '</summary>' +
+                    '<li class="w3-container ">' +
+                    '        <span class="w3-large"> ' + (item.Name ? item.Name : item.FullName) + 
+                    (item.date ? ' | ' + new Date(item.date*1000).toDateString() : "") +
                     '            <button class="w3-button w3-align-right"><i class="fa fa-trash"></i></button>' +
                     '            <button class="w3-button w3-align-right" '+
-                    'onclick="readItem(queriesTableName, \'' + item.id + '\', (data) => {preFillFormFields(data); document.getElementById(\'details\').style.display = \'block\';})"><i class="fa fa-eye"></i></button>' +
+                    'onclick="readItem(\'' + tableName + '\', \'' + item.id + '\', (data) => {preFillFormFields(data); document.getElementById(\'details\').style.display = \'block\';})"><i class="fa fa-eye"></i></button>' +
                     '        </span>' +
                     '</li>'
             });
@@ -148,10 +149,20 @@ async function renderItem(data) {
 
 function preFillFormFields(data) {
     var dbCols = Object.keys(data.Item)
-    for (var i=0; i<dbCols.length; i++) {
+    for (var i=0; i < dbCols.length; i++) {
         console.log(dbCols[i])
         if (document.querySelector("#" + dbCols[i])) {
             document.getElementById(dbCols[i]).value = data.Item[dbCols[i]]
+        }
+        else if (Object.prototype.toString.call(data.Item[dbCols[i]]) == "[object Array]") {
+            for (var item=0; item < data.Item[dbCols[i]].length; item++) {
+                if (document.querySelector("#" + data.Item[dbCols[i]][item])) {
+                    document.getElementById(data.Item[dbCols[i]][item]).checked = true
+                }
+            }
+        }
+        else {
+            console.log("Unable to find a form field for the record " + dbCols[i] + "  " + data.Item[dbCols[i]].toString())
         }
     }
     if (data.Item.videos || data.Item.images) {
