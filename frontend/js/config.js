@@ -1,6 +1,6 @@
 var cognitoURL = "https://leighrescuecentre.auth.eu-west-2.amazoncognito.com/login?response_type=token&client_id=5id64a9o4k4bcq0r9mk8s7r3op&redirect_uri="
 var APIEndpoint = "https://8zmmemwsei.execute-api.eu-west-2.amazonaws.com/prod/"
 var horsesTableName = "backend-horsesTable42466579-1FGBM9HKLZ8EN"
-var horseBucketName = "backend-websitebucket74b0f9e5-gayttyln7n1k"
+var horseBucketName = "media.leighrescuecentre.co.uk"
 var rehomersTableName = "backend-rehomersTableD4C9D2D2-105O7HRLGKHFP"
 var queriesTableName = "backend-queriesTableC1676847-1979E9M3LCZH6"

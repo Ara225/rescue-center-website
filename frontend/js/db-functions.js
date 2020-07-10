@@ -31,7 +31,7 @@ function scanData(tableName, isAdmin, html) {
                 document.getElementById('row').innerHTML +=
                     '      <div class="w3-col l3 m6 w3-margin-bottom" style="height:100%;">' +
                     '        <div class="w3-card w3-white">' +
-                    '          <img src="http://backend-websitebucket74b0f9e5-gayttyln7n1k.s3-website.eu-west-2.amazonaws.com' + encodeURI(horse.images[0]) + '" onerror="this.onerror=null; this.src=\'\'" style="width:100%">' +
+                    '          <img src="http://media.leighrescuecentre.co.uk.s3-website.eu-west-2.amazonaws.com' + encodeURI(horse.images[0]) + '" onerror="this.onerror=null; this.src=\'\'" style="width:100%">' +
                     '          <div class="w3-container">' +
                     '            <h3>' + horse.Name + '</h3>' +
                     '            <p style="overflow: hidden;height:7em">' + horse.Description + '</p>' +
@@ -80,14 +80,11 @@ function scanDataList(tableName) {
                 }
                 document.getElementById('row').innerHTML +=
                     '<li class="w3-container">' +
-                    '    <details class="w3-row">' +
-                    '        <summary class="w3-large">' + (item.Name ? item.Name : item.FullName) + '</summary>' +
-                    '        <span class="w3-col m11" style="word-wrap:break-word">' + innerList + '</span>' +
-                    '        <span class="w3-col m1">' +
+                    '        <span class="w3-large">' + (item.Name ? item.Name : item.FullName) + '</summary>' +
                     '            <button class="w3-button w3-align-right"><i class="fa fa-trash"></i></button>' +
-                    '            <button class="w3-button w3-align-right"><i class="fa fa-edit"></i></button>' +
+                    '            <button class="w3-button w3-align-right" '+
+                    'onclick="readItem(queriesTableName, \'' + item.id + '\', (data) => {preFillFormFields(data); document.getElementById(\'details\').style.display = \'block\';})"><i class="fa fa-eye"></i></button>' +
                     '        </span>' +
-                    '    </details>' +
                     '</li>'
             });
             if (data.LastEvaluatedKey && !params.Limit) {
@@ -129,12 +126,12 @@ function readItem(tableName, id, callback) {
 async function renderItem(data) {
     document.getElementById("name").innerText = data.Item.Name
     for (image in data.Item.images) {
-        document.getElementById("media").innerHTML += '<img class="mySlides w3-animate-opacity" src="http://backend-websitebucket74b0f9e5-gayttyln7n1k.s3-website.eu-west-2.amazonaws.com' + encodeURI(data.Item.images[image]) + '" style="width:100%">'
+        document.getElementById("media").innerHTML += '<img class="mySlides w3-animate-opacity" src="http://media.leighrescuecentre.co.uk.s3-website.eu-west-2.amazonaws.com' + encodeURI(data.Item.images[image]) + '" style="width:100%">'
     }
     showDivs(1);
     for (video in data.Item.videos) {
         document.getElementById("media").innerHTML += '<video class="mySlides w3-animate-opacity" controls style="width: 100%;">' +
-            '    <source src="http://backend-websitebucket74b0f9e5-gayttyln7n1k.s3-website.eu-west-2.amazonaws.com' + 
+            '    <source src="http://media.leighrescuecentre.co.uk.s3-website.eu-west-2.amazonaws.com' + 
             encodeURI(data.Item.videos[video]) + '" type="video/' + data.Item.videos[video].split(".")[data.Item.videos[video].split(".").length-1] + '">' +
             '    Your browser does not support the video tag.' +
             '</video>'
