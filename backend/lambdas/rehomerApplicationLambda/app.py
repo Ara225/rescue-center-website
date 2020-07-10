@@ -55,7 +55,6 @@ def lambda_handler(event, context):
             "VetDetails": body["VetDetails"],
             "experience": body["experience"],
             "notes": body["notes"],
-            "HorsePreferences": body["HorsePreferences"],
             "id": body["Name"] + ":" + randomString,
             "date": Decimal(datetime.now().timestamp()),
             "accepted": "N/A",

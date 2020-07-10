@@ -99,7 +99,8 @@ function formToJSON(form) {
         }
         else {
             if (form[i].value == "" && form[i].required) {
-                document.getElementById("submit").innerText = 'Submit'
+                document.getElementById("submit").innerText = 'Submit Form'
+                document.getElementById("submit").disabled = false
                 alert("Unable to validate form. Please ensure all required fields are completed")
                 return false;
             }
@@ -113,6 +114,7 @@ function formToJSON(form) {
 }
 function onRehomerFormSubmit(token) {
     document.getElementById("submit").innerHTML = 'Submitting <i class="fa fa-spinner fa-spin"></i>'
+    document.getElementById("submit").disabled = true
     try {
         var SuitableForCheckBoxGroup = document.getElementsByClassName('preferredSuitableFor')
         var oneChecked = false
@@ -122,7 +124,8 @@ function onRehomerFormSubmit(token) {
             }
         }
         if (!oneChecked) {
-            document.getElementById("submit").innerText = 'Submit'
+            document.getElementById("submit").innerText = 'Submit Form'
+            document.getElementById("submit").disabled = false
             alert("Please tick a box in the \"Planned horse use\" section")
             return false;
         }
@@ -134,23 +137,24 @@ function onRehomerFormSubmit(token) {
             }
         }
         if (!oneChecked) {
-            document.getElementById("submit").innerText = 'Submit'
+            document.getElementById("submit").innerText = 'Submit Form'
+            document.getElementById("submit").disabled = false
             alert("Please tick a box in the \"I'm looking for a\" section")
             return false;
         }
         var form = formToJSON(document.getElementsByClassName('FormField'));
-        form.SuitableFor = []
-        var SuitableFor = document.getElementsByClassName('SuitableFor')
-        for (i in SuitableFor) {
-            if (SuitableFor[i].checked) {
-                form.SuitableFor.push(SuitableFor[i].id)
+        form.preferredSuitableFor = []
+        var preferredSuitableFor = document.getElementsByClassName('preferredSuitableFor')
+        for (i in preferredSuitableFor) {
+            if (preferredSuitableFor[i].checked) {
+                form.preferredSuitableFor.push(preferredSuitableFor[i].id)
             }
         }
-        form.Sex = []
-        var Sex = document.getElementsByClassName('Sex')
-        for (i in Sex) {
-            if (Sex[i].checked) {
-                form.Sex.push(Sex[i].id)
+        form.preferredSex = []
+        var preferredSex = document.getElementsByClassName('preferredSex')
+        for (i in preferredSex) {
+            if (preferredSex[i].checked) {
+                form.preferredSex.push(preferredSex[i].id)
             }
         }
         console.log(form)
@@ -169,6 +173,7 @@ function onRehomerFormSubmit(token) {
 function onContactFormSubmit(token) {
     try {
         document.getElementById("submit").innerHTML = 'Submitting <i class="fa fa-spinner fa-spin"></i>'
+        document.getElementById("submit").disabled = true
         var form = formToJSON(document.getElementsByClassName('FormField'));
         fetch(APIEndpoint + "queries", {
                   method: "POST", 
@@ -201,14 +206,16 @@ function displaySuccess(text) {
                                                     "<div class=\"w3-container\">" +
                                                     text +
                                                     "</div>" 
-    document.getElementById("submit").innerText = 'Submit'
+    document.getElementById("submit").innerText = 'Submit Form'
+    document.getElementById("submit").disabled = false
     document.getElementById('alertBox').style.display='block'
     document.getElementById("Form").reset()
 }
 
 function displayError(e) {
     console.log(e)
-    document.getElementById("submit").innerText = 'Submit'
+    document.getElementById("submit").innerText = 'Submit Form'
+    document.getElementById("submit").disabled = false
     document.getElementById("alertDiv").innerHTML = "<header class=\"w3-container w3-red\"> " +
                                                     "  <span onclick=\"document.getElementById('alertBox').style.display='none'\" " +
                                                     "  class=\"w3-button w3-display-topright\">&times;</span>" +
