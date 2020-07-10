@@ -105,16 +105,27 @@ class InfrastructureStack(core.Stack):
         queriesTable.grant_write_data(queries_lambda_function)
 
         # ******* S3 bucket
-        websiteBucket = aws_s3.Bucket(self, "websiteBucket",
+        websiteBucket = aws_s3.Bucket(self, "websiteBucket", bucket_name="www.leighrescuecentre.co.uk",
                                       public_read_access=True,
                                       website_index_document="index.html",
                                       cors=[{
-                                          "allowedMethods" : [aws_s3.HttpMethods.GET, aws_s3.HttpMethods.PUT, aws_s3.HttpMethods.HEAD, aws_s3.HttpMethods.POST, aws_s3.HttpMethods.DELETE ],
-                                          "allowedOrigins" : [ "*"],
-                                          "allowedHeader": ["*"],
-                                          "exposeHeader": ["ETag"]
-                                        }]
+                                        "allowedMethods" : [aws_s3.HttpMethods.GET, aws_s3.HttpMethods.PUT, aws_s3.HttpMethods.HEAD, aws_s3.HttpMethods.POST, aws_s3.HttpMethods.DELETE ],
+                                        "allowedOrigins" : [ "*"],
+                                        "allowedHeader": ["*"],
+                                        "exposeHeader": ["ETag"]
+                                      }]
                                       )
+        imagesBucket = aws_s3.Bucket(self, "imagesBucket",
+                              bucket_name="media.leighrescuecentre.co.uk",
+                              public_read_access=True,
+                              website_index_document="index.html",
+                              cors=[{
+                                  "allowedMethods" : [aws_s3.HttpMethods.GET, aws_s3.HttpMethods.PUT, aws_s3.HttpMethods.HEAD, aws_s3.HttpMethods.POST, aws_s3.HttpMethods.DELETE ],
+                                  "allowedOrigins" : [ "*"],
+                                  "allowedHeader": ["*"],
+                                  "exposeHeader": ["ETag"]
+                                }]
+                              )
 
         # ******* CloudFront distribution
         distribution = aws_cloudfront.CloudFrontWebDistribution(self, "websiteBucketDistribution",
