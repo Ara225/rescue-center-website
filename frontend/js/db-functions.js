@@ -154,7 +154,7 @@ function preFillFormFields(data) {
         if (document.querySelector("#" + dbCols[i])) {
             document.getElementById(dbCols[i]).value = data.Item[dbCols[i]]
         }
-        else if (Object.prototype.toString.call(data.Item[dbCols[i]]) == "[object Array]") {
+        else if (Object.prototype.toString.call(data.Item[dbCols[i]]) == "[object Array]" && dbCols[i] != "videos" && dbCols[i] != "images") {
             for (var item=0; item < data.Item[dbCols[i]].length; item++) {
                 if (document.querySelector("#" + data.Item[dbCols[i]][item])) {
                     document.getElementById(data.Item[dbCols[i]][item]).checked = true
