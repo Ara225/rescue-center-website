@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="/js/config.js"></script>
+<script src="/js/utility-functions.js"></script>
+<script src="/js/db-functions.js"></script>
+<script src="https://sdk.amazonaws.com/js/aws-sdk-2.709.0.min.js"></script>
+<link rel="stylesheet" href="/css/index.css">
+
+<body class="w3-light-grey">
+    <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+        <div class="w3-bar w3-white w3-card" id="myNavbar">
+            <a href="/" class="w3-bar-item w3-button w3-wide">Leigh Rescue Centre</a>
+            <!-- Right-sided navbar links -->
+            <div class="w3-right w3-hide-small">
+                <a href="horses.html" class="w3-bar-item w3-button">HORSES</a>
+                <a href="rehoming-applications.html"class="w3-bar-item w3-button"><i class="fa fa-user"></i>
+                    APPLICATIONS</a>
+                <a href="queries.html" class="w3-bar-item w3-button"><i
+                        class="fa fa-comment"></i> QUERIES</a>
+            </div>
+            <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+
+            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+                onclick="w3_open()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Sidebar on small screens when clicking the menu icon -->
+    <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large"
+        style="display:none" id="mySidebar">
+        <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close
+            ×</a>
+        <a href="/" class="w3-bar-item w3-button"><i class="fa fa-home"></i>BACK TO SITE</a>
+        <a href="horses.html" class="w3-bar-item w3-button">HORSES</a>
+        <a href="rehoming-applications.html"class="w3-bar-item w3-button"><i class="fa fa-user"></i>
+            APPLICATIONS</a>
+        <a href="queries.html" class="w3-bar-item w3-button"><i class="fa fa-comment"></i>
+            QUERIES</a>
+    </nav>
+    <header class="w3-container w3-center w3-padding-64"> 
+        <div ><span class="w3-xxlarge w3-hide-small w3-border-teal w3-bottombar">Volunteer Applications</span></div> 
+        <div ><span class="w3-xlarge w3-border-teal w3-bottombar w3-hide-large w3-hide-medium">Volunteer Applications</span></div> 
+    </header>
+    <div id="renderTarget" style="overflow: hidden;">
+    </div>
+    <br>
+    <br>
+
+    <div class="w3-container w3-theme-l5 w3-center" id="details" style="display: none;">
+        <div class="w3-content w3-left-align">
+            <div ><span class="w3-xlarge w3-hide-small ">Volunteer Details</span></div> 
+            <div ><span class="w3-large w3-hide-large w3-hide-medium">Volunteer Details</span></div> 
+            <br>
+                <div class="w3-section">
+                    <label for="Name">Name</label>
+                    <input class="w3-input FormField" type="text" id="Name" required disabled>
+                </div>
+                <div class="w3-section">
+                    <label for="EmailAddress">Email Address</label>
+                    <input class="w3-input FormField" type="text" id="EmailAddress" required disabled>
+                </div>
+                <div class="w3-section">
+                    <label for="PhoneNumber">Phone Number</label>
+                    <input class="w3-input FormField" type="text" id="PhoneNumber" required disabled>
+                </div>
+                <div class="w3-section">
+                    <label for="volunteerWhy">Please tell us why you want to volunteer & what you're hoping to do:</label>
+                    <textarea class="w3-input FormField" id="volunteerWhy" required disabled></textarea>
+                </div>
+                <div class="w3-section">
+                    <label for="volunteerExperience">Please tell us about your experience with horses:</label>
+                    <textarea class="w3-input FormField" id="volunteerExperience" required disabled></textarea>
+                </div>
+                <div class="w3-section">
+                    <label for="volunteerTransport">Please tell us if you have your own transport:</label>
+                    <select class="w3-input FormField" id="volunteerTransport" required disabled>
+                        <option value="" selected>
+                            -- Select Option --
+                        </option>
+                        <option>
+                            Yes
+                        </option>
+                        <option>
+                            No
+                        </option>
+                        <option>
+                            Sometimes
+                        </option>
+                    </select>
+                </div>
+                <div class="w3-section">
+                    <label>
+                        <h4><b>Internal Only Fields</b></h4>
+                    </label>
+                </div>
+                <div class="w3-section">
+                    <label for="id">id</label>
+                    <input class="w3-input FormField" type="text" id="id" required disabled>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/admin.js"></script>
+    <script>
+        getCognitoCreds(() => {getCredsAuth(() => {scanDataList(volunteersTableName)})}, true);
+    </script>
+</body>
+
+</html>

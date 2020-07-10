@@ -126,7 +126,7 @@ class InfrastructureStack(core.Stack):
         rehomersTable.grant_write_data(rehomers_lambda_function)
         horsesTable.grant_read_data(horses_lambda_function)
         queriesTable.grant_write_data(queries_lambda_function)
-        volunteersTable.grant_write_data(queries_lambda_function)
+        volunteersTable.grant_write_data(volunteers_lambda_function)
 
         # ******* S3 bucket
         websiteBucket = aws_s3.Bucket(self, "websiteBucket", bucket_name="www.leighrescuecentre.co.uk",

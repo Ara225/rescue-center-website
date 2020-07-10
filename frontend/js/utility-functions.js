@@ -170,16 +170,16 @@ function onRehomerFormSubmit(token) {
     }
 }
 
-function onContactFormSubmit(token) {
+function onContactFormSubmit(token, endpoint) {
     try {
         document.getElementById("submit").innerHTML = 'Submitting <i class="fa fa-spinner fa-spin"></i>'
         document.getElementById("submit").disabled = true
         var form = formToJSON(document.getElementsByClassName('FormField'));
-        fetch(APIEndpoint + "queries", {
+        fetch(APIEndpoint + endpoint, {
                   method: "POST", 
                   body: JSON.stringify(form)
-                }).then(res => { 
-                  res.json().then(jsonResult => {displayResult(jsonResult)}).catch(e => displayError(e.message))
+                }).then(res => { console.log(res);
+                  res.json().then(jsonResult => {console.log(jsonResult);displayResult(jsonResult)}).catch(e => displayError(e.message))
                 }).catch(e => displayError(e.message));
     }
     catch(e) {

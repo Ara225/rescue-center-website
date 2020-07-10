@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 <link rel="stylesheet" href="css/index.css">
+<script src="/js/config.js"></script>
 <script src="/js/utility-functions.js"></script>
 
 <body class="w3-light-grey">
@@ -73,12 +74,16 @@
             occaecat
             cupidatat non
             proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <div id="alertBox" class="w3-modal">
+                <div class="w3-modal-content w3-card-4" id="alertDiv">
+                </div>
+            </div>
         <div><span class="w3-xlarge w3-border-teal w3-bottombar">Apply</span>
             <br>
             <br>
 
         <form class="w3-container w3-card-4 w3-padding-16 w3-white" id="Form"
-            onSubmit="onContactFormSubmit('sdsd');return false;">
+            onSubmit="onContactFormSubmit('', 'volunteers');return false;">
             <div class="w3-section">
                 <label for="Name"><span style="color:red">*</span>Name</label>
                 <input class="w3-input FormField" type="text" id="Name" required>
@@ -117,7 +122,7 @@
                 </select>
             </div>
             <div class="w3-section">
-                <button type="submit" class="w3-button w3-right w3-theme" id="submit">Submit</button>
+                <button type="submit" class="w3-button w3-right w3-theme" id="submit">Submit Form</button>
             </div>
         </form>
         <label>
