@@ -49,11 +49,31 @@
         <div ><span class="w3-xxlarge w3-hide-small w3-border-teal w3-bottombar">Queries</span></div> 
         <div ><span class="w3-xlarge w3-border-teal w3-bottombar w3-hide-large w3-hide-medium">Queries</span></div> 
     </header>
-     <div id="renderTarget" style="overflow: hidden;">
+    <form class="w3-container w3-card-4 w3-padding-16 w3-white" id="Form"
+    onSubmit="onContactFormSubmit('sdsd');return false;">
+    <div class="w3-section">
+        <label for="FullName"><span style="color:red">*</span>Full Name</label>
+        <input class="w3-input FormField" type="text" id="FullName" required>
     </div>
+    <div class="w3-section">
+        <label for="EmailAddress"><span style="color:red">*</span>Email Address</label>
+        <input class="w3-input FormField" type="text" id="EmailAddress" required>
+    </div>
+    <div class="w3-section">
+        <label for="Message"><span style="color:red">*</span>Message</label>
+        <textarea class="w3-input FormField" id="Message" required></textarea>
+    </div>
+    <div class="w3-section">
+    <button type="submit" class="w3-button w3-right w3-theme" id="submit">Submit</button>
+    </div>
+</form>
     <script src="/js/admin.js"></script>
     <script>
-        getCognitoCreds(() => {getCredsAuth(() => {scanDataList(queriesTableName)})}, true);
+        getCognitoCreds(getCredsAuth, true)
+        if (document.location.search.search("id") != -1) {
+            readItem(queriesTableName, document.location.search.split("id=")[1], (data) => {preFillFormFields(data)})
+        }
+        //getCognitoCreds(() => {getCredsAuth(() => {scanDataList(queriesTableName)})}, true);
     </script>
 </body>
 

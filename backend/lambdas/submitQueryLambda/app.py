@@ -45,7 +45,6 @@ def lambda_handler(event, context):
             "FullName": body["FullName"],
             "EmailAddress": body["EmailAddress"],
             "Message": body["Message"],
-            "QueryReason": body["QueryReason"],
             "id": body["FullName"] + ":" + randomString,
             "date": Decimal(datetime.now().timestamp()),
             "expires": Decimal(expiresIn)
