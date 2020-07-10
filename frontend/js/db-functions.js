@@ -144,7 +144,7 @@ async function renderItem(data) {
     for (var i = 1; i < (data.Item.videos.length + data.Item.images.length + 1); i++) {
         document.getElementById("dots").innerHTML += '<span class="dot" onclick="moveToDiv(' + i.toString() + ')"></span>'
     }
-    document.getElementById("description").innerHTML = "<br><br>" + data.Item.Description.replace("\n\n", "<br>") + "<br><br>"
+    document.getElementById("description").innerHTML = "<br><br>" + data.Item.Description.replace(new RegExp("\n\n", "g"), '<br><br>') + "<br><br>"
 }
 
 function preFillFormFields(data) {
