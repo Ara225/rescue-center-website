@@ -52,14 +52,10 @@ function scanDataList(tableName) {
     var params = {
         TableName: tableName,
     };
-    document.getElementById('renderTarget').innerHTML = '<div class="w3-container w3-theme-l5 w3-center">' +
-        '    <div class="w3-content w3-left-align">' +
-        '        <div class="w3-container w3-card-2 w3-white">' +
-        '            <ul class="w3-ul w3-white" id="row">' +
-        '            </ul>' +
-        '        </div>' +
-        '    </div>' +
-        '</div>'
+    document.getElementById('renderTarget').innerHTML = '<div class="w3-container">' +
+    '    <div class="w3-row-padding w3-grayscale" id="row">' +
+    '    </div>' +
+    '</div>'
 
     console.log("Scanning table.")
     var docClient = new AWS.DynamoDB.DocumentClient();
@@ -79,14 +75,19 @@ function scanDataList(tableName) {
                     innerList += "<b>" + Object.keys(item)[i] + ":</b> " + item[Object.keys(item)[i]] + "<br>"
                 }
                 document.getElementById('row').innerHTML +=
-                    '<li class="w3-container ">' +
-                    '        <span class="w3-large"> ' + (item.Name ? item.Name : item.FullName) + 
-                    (item.date ? ' | ' + new Date(item.date*1000).toDateString() : "") +
-                    '            <button class="w3-button w3-align-right"><i class="fa fa-trash"></i></button>' +
-                    '            <button class="w3-button w3-align-right" '+
-                    'onclick="readItem(\'' + tableName + '\', \'' + item.id + '\', (data) => {preFillFormFields(data); document.getElementById(\'details\').style.display = \'block\';})"><i class="fa fa-eye"></i></button>' +
-                    '        </span>' +
-                    '</li>'
+                '      <div class="w3-col l3 m6 w3-margin-bottom" style="height:100%;">' +
+                '        <div class="w3-card w3-white">' +
+                '          <div class="w3-container">' +
+                '            <h3>' + (item.Name ? item.Name : item.FullName) + '</h3>' +
+                '            <p class="w3-opacity">' + 
+                (item.date ? "Submitted on: " + new Date(item.date*1000).toDateString() + "<br>" : "") + '</p>' +
+                '            <p style="overflow: hidden;max-height:10em">' + 
+                (item.Message ? item.Message.replace("\n\n", "<br><br>") : "Email Address:<br>"+ item.EmailAddress + "<br>") + '</p>' +
+                '            <p><a  class="w3-button w3-light-grey w3-block" onclick="readItem(\'' + tableName + '\', \'' + item.id + 
+                '\', (data) => {preFillFormFields(data); document.getElementById(\'details\').style.display = \'block\';})">View</a></p>' +
+                '          </div>' +
+                '        </div>' +
+                '      </div>' 
             });
             if (data.LastEvaluatedKey && !params.Limit) {
                 console.log("Scanning for more...")
