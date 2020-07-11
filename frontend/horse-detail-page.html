@@ -23,15 +23,11 @@
       <a href="/" class="w3-bar-item w3-button w3-wide">Leigh Rescue Centre</a>
       <!-- Right-sided navbar links -->
       <div class="w3-right w3-hide-small">
-          <a href="about.html" class="w3-bar-item w3-button">  ABOUT</a>
-    <a href="about.html" class="w3-bar-item w3-button">  ABOUT</a>
-  <a href="rehome.html" class="w3-bar-item w3-button"><i class="fa fa-heart"></i>  REHOME</a>
-
-
-
-
+        <a href="about.html" class="w3-bar-item w3-button"> ABOUT</a>
+        <a href="rehome.html" class="w3-bar-item w3-button"><i class="fa fa-heart"></i> REHOME</a>
         <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i>VOLUNTEER</a>
         <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+        <a href="donations.html" class="w3-bar-item w3-button"><i class="fa fa-money"></i> DONATE</a>
       </div>
       <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
@@ -47,22 +43,18 @@
     style="display:none" id="mySidebar">
     <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
     <a href="/" class="w3-bar-item w3-button"><i class="fa fa-home"></i>HOME</a>
-      <a href="about.html" class="w3-bar-item w3-button">  ABOUT</a>
-    <a href="about.html" class="w3-bar-item w3-button">  ABOUT</a>
-  <a href="rehome.html" class="w3-bar-item w3-button"><i class="fa fa-heart"></i>  REHOME</a>
-
-
-
-
+    <a href="about.html" class="w3-bar-item w3-button"> ABOUT</a>
+    <a href="rehome.html" class="w3-bar-item w3-button"><i class="fa fa-heart"></i> REHOME</a>
     <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i>VOLUNTEER</a>
     <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+    <a href="donations.html" class="w3-bar-item w3-button"><i class="fa fa-money"></i> DONATE</a>
   </nav>
   <br>
   <br>
   <br>
   <div class="w3-content w3-margin-bottom w3-margin-top" style="position:relative">
     <span id="media">
-    
+
     </span>
     <a class="w3-btn-floating w3-button w3-hover-dark-grey w3-xlarge" style="position:absolute;top:45%;left:0;"
       onclick="plusDivs(-1)">❮ </a>
@@ -88,7 +80,7 @@
   </div>
   </div>
   <script>
-    getCognitoCreds(() => { getCredsUnAuth(() => {readItem(horsesTableName, document.location.search.split("id=")[1], renderItem)}) }, false)
+    getCognitoCreds(() => { getCredsUnAuth(() => { readItem(horsesTableName, document.location.search.split("id=")[1], renderItem) }) }, false)
   </script>
   <!-- Footer -->
   <footer class="w3-center w3-black w3-padding-64">
