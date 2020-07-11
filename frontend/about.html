@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="/js/utility-functions.js"></script>
+    <script src="/js/db-functions.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.709.0.min.js"></script>
+    <script src="/js/config.js"></script>
+
+</head>
+
+<body class="w3-light-grey">
+    <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+        <div class="w3-bar w3-white w3-card" id="myNavbar">
+            <a href="/" class="w3-bar-item w3-button w3-wide">Leigh Rescue Centre</a>
+            <!-- Right-sided navbar links -->
+            <div class="w3-right w3-hide-small">
+                <a href="about.html" class="w3-bar-item w3-button"> ABOUT</a>
+                <a href="rehome.html" class="w3-bar-item w3-button"><i class="fa fa-heart"></i> REHOME</a>
+
+
+                <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i>VOLUNTEER</a>
+                <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+            </div>
+            <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+
+            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+                onclick="w3_open()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Sidebar on small screens when clicking the menu icon -->
+    <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large"
+        style="display:none" id="mySidebar">
+        <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close
+            ×</a>
+        <a href="/" class="w3-bar-item w3-button"><i class="fa fa-home"></i>HOME</a>
+        <a href="about.html" class="w3-bar-item w3-button"> ABOUT</a>
+        <a href="rehome.html" class="w3-bar-item w3-button"><i class="fa fa-heart"></i> REHOME</a>
+        <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i>VOLUNTEER</a>
+        <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+    </nav>
+    <br>
+    <br>
+    <br>
+      <!-- About Section -->
+    <header class="w3-container w3-center">
+        <div ><span class="w3-xxlarge w3-hide-small w3-border-teal w3-bottombar">About Us</span></div>
+        <div ><span class="w3-xlarge w3-border-teal w3-bottombar w3-hide-large w3-hide-medium">About Us</span></div>
+    </header>
+    <br>
+    <br>
+<div class="w3-content w3-left-align">
+    <span class="w3-xlarge w3-teal w3-opacity w3-padding-large ">Who We are</span><br>
+    <p class="w3-large" style="padding-left: 5%;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+            laborum.
+    </p>
+    <br>
+    <br>
+    <span class="w3-xlarge w3-teal w3-opacity w3-padding-large ">What We Do</span><br>
+    <p class="w3-large" style="padding-left: 5%;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+        laborum.
+    </p>
+    <br>
+    <br>
+    <span class="w3-xlarge w3-teal w3-opacity w3-padding-large ">How We Do It</span><br>
+    <p class="w3-large" style="padding-left: 5%;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+            laborum.
+    </p>
+    <br>
+    <br>
+    <span class="w3-xlarge w3-teal w3-opacity w3-padding-large ">Why We Do It</span><br>
+    <p class="w3-large" style="padding-left: 5%;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+        laborum.
+    </p>
+</div>
+    <div class="w3-row">
+        <div class="w3-content w3-left-align">
+    <br>
+    <br>
+    <span class="w3-xlarge w3-teal w3-opacity w3-padding-large ">FAQ</span><br>
+            
+            <h3>Who can I contact if I have technical problems with this site?</h3>
+            <p class="w3-medium">
+                You can fill in the Contact Us form or email Anna, the volunteer responsible for this site, directly
+                at
+                anna11199810@hotmail.co.uk
+            </p>
+            <h3>Does filling in the rehoming form entitle me to a horse?</h3>
+            <p class="w3-medium">
+                No. That is merely the first step in the process; we're just finding out about you so that we know
+                you can care
+                for the horse.
+            </p>
+            <h3>What happens after submitting a query or volunteering form?</h3>
+            <p class="w3-medium">
+                We'll try to get back to you within 7 working days. If we don't, feel free to remind us
+            </p>
+            <h3>What happens after submitting the rehoming form?</h3>
+            <p class="w3-medium">
+                When you submit the rehoming form, if you've indicated interest in a specific horse, we'll try to phone
+                and/or email you as soon as possible to discuss and arrange a
+                meeting. Otherwise, we'll try to reach out when we have a suitable horse, though we have no
+                obligation do so.
+            </p>
+            <h3>Is my personal data secure?</h3>
+            <p class="w3-medium">
+                We make the best possible efforts to secure your data in accordance with the GPDR. It will be sent
+                over HTTPS,
+                stored in a secure cloud database, and encrypted at rest. You can request to have us delete it at
+                any time.
+            </p>
+            <h3>Why do you need the data you request?</h3>
+            <p class="w3-medium">
+                We need to be sure that our horses are going to be safe and happy in their new homes. We believe
+                that the
+                data we request is reasonable in attaining this goal under the GPDR legitimate interests ground.
+                Specifically,
+                it is used for assessing suitability for rehoming, checking up horse(s) rehomed, contacting for
+                purposes
+                related to rehoming, and/or informing potential rehomers about horses they might be interested in.
+                In the unfortunate
+                event that evidence of serious misconduct such as abuse or resale is present, the data may also be
+                used to
+                exercise the charity's legal right to seize the horse.
+            </p>
+            <h3>Will you send spam or resell my data?</h3>
+            <p class="w3-medium">
+                No; we will use the data only for the purposes listed above.
+            </p>
+            <h3>How long will my data be kept for?</h3>
+            <p class="w3-medium">
+                Queries are automatically deleted within thirty days.
+                For volunteer and rehoming applications, it's difficult to give an exact timescale; it really depends on the situation. However, we will
+                review
+                the data we have regularly and delete any unnecessary data. Specifically, if we turn you down for
+                rehoming,
+                we will try to delete your data within a month. You can ask us about the data we have or ask us to
+                remove it
+                at any time via the Contact Us form or authorized email addresses.
+            </p>
+        </div>
+    </div>
+    </div>
+    <!-- Footer -->
+    <footer class="w3-center w3-black w3-padding-64">
+        <p>Copyright Leigh Rescue Centre 2020 | Powered by <a href="https://www.w3schools.com/w3css/default.asp"
+                title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+    </footer>
+    <script src="/js/slideshow.js"></script>
+
+</body>
+
+</html>
