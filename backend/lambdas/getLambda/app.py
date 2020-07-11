@@ -31,6 +31,8 @@ def lambda_handler(event, context):
     """
     # This allows the function to run locally by sending requests to a local DynamoDB. Option one is for when it's
     #  being run by SAM, option two for when the tests are being run, and three for production
+    print(context)
+    print(event)
     if 'local' == os.environ.get('APP_STAGE'):
         dynamodb = boto3.resource('dynamodb', endpoint_url='http://localhost:8000')
         table = dynamodb.Table("horsesTable")

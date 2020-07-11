@@ -6,6 +6,7 @@ from aws_cdk import aws_dynamodb
 from aws_cdk import aws_s3_deployment
 from aws_cdk import aws_cloudfront
 from os import environ
+from aws_cdk.aws_apigateway import AuthorizationType
 
 
 class InfrastructureStack(core.Stack):
@@ -65,6 +66,12 @@ class InfrastructureStack(core.Stack):
                                                        "allow_methods": ["GET", "POST", "OPTIONS"]
                                                    })
 
+        auth = aws_apigateway.CfnAuthorizer(self, "adminSectionAuth", rest_api_id=rescue_centre_api.rest_api_id,
+                                            type='COGNITO_USER_POOLS', identity_source='method.request.header.Authorization',
+                                            provider_arns=[
+                                                'arn:aws:cognito-idp:eu-west-2:040684591284:userpool/eu-west-2_3T4vtfKJE'],
+                                            name="adminSectionAuth"
+                                            )
         # ******* Public API
         # Create URL paths
         rehomers_resource = rescue_centre_api.root.add_resource('rehomers')
@@ -83,7 +90,7 @@ class InfrastructureStack(core.Stack):
                                                      handler='app.lambda_handler',
                                                      runtime=aws_lambda.Runtime.PYTHON_3_8,
                                                      code=aws_lambda.Code.from_asset(
-                                                         "lambdas/getHorsesLambda"),
+                                                         "lambdas/getLambda"),
                                                      )
 
         queries_lambda_function = aws_lambda.Function(self, "submitQueryLambda",
@@ -127,6 +134,61 @@ class InfrastructureStack(core.Stack):
         horsesTable.grant_read_data(horses_lambda_function)
         queriesTable.grant_write_data(queries_lambda_function)
         volunteersTable.grant_write_data(volunteers_lambda_function)
+
+        get_rehomers_lambda_function = aws_lambda.Function(self, "getrehomersLambda",
+                                                           handler='app.lambda_handler',
+                                                           runtime=aws_lambda.Runtime.PYTHON_3_8,
+                                                           code=aws_lambda.Code.from_asset(
+                                                               "lambdas/getLambda"),)
+
+        get_queries_lambda_function = aws_lambda.Function(self, "getQueriesLambda",
+                                                          handler='app.lambda_handler',
+                                                          runtime=aws_lambda.Runtime.PYTHON_3_8,
+                                                          code=aws_lambda.Code.from_asset(
+                                                              "lambdas/getLambda")
+                                                          )
+        get_volunteers_lambda_function = aws_lambda.Function(self, "getVolunteersLambda",
+                                                             handler='app.lambda_handler',
+                                                             runtime=aws_lambda.Runtime.PYTHON_3_8,
+                                                             code=aws_lambda.Code.from_asset(
+                                                                 "lambdas/getLambda"),
+                                                             )
+
+        # Make intergrations
+        get_rehomers_lambda_integration = aws_apigateway.LambdaIntegration(
+            get_rehomers_lambda_function, proxy=True)
+        rehomers_resource.add_method('GET', rehomers_lambda_integration,
+                                     authorization_type=AuthorizationType.COGNITO,
+                                     authorization_scopes=["openid", "profile", "email"], authorizer=auth)
+        get_queries_lambda_integration = aws_apigateway.LambdaIntegration(
+            get_queries_lambda_function, proxy=True)
+        queries_resource.add_method('GET', queries_lambda_integration,
+                                    authorization_type=AuthorizationType.COGNITO,
+                                    authorization_scopes=["openid", "profile", "email"], authorizer=auth)
+        get_volunteers_lambda_integration = aws_apigateway.LambdaIntegration(
+            get_volunteers_lambda_function, proxy=True)
+        volunteers_resource.add_method('GET', volunteers_lambda_integration,
+                                       authorization_type=AuthorizationType.COGNITO,
+                                       authorization_scopes=["openid", "profile", "email"], authorizer=auth)
+
+        # ******* environment variables
+        get_rehomers_lambda_function.add_environment(
+            "TABLE_NAME", rehomersTable.table_name)
+        get_queries_lambda_function.add_environment(
+            "TABLE_NAME", queriesTable.table_name)
+        get_volunteers_lambda_function.add_environment(
+            "TABLE_NAME", volunteersTable.table_name)
+        get_rehomers_lambda_function.add_environment(
+            "ShouldBeAuth", "true")
+        get_queries_lambda_function.add_environment(
+            "ShouldBeAuth", "true")
+        get_volunteers_lambda_function.add_environment(
+            "ShouldBeAuth", "true")
+
+        # ******* function permissions
+        rehomersTable.grant_read_data(rehomers_lambda_function)
+        queriesTable.grant_read_data(queries_lambda_function)
+        volunteersTable.grant_read_data(volunteers_lambda_function)
 
         # ******* S3 bucket
         websiteBucket = aws_s3.Bucket(self, "websiteBucket", bucket_name="www.leighrescuecentre.co.uk",
