@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+
+<html>
+
+<head>
+    <title>Leigh Rescue Centre | About</title>
+    <meta name="Description" CONTENT="About Leigh Rescue Centre: what we do, how we do it and why we do it">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="/js/utility-functions.js"></script>
+    <script src="/js/db-functions.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.709.0.min.js"></script>
+    <script src="/js/config.js"></script>
+</head>
+
+<body class="w3-light-grey">
+    <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+        <div class="w3-bar w3-white w3-card" id="myNavbar">
+            <a href="/" class="w3-bar-item w3-button w3-wide">Leigh Rescue Centre</a>
+            <!-- Right-sided navbar links -->
+            <div class="w3-right w3-hide-small">
+                <a href="about.html" class="w3-bar-item w3-button"> ABOUT</a>
+                <a href="rehome.html" class="w3-bar-item w3-button"><i class="fa fa-heart"></i> REHOME</a>
+                <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i>VOLUNTEER</a>
+                <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+                <a href="donations.html" class="w3-bar-item w3-button"><i class="fa fa-money"></i> DONATE</a>
+            </div>
+            <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+
+            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+                onclick="w3_open()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Sidebar on small screens when clicking the menu icon -->
+    <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large"
+        style="display:none" id="mySidebar">
+        <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close
+            ×</a>
+        <a href="/" class="w3-bar-item w3-button"><i class="fa fa-home"></i>HOME</a>
+        <a href="about.html" class="w3-bar-item w3-button"> ABOUT</a>
+        <a href="rehome.html" class="w3-bar-item w3-button"><i class="fa fa-heart"></i> REHOME</a>
+        <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i>VOLUNTEER</a>
+        <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+        <a href="donations.html" class="w3-bar-item w3-button"><i class="fa fa-money"></i> DONATE</a>
+    </nav>
+
+
+
+<!-- Header -->
+<header class="w3-container w3-center w3-padding-64"> 
+  <h1><b>MY BLOG</b></h1>
+  <p>Welcome to the blog of <span class="w3-tag">unknown</span></p>
+</header>
+
+<!-- Grid -->
+<div class="w3-row">
+
+<!-- Blog entries -->
+<div class="w3-content">
+  <!-- Blog entry -->
+  <div class="w3-card-4 w3-margin w3-white">
+    <div style="max-height: 30em;overflow: hidden;">
+    <img src="media/SampleHorse/horse-905534.jpg" alt="Nature" style="width:100%;">
+</div>
+    <div class="w3-container">
+      <h3><b>TITLE HEADING</b></h3>
+      <h5>Title description, <span class="w3-opacity">April 7, 2014</span></h5>
+    </div>
+
+    <div class="w3-container">
+      <p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed
+        tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+      <div class="w3-row">
+        <div class="w3-col m8 s12">
+          <p><button class="w3-button w3-padding-large w3-white w3-border"><b>READ MORE »</b></button></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+
+  <!-- Blog entry -->
+  <div class="w3-card-4 w3-margin w3-white">
+  <img src="/w3images/bridge.jpg" alt="Norway" style="width:100%">
+    <div class="w3-container">
+      <h3><b>BLOG ENTRY</b></h3>
+      <h5>Title description, <span class="w3-opacity">April 2, 2014</span></h5>
+    </div>
+
+    <div class="w3-container">
+      <p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed
+        tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+      <div class="w3-row">
+        <div class="w3-col m8 s12">
+          <p><button class="w3-button w3-padding-large w3-white w3-border"><b>READ MORE »</b></button></p>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- END BLOG ENTRIES -->
+</div>
+
+<!-- END GRID -->
+</div><br>
+
+<!-- Footer -->
+<footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
+  <button class="w3-button w3-black w3-disabled w3-padding-large w3-margin-bottom">Previous</button>
+  <button class="w3-button w3-black w3-padding-large w3-margin-bottom">Next »</button>
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer>
+
+</body>
+</html>

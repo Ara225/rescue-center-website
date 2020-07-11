@@ -31,8 +31,9 @@ function scanData(tableName, isAdmin, html) {
                 document.getElementById('row').innerHTML +=
                     '      <div class="w3-col l3 m6 w3-margin-bottom" style="height:100%;">' +
                     '        <div class="w3-card w3-white">' +
+                    '    <div style="height: 14em;overflow: hidden;">                    ' +
                     '          <img src="http://media.leighrescuecentre.co.uk.s3-website.eu-west-2.amazonaws.com' + encodeURI(horse.images[0]) + '" onerror="this.onerror=null; this.src=\'\'" style="width:100%">' +
-                    '          <div class="w3-container">' +
+                    '          </div><div class="w3-container">' +
                     '            <h3>' + horse.Name + '</h3>' +
                     '            <p style="overflow: hidden;height:7em">' + horse.Description + '</p>' +
                     '            <p><a href="' + (isAdmin ? 'create-horse.html' : '/horse-detail-page.html') + '?id=' + encodeURI(horse.id) + '" class="w3-button w3-light-grey w3-block">' + actionButton + '</a></p>' +
