@@ -4,90 +4,93 @@
 <html>
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
-  <link rel="stylesheet" href="css/index.css">
-  <script src="/js/utility-functions.js"></script>
-  <script src="/js/db-functions.js"></script>
-  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.709.0.min.js"></script>
-  <script src="/js/config.js"></script>
-
+    <title>Leigh Rescue Centre | Horse Details</title>
+    <meta name="Description" CONTENT="Details of a horse for rehoming">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="/js/utility-functions.js"></script>
+    <script src="/js/db-functions.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.709.0.min.js"></script>
+    <script src="/js/config.js"></script>
 </head>
 
 <body class="w3-light-grey">
-  <!-- Navbar (sit on top) -->
-  <div class="w3-top">
-    <div class="w3-bar w3-white w3-card" id="myNavbar">
-      <a href="/" class="w3-bar-item w3-button w3-wide">Leigh Rescue Centre</a>
-      <!-- Right-sided navbar links -->
-      <div class="w3-right w3-hide-small">
+    <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+        <div class="w3-bar w3-white w3-card" id="myNavbar">
+            <a href="/" class="w3-bar-item w3-button w3-wide">Leigh Rescue Centre</a>
+            <!-- Right-sided navbar links -->
+            <div class="w3-right w3-hide-small">
+                <a href="about.html" class="w3-bar-item w3-button"> ABOUT</a>
+                <a href="rehome.html" class="w3-bar-item w3-button"><i class="fa fa-heart"></i> REHOME</a>
+                <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i>VOLUNTEER</a>
+                <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
+                <a href="donations.html" class="w3-bar-item w3-button"><i class="fa fa-money"></i> DONATE</a>
+            </div>
+            <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+
+            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+                onclick="w3_open()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Sidebar on small screens when clicking the menu icon -->
+    <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large"
+        style="display:none" id="mySidebar">
+        <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close
+            ×</a>
+        <a href="/" class="w3-bar-item w3-button"><i class="fa fa-home"></i>HOME</a>
         <a href="about.html" class="w3-bar-item w3-button"> ABOUT</a>
         <a href="rehome.html" class="w3-bar-item w3-button"><i class="fa fa-heart"></i> REHOME</a>
         <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i>VOLUNTEER</a>
         <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
         <a href="donations.html" class="w3-bar-item w3-button"><i class="fa fa-money"></i> DONATE</a>
-      </div>
-      <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+    </nav>
+    <br>
+    <br>
+    <br>
+    <div class="w3-content w3-margin-bottom w3-margin-top" style="position:relative">
+        <span id="media">
 
-      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
-        onclick="w3_open()">
-        <i class="fa fa-bars"></i>
-      </a>
+        </span>
+        <a class="w3-btn-floating w3-button w3-hover-dark-grey w3-xlarge" style="position:absolute;top:45%;left:0;"
+            onclick="plusDivs(-1)">❮ </a>
+        <a class="w3-btn-floating w3-button  w3-hover-dark-grey w3-xlarge" style="position:absolute;top:45%;right:0;"
+            onclick="plusDivs(+1)"> ❯</a>
+        <div class="w3-center w3-display-bottommiddle" id="dots" style="width:100%">
+
+        </div>
     </div>
-  </div>
+    <div class="w3-content w3-margin-bottom w3-margin-top" style="position:relative">
+        <span class="w3-xxlarge" id="name"></span><br>
+        <span id="details"></span>
 
-  <!-- Sidebar on small screens when clicking the menu icon -->
-  <nav class="w3-sidebar w3-bar-block w3-black w3-card w3-animate-left w3-hide-medium w3-hide-large"
-    style="display:none" id="mySidebar">
-    <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
-    <a href="/" class="w3-bar-item w3-button"><i class="fa fa-home"></i>HOME</a>
-    <a href="about.html" class="w3-bar-item w3-button"> ABOUT</a>
-    <a href="rehome.html" class="w3-bar-item w3-button"><i class="fa fa-heart"></i> REHOME</a>
-    <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i>VOLUNTEER</a>
-    <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
-    <a href="donations.html" class="w3-bar-item w3-button"><i class="fa fa-money"></i> DONATE</a>
-  </nav>
-  <br>
-  <br>
-  <br>
-  <div class="w3-content w3-margin-bottom w3-margin-top" style="position:relative">
-    <span id="media">
+        <span id="description">
 
-    </span>
-    <a class="w3-btn-floating w3-button w3-hover-dark-grey w3-xlarge" style="position:absolute;top:45%;left:0;"
-      onclick="plusDivs(-1)">❮ </a>
-    <a class="w3-btn-floating w3-button  w3-hover-dark-grey w3-xlarge" style="position:absolute;top:45%;right:0;"
-      onclick="plusDivs(+1)"> ❯</a>
-    <div class="w3-center w3-display-bottommiddle" id="dots" style="width:100%">
+        </span>
+        <p>
+            <a href="/rehoming-form.html" class="w3-button w3-light-green w3-padding-large w3-medium">Apply to
+                Rehome</a>
+            &nbsp;
+            <a href="/rehome.html" class="w3-button w3-grey w3-padding-large w3-medium">View Other Horses</a>
+        </p>
 
     </div>
-  </div>
-  <div class="w3-content w3-margin-bottom w3-margin-top" style="position:relative">
-    <span class="w3-xxlarge" id="name"></span><br>
-    <span id="details"></span>
-
-    <span id="description">
-
-    </span>
-    <p>
-      <a href="/rehoming-form.html" class="w3-button w3-light-green w3-padding-large w3-medium">Apply to Rehome</a>
-      &nbsp;
-      <a href="/rehome.html" class="w3-button w3-grey w3-padding-large w3-medium">View Other Horses</a>
-    </p>
-
-  </div>
-  </div>
-  <script>
-    getCognitoCreds(() => { getCredsUnAuth(() => { readItem(horsesTableName, document.location.search.split("id=")[1], renderItem) }) }, false)
-  </script>
-  <!-- Footer -->
-  <footer class="w3-center w3-black w3-padding-64">
-    <p>Copyright Leigh Rescue Centre 2020 | Powered by <a href="https://www.w3schools.com/w3css/default.asp"
-        title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
-  </footer>
-  <script src="/js/slideshow.js"></script>
+    </div>
+    <script>
+        getCognitoCreds(() => { getCredsUnAuth(() => { readItem(horsesTableName, document.location.search.split("id=")[1], renderItem) }) }, false)
+    </script>
+    <!-- Footer -->
+    <footer class="w3-center w3-black w3-padding-64">
+        <p>Copyright Leigh Rescue Centre 2020 | Powered by <a href="https://www.w3schools.com/w3css/default.asp"
+                title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+    </footer>
+    <script src="/js/slideshow.js"></script>
 
 </body>
 
