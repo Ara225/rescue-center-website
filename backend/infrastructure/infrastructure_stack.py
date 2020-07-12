@@ -19,7 +19,7 @@ class InfrastructureStack(core.Stack):
         rescue_centre_api = aws_apigateway.RestApi(self, 'rescueCentreAPI', rest_api_name='rescueCentreAPI',
                                                    default_cors_preflight_options={
                                                        "allow_origins": ["*"],
-                                                       "allow_methods": ["GET", "POST", "OPTIONS"]
+                                                       "allow_methods": ["GET", "POST", "OPTIONS", "PUT", "DELETE"]
                                                    })
         # ******* COGNITO_USER_POOLS Auth
         auth = aws_apigateway.CfnAuthorizer(self, "adminSectionAuth", rest_api_id=rescue_centre_api.rest_api_id,
@@ -115,9 +115,10 @@ class InfrastructureStack(core.Stack):
             lambda_function, proxy=True)
         if details.get("requiresAuth"):
             lambda_function.add_environment("requiresAuth", "True")
-            #details["resource"].add_method(details["method"], lambda_integration,
-            #                               authorization_type=AuthorizationType.COGNITO,
-            #                               authorization_scopes=["openid", "profile", "email"], authorizer=auth)
+            details["resource"].add_method(details["method"], lambda_integration,
+                                           authorization_type=AuthorizationType.COGNITO,
+                                           authorizer=auth)
+            #authorization_scopes=["openid", "profile", "email"]
         else:
             details["resource"].add_method(
                 details["method"], lambda_integration)

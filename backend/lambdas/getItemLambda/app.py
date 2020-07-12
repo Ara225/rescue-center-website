@@ -31,27 +31,41 @@ def lambda_handler(event, context):
     """
     # This allows the function to run locally by sending requests to a local DynamoDB. Option one is for when it's
     #  being run by SAM, option two for when the tests are being run, and three for production
-    print(event["headers"])
-    print(event["identity"])
-    if 'local' == os.environ.get('APP_STAGE'):
-        dynamodb = boto3.resource('dynamodb', endpoint_url='http://localhost:8000')
-        table = dynamodb.Table("horsesTable")
-    else:
-        dynamodb = boto3.resource('dynamodb')
-        table = dynamodb.Table(os.environ["TABLE_NAME"])
-    if os.environ.get("requiresAuth") and not event['requestContext']['authorizer']["username"]:
+    try:
+        print(event["headers"])
         print(event)
+        if 'local' == os.environ.get('APP_STAGE'):
+            dynamodb = boto3.resource('dynamodb', endpoint_url='http://localhost:8000')
+            table = dynamodb.Table("horsesTable")
+        else:
+            dynamodb = boto3.resource('dynamodb')
+            table = dynamodb.Table(os.environ["TABLE_NAME"])
+        if os.environ.get("requiresAuth") and not event['requestContext'].get("authorizer"):
+            print(event)
+            return {
+                'headers': {
+                    'Access-Control-Allow-Headers': 'Content-Type',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+                },
+                "statusCode": 403,
+                "body": json.dumps({
+                    "success": False,
+                    "error": "Authentication required"
+                }),
+            }
+    except Exception as e:
         return {
             'headers': {
                 'Access-Control-Allow-Headers': 'Content-Type',
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
             },
-            "statusCode": 403,
-            "body": json.dumps({
-                "success": False,
-                "error": "Authentication required"
-            }),
+            "statusCode": 500,
+                "body": json.dumps({
+                    "success": False,
+                    "error": str(e) 
+                }),
         }
     if event.get("queryStringParameters"):
         if event["queryStringParameters"].get("id"):
@@ -135,7 +149,7 @@ def lambda_handler(event, context):
             key = response["LastEvaluatedKey"]['id']
         else:
             key = None
-        print("The items " + str([i.id for i in response['Items']]) + " were successfully retrieved by a request to " + event['resource'])
+        print("The items " + str([i["id"] for i in response['Items']]) + " were successfully retrieved by a request to " + event['resource'])
         return {
             'headers': {
                 'Access-Control-Allow-Headers': 'Content-Type',

@@ -64,7 +64,7 @@ def lambda_handler(event, context):
 
     try:
         # Prevent unauthenticated users from overwriting data
-        if body.get("id") and not event['requestContext']['authorizer']["username"]:
+        if body.get("id") and not event['requestContext'].get("authorizer"):
             print(event)
             return {
                 'headers': {
@@ -78,7 +78,7 @@ def lambda_handler(event, context):
                     "error": "Unable to update item without authentication"
                 }),
             }
-        if os.environ.get("requiresAuth") and not event['requestContext']['authorizer']["username"]:
+        if os.environ.get("requiresAuth") and not event['requestContext'].get("authorizer"):
             print(event)
             return {
                 'headers': {
