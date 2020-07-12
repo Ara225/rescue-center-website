@@ -29,7 +29,6 @@ validation = {
 
 def lambda_handler(event, context):
     """
-    Add a rehoming application. See README.md for more
 
     Parameters
     ----------
@@ -66,69 +65,27 @@ def lambda_handler(event, context):
         # Prevent unauthenticated users from overwriting data
         if body.get("id") and not event['requestContext'].get("authorizer"):
             print(event)
-            return {
-                'headers': {
-                    'Access-Control-Allow-Headers': 'Content-Type',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-                },
-                "statusCode": 403,
-                "body": json.dumps({
-                    "success": False,
-                    "error": "Unable to update item without authentication"
-                }),
-            }
+            return getResponse(json.dumps({"success": False,"error": "Unable to update item without authentication"}), 403)
         if os.environ.get("requiresAuth") and not event['requestContext'].get("authorizer"):
             print(event)
-            return {
-                'headers': {
-                    'Access-Control-Allow-Headers': 'Content-Type',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-                },
-                "statusCode": 403,
-                "body": json.dumps({
-                    "success": False,
-                    "error": "Authentication required"
-                }),
-            }
+            return getResponse(json.dumps({"success": False,"error": "Authentication required"}), 403)
+        # Use the validation dict to ensure the submitted object has all the properities a object of this type should have 
         item = {}
-        for i in validation[event['resource']]["required"]:
+        resource = event['resource'].replace("/", "")
+        for i in validation[resource]["required"]:
             item[i] = body[i]
-        for i in validation[event['resource']]["other"]:
-            item[i] = validation[event['resource']]["other"][i]
+        for i in validation[resource]["other"]:
+            item[i] = validation[resource]["other"][i]
         if body.get("id"):
             item["id"] = body[id]
     except KeyError as e:
         print(event)
         print(e)
-        return {
-            'headers': {
-                'Access-Control-Allow-Headers': 'Content-Type',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-            },
-            "statusCode": 500,
-            "body": json.dumps({
-                "success": False,
-                "error": "The form field " + str(e) + " was not present in the request"
-            }),
-        }
+        return getResponse(json.dumps({"success": False,"error": "The form field " + str(e) + " was not present in the request"}), 500)
     except Exception as e:
         print(event)
         print(e)
-        return {
-            'headers': {
-                'Access-Control-Allow-Headers': 'Content-Type',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-            },
-            "statusCode": 500,
-            "body": json.dumps({
-                "success": False,
-                "error": str(e)
-            }),
-        }
+        return getResponse(json.dumps({"success": False,"error": str(e)}), 500)
     try:
         response = table.put_item(
             Item=item
@@ -136,28 +93,20 @@ def lambda_handler(event, context):
     except Exception as e:
         print(event)
         print(e)
-        return {
-            'headers': {
-                'Access-Control-Allow-Headers': 'Content-Type',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-            },
-            "statusCode": 500,
-            "body": json.dumps({
-                "success": False,
-                "error": "Error inserting record into database " + str(e)
-            }),
-        }
+        return getResponse(json.dumps({"success": False,"error": "Error inserting record into database " + str(e)}), 500)
     print("The item " + item["id"] + " was successfully created by a request to " + event['resource'])
+    return getResponse(json.dumps({"success": True, "id": item["id"]}), 200)
+
+def getResponse(body, statusCode):
+    '''
+    Returns the dict the  function needs to return. Prevents cluttering code with massive amounts of dicts 
+    '''
     return {
-        'headers': {
-            'Access-Control-Allow-Headers': 'Content-Type',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-        },
-        "statusCode": 200,
-        "body": json.dumps({
-            "success": True,
-            "id": item["id"]
-        }),
-    }
+                'headers': {
+                    'Access-Control-Allow-Headers': 'Content-Type',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'OPTIONS,POST,PUT,GET,DELETE'
+                },
+                "statusCode": statusCode,
+                "body": body
+            }
