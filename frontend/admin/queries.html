@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="/js/config.js"></script>
 <script src="/js/utility-functions.js"></script>
-<script src="/js/db-functions.js"></script>
+<script src="/js/test-functions.js"></script>
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.709.0.min.js"></script>
 <link rel="stylesheet" href="/css/index.css">
 
@@ -54,6 +54,10 @@
         <div ><span class="w3-xlarge w3-border-teal w3-bottombar w3-hide-large w3-hide-medium">Queries</span></div> 
     </header>
     <div id="renderTarget" style="overflow: hidden;">
+        <div class="w3-container"> 
+                <div class="w3-row-padding w3-grayscale" id="row"> 
+                </div> 
+            </div>
     </div>
     <br>
     <br>
@@ -90,7 +94,7 @@
     </div>
     <script src="/js/admin.js"></script>
     <script>
-        getCognitoCreds(() => {getCredsAuth(() => {scanDataList(queriesTableName)})}, true);
+        getCognitoCreds(() => {getCredsAuth(() => {getItems("queries", {method: "GET", headers: {Authorization: window.sessionStorage.id_token}})})}, true);
     </script>
 </body>
 
