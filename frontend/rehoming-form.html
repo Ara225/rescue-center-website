@@ -81,18 +81,18 @@
                             </div>
                             <div class="w3-section">
                                 <label for="EmailAddress"><span style="color:red">*</span>Email Address</label>
-                                <input class="w3-input FormField" type="text" id="EmailAddress" required>
+                                <input class="w3-input FormField" type="text" id="EmailAddress" pattern=".*@.*" required>
                             </div>
                         </div>
                         <div class="w3-half" style="padding-left: 2%;">
                             <div class="w3-section">
                                 <label for="PrimaryPhoneNumber"><span style="color:red">*</span>Primary Phone
                                     Number</label>
-                                <input class="w3-input FormField" type="text" id="PrimaryPhoneNumber" required>
+                                <input class="w3-input FormField" type="text" id="PrimaryPhoneNumber" pattern="[0-9 ]*" required>
                             </div>
                             <div class="w3-section">
                                 <label for="SecondaryPhoneNumber">Secondary Phone Number</label>
-                                <input class="w3-input FormField" type="text" id="SecondaryPhoneNumber">
+                                <input class="w3-input FormField" type="text" id="SecondaryPhoneNumber" pattern="[0-9 ]*">
                             </div>
                         </div>
                         <div class="w3-section">
