@@ -11,3 +11,12 @@ cdk.out
 .vscode
 simplejson*
 backend/emails.txt
+backend/lambdas/createItemLambda/bin
+backend/lambdas/createItemLambda/certifi*
+backend/lambdas/createItemLambda/chardet*
+backend/lambdas/createItemLambda/idna*
+backend/lambdas/createItemLambda/requests*
+backend/lambdas/createItemLambda/urllib3*
+
+backend/lambdas/createItemLambda/keyV2.txt
+backend/lambdas/createItemLambda/keyV3.txt

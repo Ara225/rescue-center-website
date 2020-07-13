@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="css/index.css">
     <script src="/js/config.js"></script>
     <script src="/js/utility-functions.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+        function onSubmit(token) {
+            onContactFormSubmit(token, 'volunteers');return false;
+        }
+    </script>
 </head>
 
 <body class="w3-light-grey">
@@ -98,8 +104,7 @@
         <br>
         <span class="w3-xlarge w3-teal w3-opacity w3-padding-large ">Apply</span><br>
         <br>
-        <form class="w3-container w3-card-4 w3-padding-16 w3-white" id="Form"
-            onSubmit="onContactFormSubmit('', 'volunteers');return false;">
+        <form class="w3-container w3-card-4 w3-padding-16 w3-white" id="Form">
             <div class="w3-section">
                 <label for="Name"><span style="color:red">*</span>Name</label>
                 <input class="w3-input FormField" type="text" id="Name" required>
@@ -141,7 +146,10 @@
                 </select>
             </div>
             <div class="w3-section">
-                <button type="submit" class="w3-button w3-right w3-theme" id="submit">Submit Form</button>
+                <button type="submit" class="w3-button w3-right w3-theme g-recaptcha" id="submit" 
+                data-sitekey="6Lf5X_sUAAAAAOFAZ57hlJzp49WBmypDf3T8Kk7z" 
+                data-callback="onSubmit" 
+                data-action='submit'>Submit Form</button>
             </div>
         </form>
         <label>

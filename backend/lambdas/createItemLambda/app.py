@@ -5,6 +5,7 @@ import random
 import string
 from datetime import datetime, timedelta
 from decimal import Decimal
+from requests import post
 randomString = ''.join([random.choice(string.ascii_letters
                                       + string.digits) for n in range(32)])
 validation = {
@@ -50,7 +51,6 @@ def lambda_handler(event, context):
     """
     print(event["headers"])
     print(event['requestContext'])
-    
     # This allows the function to run locally by sending requests to a local DynamoDB.
     if 'local' == os.environ.get('APP_STAGE'):
         dynamodb = boto3.resource(
@@ -62,6 +62,10 @@ def lambda_handler(event, context):
 
     try:
         resource = event['resource'].replace("/", "")
+        if not os.environ.get("requiresAuth") and os.environ.get('APP_STAGE') != 'local':
+            result = validate(event, resource)
+            if result:
+                return result
         body = json.loads(event["body"].replace("'", '"'))
         # Prevent unauthenticated users from overwriting data
         if body.get("id") and not event['requestContext'].get("authorizer"):
@@ -127,3 +131,30 @@ def getResponse(body, statusCode, resource=None):
                 "statusCode": statusCode,
                 "body": body
             }
+
+def validate(event, resource):
+    if not event["queryStringParameters"]:
+        return getResponse(json.dumps({"success": False, "message": "No reCaptcha key provided"}), 500, resource)
+    elif not event["queryStringParameters"].get("token"):
+        return getResponse(json.dumps({"success": False, "message": "No reCaptcha key provided"}), 500, resource)
+    else:
+        if event["queryStringParameters"].get("isV2"):
+            secret = open("keyV2.txt").read().replace("\r\n", "").replace("\n", "")
+        else:
+            secret = open("keyV3.txt").read().replace("\r\n", "").replace("\n", "")
+        responseFromGoogle = post("https://www.google.com/recaptcha/api/siteverify", {"secret": secret, 
+        "response": event["queryStringParameters"]["token"]})
+        print(responseFromGoogle.json())
+        # Fallback - failure should be indicated by success being False not a HTTP error
+        if responseFromGoogle.status_code != 200:
+            return getResponse(json.dumps({"success": False, "Error": "ReCaptcha validation failed"}), 500, resource)
+        # If the request failed
+        elif responseFromGoogle.json()["success"] == False:   
+            print("ReCaptcha validation failed")
+            return getResponse(json.dumps({"success": False, "Error": "ReCaptcha validation failed.", 
+                                             "error-codes": responseFromGoogle.json().get("error-codes", [])
+                                           }), 500, resource)  
+        elif responseFromGoogle.json().get("score"):
+            if responseFromGoogle.json()["score"] < 0.5:
+                print("ReCaptcha test failed (score under threshold)")
+                return getResponse(json.dumps({"success": False, "message": "Score below threshold"}), 200, resource)

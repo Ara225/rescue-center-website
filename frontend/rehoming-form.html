@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="css/index.css">
     <script src="/js/config.js"></script>
     <script src="/js/utility-functions.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+        function onSubmit(token) {
+            onRehomerFormSubmit(token);return false;
+        }
+    </script>
 </head>
 
 <body class="w3-light-grey">
@@ -67,8 +73,7 @@
             </div>
             <div class="w3-container w3-theme-l5 w3-center">
                 <div class="w3-content w3-left-align">
-                    <form class="w3-container w3-card-4 w3-white" id="Form"
-                        onSubmit="onRehomerFormSubmit('sdsd');return false;">
+                    <form class="w3-container w3-card-4 w3-white" id="Form">
                         <div class="w3-section">
                             <label>
                                 <h5><b>About You</b></h5>
@@ -311,7 +316,10 @@
                                 reviewed, and that I can request to have it removed.
                             </label>
                         </div>
-                        <button type="submit" id="submit" class="w3-button w3-right w3-green">Submit Form</button>
+                        <button class="w3-button w3-right w3-green g-recaptcha" id="submit" 
+                        data-sitekey="6Lf5X_sUAAAAAOFAZ57hlJzp49WBmypDf3T8Kk7z" 
+                        data-callback="onSubmit" 
+                        data-action='submit'>Submit Form</button>
                         <button type="reset" class="w3-button w3-right w3-red" style="margin-right:2%">Clear
                             Form</button>
                         <br>

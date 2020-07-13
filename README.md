@@ -2,7 +2,7 @@ Rehomer Registration Flow
 Views horse page >> Clicks apply to rehome >> Form for rehoming >>
 Submit >> API call >> Details entered into DB >> email sent to us >>
 Customer receives thank you and ref no on screen 
-
+python3 -m pip install --system -r requirements.txt -t ./
         rehomingApplication = {
             "Name": body["Name"],
             "EmailAddress": body["EmailAddress"],

@@ -97,7 +97,7 @@ function formToJSON(form) {
     }
     return data;
 }
-function onRehomerFormSubmit(token, isUpdate) {
+async function onRehomerFormSubmit(token, isUpdate) {
     document.getElementById("submit").innerHTML = 'Submitting <i class="fa fa-spinner fa-spin"></i>'
     document.getElementById("submit").disabled = true
     try {
@@ -128,6 +128,9 @@ function onRehomerFormSubmit(token, isUpdate) {
             return false;
         }
         var form = formToJSON(document.getElementsByClassName('FormField'));
+        if (!form) {
+            return
+        }
         form.preferredSuitableFor = []
         var preferredSuitableFor = document.getElementsByClassName('preferredSuitableFor')
         for (i in preferredSuitableFor) {
@@ -150,9 +153,17 @@ function onRehomerFormSubmit(token, isUpdate) {
             }
             details.headers = { Authorization: window.sessionStorage.id_token }
         }
-        fetch(APIEndpoint + "rehomers", details).then(res => { console.log(res);
-                  res.json().then(jsonResult => {console.log(jsonResult);displayResult(jsonResult)})
-                });
+        var endpoint = "rehomers"
+        if (token) {
+            endpoint += "?token=" + token
+        }
+        var res = await fetch(APIEndpoint + endpoint, details)
+        var jsonResult = await res.json()
+        if (res.status == 200 && jsonResult.message == "Score below threshold") {
+            displayRecaptcha(endpoint, details)
+            return
+        }
+        displayResult(jsonResult)
     }
     catch(e) {
         displayError(e.message)
@@ -171,9 +182,21 @@ async function onContactFormSubmit(token, endpoint, isUpdate) {
         document.getElementById("submit").innerHTML = 'Submitting <i class="fa fa-spinner fa-spin"></i>'
         document.getElementById("submit").disabled = true
         var form = formToJSON(document.getElementsByClassName('FormField'));
+        if (!form) {
+            return
+        }
         details.body = JSON.stringify(form)
+        console.log(form)
+        console.log(token)
+        if (token) {
+            endpoint = endpoint + "?token=" + token
+        }
         var res = await fetch(APIEndpoint + endpoint, details)
         var jsonResult = await res.json()
+        if (res.status == 200 && jsonResult.message == "Score below threshold") {
+            displayRecaptcha(endpoint, details)
+            return
+        }
         console.log(jsonResult)
         displayResult(jsonResult)
     }
@@ -228,4 +251,30 @@ function displayError(e, subject) {
        document.getElementById("submit").innerText = 'Submit Form'
        document.getElementById("submit").disabled = false
     }
+}
+
+function displayRecaptcha(endpoint, details) {
+    document.getElementById('alertBox').style.display='block'
+            document.getElementById('alertDiv').innerHTML = "<header class=\"w3-container w3-red\"> " +
+            "  <span onclick=\"document.getElementById('alertBox').style.display='none'\" " +
+            "  class=\"w3-button w3-display-topright\">&times;</span>  <h2>Security Check</h2>" +
+            "</header>" +
+            "<div class=\"w3-container\">" + "<p>Unfortunately, Google thinks you're a bot. Could you " + 
+            "please complete the following ReCaptcha to verify you're not? Thanks for your patience!</p><p id='recaptcha'></p>"
+            "</div>" 
+    grecaptcha.render('recaptcha', {
+        'sitekey' : '6LcvB7EZAAAAADGTmgBsNxNd-X40u64E70TRmf01',
+        'callback': async function(response) {
+            try {
+            var res = await fetch(APIEndpoint + endpoint.split("?token=")[0] + '?token=' +response + "&isV2=true", details)
+            var jsonResult = await res.json()
+            console.log(jsonResult)
+            displayResult(jsonResult)
+            }
+            catch(e) {
+                displayError(e.message)
+            }
+        }
+      });     
+    return 
 }

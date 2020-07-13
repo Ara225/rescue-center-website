@@ -13,10 +13,16 @@
     <link rel="stylesheet" href="css/index.css">
     <script src="/js/utility-functions.js"></script>
     <script src="/js/config.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+        function onSubmit(token) {
+            onContactFormSubmit(token, 'queries');
+            return false;
+        }
+    </script>
 </head>
 
 <body>
-
     <!-- Navbar (sit on top) -->
     <div class="w3-top">
         <div class="w3-bar w3-white w3-card" id="myNavbar">
@@ -87,8 +93,7 @@
                 <p><i class="fa fa-envelope-o w3-text-teal w3-xlarge"></i> test@test.com</p>
             </div>
             <div class="w3-col m7">
-                <form class="w3-container w3-card-4 w3-padding-16 w3-white" id="Form"
-                    onSubmit="onContactFormSubmit('', 'queries');return false;">
+                <form class="w3-container w3-card-4 w3-padding-16 w3-white" id="Form">
                     <div class="w3-section">
                         <label for="Name"><span style="color:red">*</span>Name</label>
                         <input class="w3-input FormField" type="text" id="Name" required>
@@ -102,9 +107,13 @@
                         <textarea class="w3-input FormField" id="Message" required></textarea>
                     </div>
                     <div class="w3-section">
-                        <button type="submit" class="w3-button w3-right w3-theme" id="submit">Submit Form</button>
+                        <button type="submit" class="w3-button w3-right w3-theme g-recaptcha" id="submit" 
+                        data-sitekey="6Lf5X_sUAAAAAOFAZ57hlJzp49WBmypDf3T8Kk7z" 
+                        data-callback="onSubmit" 
+                        data-action='submit'>Submit Form</button>
                     </div>
                 </form>
+     
                 <br>
                 <label>
                     N.B. Data submitted via this form will be stored securely under
