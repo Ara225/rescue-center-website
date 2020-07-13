@@ -5,15 +5,20 @@ from aws_cdk import aws_s3
 from aws_cdk import aws_dynamodb
 from aws_cdk import aws_s3_deployment
 from aws_cdk import aws_cloudfront
+from aws_cdk import aws_sns
+from aws_cdk import aws_sns_subscriptions
 from os import environ
 from aws_cdk.aws_apigateway import AuthorizationType
-
 
 class InfrastructureStack(core.Stack):
 
     def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
-
+        sns_topic = aws_sns.Topic(self, "RescueCentreAPISNS")
+        for i in open("emails.txt"):
+            sns_topic.add_subscription(
+                 aws_sns_subscriptions.EmailSubscription(i.replace("\r\n","").replace("\n","").replace(" ","")))
+        
         # ******* API gateway
         # Create simple, publically available API gateway resource. The CORS stuff is only for preflight requests
         rescue_centre_api = aws_apigateway.RestApi(self, 'rescueCentreAPI', rest_api_name='rescueCentreAPI',
@@ -52,7 +57,7 @@ class InfrastructureStack(core.Stack):
             for method in methods:
                 if method not in resources[i]["methodsToExclude"]:
                     details = {"table": Table, "method": method, "resource": resource, "lambdaName":  i + method, "lambdaCode": methods[method],
-                    "requiresAuth": True}
+                    "requiresAuth": True, "topic": sns_topic}
                     
                     if method in resources[i]["methodsNotRequiringAuth"]:
                         details["requiresAuth"] = False
@@ -102,7 +107,7 @@ class InfrastructureStack(core.Stack):
                                                         destination_bucket=websiteBucket,
                                                         distribution=distribution
                                                         )
-
+                                                        
     def makeLambda(self, details, auth):
         lambda_function = aws_lambda.Function(self, details["lambdaName"],
                                               handler='app.lambda_handler',
@@ -130,3 +135,7 @@ class InfrastructureStack(core.Stack):
             details["table"].grant_read_data(lambda_function)
         else:
             details["table"].grant_write_data(lambda_function)
+        if details["topic"]:
+            lambda_function.add_environment(
+                "TOPIC_ARN", details["topic"].topic_arn)
+            details["topic"].grant_publish(lambda_function)

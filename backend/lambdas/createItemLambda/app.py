@@ -61,17 +61,17 @@ def lambda_handler(event, context):
         table = dynamodb.Table(os.environ["TABLE_NAME"])
 
     try:
+        resource = event['resource'].replace("/", "")
         body = json.loads(event["body"].replace("'", '"'))
         # Prevent unauthenticated users from overwriting data
         if body.get("id") and not event['requestContext'].get("authorizer"):
             print(event)
-            return getResponse(json.dumps({"success": False,"error": "Unable to update item without authentication"}), 403)
+            return getResponse(json.dumps({"success": False,"error": "Unable to update item without authentication"}), 403, resource)
         if os.environ.get("requiresAuth") and not event['requestContext'].get("authorizer"):
             print(event)
-            return getResponse(json.dumps({"success": False,"error": "Authentication required"}), 403)
+            return getResponse(json.dumps({"success": False,"error": "Authentication required"}), 403, resource)
         # Use the validation dict to ensure the submitted object has all the properities a object of this type should have 
         item = {}
-        resource = event['resource'].replace("/", "")
         for i in validation[resource]["required"]:
             item[i] = body[i]
         for i in validation[resource]["other"]:
@@ -81,11 +81,11 @@ def lambda_handler(event, context):
     except KeyError as e:
         print(event)
         print(e)
-        return getResponse(json.dumps({"success": False,"error": "The form field " + str(e) + " was not present in the request"}), 500)
+        return getResponse(json.dumps({"success": False,"error": "The form field " + str(e) + " was not present in the request"}), 500, resource)
     except Exception as e:
         print(event)
         print(e)
-        return getResponse(json.dumps({"success": False,"error": str(e)}), 500)
+        return getResponse(json.dumps({"success": False,"error": str(e)}), 500, resource)
     try:
         response = table.put_item(
             Item=item
@@ -93,14 +93,31 @@ def lambda_handler(event, context):
     except Exception as e:
         print(event)
         print(e)
-        return getResponse(json.dumps({"success": False,"error": "Error inserting record into database " + str(e)}), 500)
+        return getResponse(json.dumps({"success": False,"error": "Error inserting record into database " + str(e)}), 500, resource)
     print("The item " + item["id"] + " was successfully created by a request to " + event['resource'])
-    return getResponse(json.dumps({"success": True, "id": item["id"]}), 200)
+    return getResponse(json.dumps({"success": True, "id": item["id"]}), 200, resource)
 
-def getResponse(body, statusCode):
+def getResponse(body, statusCode, resource=None):
     '''
     Returns the dict the  function needs to return. Prevents cluttering code with massive amounts of dicts 
     '''
+    try:
+        if os.environ.get("TOPIC_ARN") and not os.environ.get("requiresAuth") and os.environ.get('APP_STAGE') != 'local':
+            client = boto3.client('sns')
+            if json.loads(body)["success"]:
+                message = 'Successful form submission by customer. The item ID was ' + json.loads(body)["id"] + ' You can login to www.leighrescuecentre.co.uk/admin for details'
+            else:
+                message = 'Failed form submission by customer. Status code was ' + str(statusCode)
+            if resource:
+                message += " The form was the " + resource + " form"
+            response = client.publish(
+                TopicArn=os.environ["TOPIC_ARN"],
+                Message=message,
+                Subject='Form submission - Leigh Rescue Centre Website'
+            )
+    except Exception as e:
+        print("Error while publishing to SNS topic")
+        print(e)
     return {
                 'headers': {
                     'Access-Control-Allow-Headers': 'Content-Type',
