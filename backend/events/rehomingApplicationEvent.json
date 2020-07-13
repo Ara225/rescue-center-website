@@ -14,6 +14,7 @@
     "CloudFront-Is-SmartTV-Viewer": "false",
     "CloudFront-Is-Tablet-Viewer": "false",
     "CloudFront-Viewer-Country": "US",
+    "Authorization": "eyJraWQiOiJDZ3g5dUtxZWRwNnI1YXpZNlwva1BqQWFZSENrRzZwbHBLUUJoRzArSmw5RT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI3NWMyNTA0Ni1hZGRmLTRlM2UtOWI1OS00Mzc5NWU0Mjk2M2QiLCJldmVudF9pZCI6ImU5MWU2NGI4LTI2ZjctNGZhNi05NzdiLTk1YzhkY2ViYTBjNSIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4gcGhvbmUgb3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhdXRoX3RpbWUiOjE1OTQ1NjU3ODksImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5ldS13ZXN0LTIuYW1hem9uYXdzLmNvbVwvZXUtd2VzdC0yXzNUNHZ0ZktKRSIsImV4cCI6MTU5NDU2OTM4OSwiaWF0IjoxNTk0NTY1Nzg5LCJ2ZXJzaW9uIjoyLCJqdGkiOiJjMmYzYmEzZC02N2FjLTQ3NDEtOWU5MC03MmZmOGNmNzRkNWYiLCJjbGllbnRfaWQiOiI1aWQ2NGE5bzRrNGJjcTByOW1rOHM3cjNvcCIsInVzZXJuYW1lIjoiYW5uYWFpdGNoaXNvbiJ9.dzid1tUbWzQieil_mowqFbz4QvXv59D1r9gf79-V-JeMjDcHxJ4VyWIcJbfIBNAD6Q4BYs4B3ElAPys81VK9YQ0khXo8qQcXiUYag_hpJkcuZIMcZQCCVGEL-TQxm2t_C6bGSrKtghf-Lax_zUMQGOQ4DUQzHmLHzWH5ckXRyagp9ROUlQnPh3W-V-2fZO4tCLqlO_4JOemTZw-wRhlDN-GzmK7tq2i94DpsS8j44AylPSAi0zare3aJSf7cLl_ZNUID12Lm-REhKlBnHLGQCcQXmKV5iSuFrv5Y_-oEwYjhn_m4X1HQ4iVqaUf8tI5bNhXV31WoDf5vSYCy3ZqiAg",
     "Host": "1234567890.execute-api.us-east-1.amazonaws.com",
     "Upgrade-Insecure-Requests": "1",
     "User-Agent": "Custom User Agent String",

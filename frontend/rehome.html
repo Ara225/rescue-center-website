@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="css/index.css">
     <script src="/js/utility-functions.js"></script>
     <script src="/js/config.js"></script>
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.709.0.min.js"></script>
 </head>
 
 <body class="w3-light-grey">
@@ -26,10 +25,6 @@
             <div class="w3-right w3-hide-small">
                 <a href="about.html" class="w3-bar-item w3-button"> ABOUT</a>
                 <a href="rehome.html" class="w3-bar-item w3-button"><i class="fa fa-heart"></i> REHOME</a>
-
-
-
-
                 <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i> VOLUNTEER</a>
                 <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
                 <a href="donations.html" class="w3-bar-item w3-button"><i class="fa fa-money"></i> DONATE</a>
@@ -115,11 +110,14 @@
     </div>
     <h3 class="w3-center">CURRENTLY AVAILABLE HORSES</h3>
     <div id="renderTarget" class="w3-padding-64" style="overflow: hidden;">
-
+        <div class="w3-container">
+            <div class="w3-row-padding w3-grayscale" id="row">
+           </div>
+        </div>
     </div>
-    <script src="/js/db-functions.js"></script>
+    <script src="/js/test-functions.js"></script>
     <script>
-        getCognitoCreds(() => { getCredsUnAuth(() => { scanData(horsesTableName, false, "") }) }, false)
+        getItems("horses")
     </script>
     <!-- Footer -->
     <footer class="w3-center w3-black w3-padding-64">
