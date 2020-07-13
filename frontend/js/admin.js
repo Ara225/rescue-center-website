@@ -1,7 +1,7 @@
 function redirect() {
     if (document.location.pathname.endsWith("index.html") || document.location.pathname.endsWith("/admin/")) {
         document.body.innerHTML = '<h2 class="w3-center">Login Required</h2><p  class="w3-center">If not redirected, please click <a href="' +
-        cognitoURL + document.location.href.split("?")[0].replace("index.html", "") + '">here</a> to go to the login page</p>'
+            cognitoURL + document.location.href.split("?")[0].replace("index.html", "") + '">here</a> to go to the login page</p>'
         window.location.href = cognitoURL + document.location.href.split("#")[0].replace("index.html", "");
     }
     else {
@@ -14,7 +14,6 @@ function getHtml(template) {
     return template.join('\n');
 }
 
-var ddb = null
 var s3 = null
 var filesToUpload = []
 var statusField
@@ -99,34 +98,24 @@ function createFolder(horseName) {
 
 function listS3Objects(prefix) {
     return new Promise((resolve, reject) => {
-        s3.listObjects((prefix ? { Prefix: prefix } : { }), function(err, data) {
+        s3.listObjects((prefix ? { Prefix: prefix } : {}), function (err, data) {
             if (err) {
-              return reject("There was an error viewing your album: " + err.message);
+                return reject("There was an error viewing your album: " + err.message);
             }
             else {
                 if (data.Contents.length == 0) {
-                   resolve(false)
+                    resolve(false)
                 }
                 else {
-                   resolve(data)
+                    resolve(data)
                 }
             }
         })
     })
 }
 
-function makeid(length) {
-    var result = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-}
 async function onCreateHorseFormSubmit(event) {
     statusField = document.getElementById("status")
-    ddb = new AWS.DynamoDB({ apiVersion: '2012-08-10' });
     s3 = new AWS.S3({
         apiVersion: "2006-03-01",
         params: { Bucket: horseBucketName }
@@ -139,7 +128,11 @@ async function onCreateHorseFormSubmit(event) {
         alert("Please select some images/videos for upload!")
         return
     }
-
+    if (document.location.search.search("id") != -1) {
+        if (!confirm("Continuing with this form submission will overwrite a preexisting horse. Is this OK?")) {
+            window.location.href = window.location.href.split("?")[0]
+        }
+    }
     console.log("Status: Creating folder")
     statusField.innerText = "Status: Creating folder"
     var horseName = document.getElementById("Name").value
@@ -156,7 +149,7 @@ async function onCreateHorseFormSubmit(event) {
         }
         else {
             statusField.innerText = e
-           return
+            return
         }
     }
     var fileResults = await processFileList(horseName)
@@ -169,30 +162,25 @@ async function onCreateHorseFormSubmit(event) {
         return
     }
     try {
-        var params = {
-            TableName: horsesTableName,
-            Item: {
-                'id': { S: document.location.search.search("id") != -1 ?
-                           decodeURIComponent(document.location.search.split("id=")[1]) :
-                           document.getElementById("Name").value + ":" + makeid(32) 
-                      },
-                'Name': { S: document.getElementById("Name").value },
-                'Age': { S: document.getElementById("Age").value },
-                'Breed': { S: document.getElementById("Breed").value },
-                'Sex': { S: document.getElementById("Sex").value },
-                'SuitableFor': { S: document.getElementById("SuitableFor").value },
-                'Height': { S: document.getElementById("Height").value },
-                'Description': { S: document.getElementById("Description").value },
-                'RehomingFee': { S: document.getElementById("RehomingFee").value },
-                'images': { L: uploadedPhotoURLs },
-                'videos': { L: uploadedVideoURLs }
-            }
-        };
+        var form = formToJSON(document.getElementsByClassName('FormField'));
+        if (document.location.search.search("id") != -1) {
+            form.id = decodeURIComponent(document.location.search.split("id=")[1])
+        }
+        form.images = uploadedPhotoURLs
+        form.videos = uploadedVideoURLs
         console.log("Status: Attempting database insert")
         statusField.innerText = "Status: Attempting database insert"
-        var tableResult = await insertIntoTable(params)
+        console.log(JSON.stringify(form))
+        var result = await fetch(APIEndpoint + "horses", {
+            method: "POST",
+            body: JSON.stringify(form),
+            headers: { Authorization: window.sessionStorage.id_token }
+        })
+
+        var json = await result.json()
+        console.log(json)
+        displayResult(json)
         statusField.innerText = "Status: Database insert succeeded "
-        displaySuccess("<p>You can view the result <a href='/horse-detail-page.html?id=" + encodeURI(params.Item.id.S) + "'> here</a>")
         document.getElementById("files").innerHTML = ""
         filesToUpload = []
     }
@@ -212,7 +200,7 @@ async function processFileList(prefix) {
             statusField.innerText = "Status: Deleting " + filesToDelete[i].name
             await deleteS3Object("/media/" + prefix + "/" + filesToDelete[i].name)
         }
-        catch(e) {
+        catch (e) {
             console.log("Status: Error " + e.toString() + " while deleting " + filesToDelete[i].name)
             statusField.innerText = "Status: Error " + e.toString() + " while deleting " + filesToDelete[i].name
         }
@@ -227,10 +215,10 @@ async function processFileList(prefix) {
                 statusField.innerText = "Status: Upload of " + filesToUpload[i].name + " has completed"
             }
             if (filesToUpload[i].type.search("image") != -1) {
-                uploadedPhotoURLs.push({ S: "/media/" + prefix + "/" + filesToUpload[i].name })
+                uploadedPhotoURLs.push("/media/" + prefix + "/" + filesToUpload[i].name)
             }
             else if (filesToUpload[i].type.search("video") != -1) {
-                uploadedVideoURLs.push({ S: "/media/" + prefix + "/" + filesToUpload[i].name })
+                uploadedVideoURLs.push("/media/" + prefix + "/" + filesToUpload[i].name)
             }
             //TODO Else branch here 
         }
@@ -257,21 +245,6 @@ async function processFileList(prefix) {
         return [uploadedPhotoURLs, uploadedVideoURLs, failedFiles]
     }
 }
-function insertIntoTable(params) {
-    return new Promise((resolve, reject) => {
-        // Call DynamoDB to add the item to the table
-        ddb.putItem(params, function (err, data) {
-            if (err) {
-                console.log("Error", err);
-                return reject(err)
-            } else {
-                console.log("Success", data);
-                return resolve(data)
-            }
-        });
-    })
-}
-
 
 function copyFileToS3(horseName, file) {
     var horsePhotosKey = horseName + "/";
@@ -289,4 +262,77 @@ function copyFileToS3(horseName, file) {
     });
 
     return upload.promise();
+}
+
+async function deleteItem(endpoint, folderName) {
+    if (!confirm("This will delete this item along with any associated images and videos. This is a permanent action. Is this OK?")) {
+        return alert("Operation cancelled at user request")
+    }
+    try {
+        s3 = new AWS.S3({
+            apiVersion: "2006-03-01",
+            params: { Bucket: horseBucketName }
+        });
+        if (folderName) {
+            deleteFolder(folderName)
+        }
+        console.log("Status: Attempting delete")
+        var result = await fetch(APIEndpoint + endpoint, {
+            method: "DELETE",
+            headers: { Authorization: window.sessionStorage.id_token }
+        })
+        var json = await result.json()
+        console.log(json)
+        displaySuccess("Item deleted", "Success")
+    }
+    catch (e) {
+        console.log(e)
+        console.log("Status: Delete failed due to the following error: " + e)
+        displayError(e, "Delete failed ")
+    }
+}
+async function updateItem(endpoint, data) {
+    try {
+        console.log("Status: Attempting database update")
+        var result = await fetch(APIEndpoint + endpoint, {
+            method: "PUT",
+            body: JSON.stringify(data),
+            headers: { Authorization: window.sessionStorage.id_token }
+        })
+
+        var json = await result.json()
+        console.log(json)
+        displayResult(json)
+    }
+    catch (e) {
+        console.log(e)
+        console.log("Status: Delete failed due to the following error: " + e)
+    }
+}
+function deleteFolder(folderName) {
+    var albumKey = folderName;
+    return new Promise((resolve, reject) => {
+        s3.listObjects({ Prefix: albumKey }, function (err, data) {
+            if (err) {
+                console.log("There was an error deleting your folder: ", err.message);
+                return reject("There was an error deleting the folder: ", err.message)
+            }
+            var objects = data.Contents.map(function (object) {
+                return { Key: object.Key };
+            });
+            s3.deleteObjects(
+                {
+                    Delete: { Objects: objects, Quiet: true }
+                },
+                function (err, data) {
+                    if (err) {
+                        console.log("There was an error deleting your folder: ", err.message);
+                        return reject("There was an error deleting the folder: ", err.message)
+                    }
+                    console.log("Successfully deleted album.");
+                    return resolve("Successfully deleted album.")
+                }
+            );
+        });
+    });
 }

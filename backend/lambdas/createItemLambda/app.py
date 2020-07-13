@@ -48,7 +48,6 @@ def lambda_handler(event, context):
 
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
-    body = json.loads(event["body"].replace("'", '"'))
     print(event["headers"])
     print(event['requestContext'])
     
@@ -62,6 +61,7 @@ def lambda_handler(event, context):
         table = dynamodb.Table(os.environ["TABLE_NAME"])
 
     try:
+        body = json.loads(event["body"].replace("'", '"'))
         # Prevent unauthenticated users from overwriting data
         if body.get("id") and not event['requestContext'].get("authorizer"):
             print(event)
@@ -77,7 +77,7 @@ def lambda_handler(event, context):
         for i in validation[resource]["other"]:
             item[i] = validation[resource]["other"][i]
         if body.get("id"):
-            item["id"] = body[id]
+            item["id"] = body["id"]
     except KeyError as e:
         print(event)
         print(e)

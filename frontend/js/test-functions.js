@@ -1,5 +1,5 @@
 
-async function getItems(endpoint, options) {
+async function getItems(endpoint, options, returnJSON) {
     options = options ? options : {method: "GET"}
     try {
         var result = await fetch(APIEndpoint + endpoint, options)
@@ -9,6 +9,9 @@ async function getItems(endpoint, options) {
         console.log("Error while making API call")
         console.log(e)
         return
+    }
+    if (returnJSON) {
+        return json
     }
     if (endpoint.search("id=") != -1 && document.location.href.search("/admin/") == -1) {
         renderItem(json)
@@ -30,6 +33,8 @@ async function getItems(endpoint, options) {
             '            <p style="overflow: hidden;height:7em">' + json.items[i].Description + '</p>' +
             '            <p><a href="' + (document.location.href.search("/admin/") != -1 ? 'create-horse.html' : '/horse-detail-page.html') + '?id=' + encodeURI(json.items[i].id) + 
             '" class="w3-button w3-light-grey w3-block">View</a></p>' +
+            (document.location.href.search("/admin/") != -1 ? '<p><a onclick="deleteItem(\'horses?id=' + json.items[i].id + '\', \'media/'+ json.items[i].Name + 
+            '\')" class="w3-button w3-light-grey w3-block">Delete</a></p>' : "") +
             '          </div>' +
             '        </div>' +
             '      </div>'
@@ -46,6 +51,8 @@ async function getItems(endpoint, options) {
                 (json.items[i].Message ? json.items[i].Message.replace("\n\n", "<br><br>") : "Email Address:<br>"+ json.items[i].EmailAddress + "<br>") + '</p>' +
                 '            <p><a  class="w3-button w3-light-grey w3-block"' + 
                 "onclick='getItems(\"" + endpoint.split("?")[0] + "?id=" + json.items[i].id + "\", " +  JSON.stringify(options) +"); document.getElementById(\"details\").style.display = \"block\";'>View</a></p>" +
+                (document.location.href.search("/admin/") != -1 ? '            <p><a onclick="deleteItem(\'' + endpoint.split("?")[0]+ '?id=' + json.items[i].id + 
+                '\')" class="w3-button w3-light-grey w3-block">Delete</a></p>' : "") +
                 '          </div>' +
                 '        </div>' +
                 '      </div>' 

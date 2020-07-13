@@ -67,18 +67,18 @@
             <div ><span class="w3-xlarge w3-hide-small ">Volunteer Details</span></div> 
             <div ><span class="w3-large w3-hide-large w3-hide-medium">Volunteer Details</span></div> 
             <br>
-            <div class="w3-container w3-card-4 w3-padding-16 w3-white">
+            <form class="w3-container w3-card-4 w3-padding-16 w3-white" onSubmit="onContactFormSubmit('', 'volunteers', true);return false;">
                 <div class="w3-section">
                     <label for="Name">Name</label>
-                    <input class="w3-input FormField" type="text" id="Name" required disabled>
+                    <input class="w3-input FormField" type="text" id="Name" required>
                 </div>
                 <div class="w3-section">
                     <label for="EmailAddress">Email Address</label>
-                    <input class="w3-input FormField" type="text" id="EmailAddress" required disabled>
+                    <input class="w3-input FormField" type="text" id="EmailAddress" required>
                 </div>
                 <div class="w3-section">
                     <label for="PhoneNumber">Phone Number</label>
-                    <input class="w3-input FormField" type="text" id="PhoneNumber" required disabled>
+                    <input class="w3-input FormField" type="text" id="PhoneNumber" required>
                 </div>
                 <div class="w3-section">
                     <label for="volunteerWhy">Please tell us why you want to volunteer & what you're hoping to do:</label>
@@ -114,7 +114,10 @@
                     <label for="id">id</label>
                     <input class="w3-input FormField" type="text" id="id" required disabled>
                 </div>
-            </div>
+                <div class="w3-section">
+                    <button type="submit" class="w3-button w3-right w3-theme" id="submit">Submit Form</button>
+                </div>
+            </form>
         </div>
         </div>
     </div>

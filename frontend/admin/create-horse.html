@@ -10,7 +10,7 @@
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.709.0.min.js"></script>
 <link rel="stylesheet" href="/css/index.css">
 <script src="/js/admin.js"></script>
-<script src="/js/db-functions.js"></script>
+<script src="/js/test-functions.js"></script>
 
 <body class="w3-light-grey">
     <!-- Navbar (sit on top) -->
@@ -165,7 +165,7 @@
         <script>
             getCognitoCreds(getCredsAuth, true)
             if (document.location.search.search("id") != -1) {
-                readItem(horsesTableName, document.location.search.split("id=")[1], (data) => {preFillFormFields(data)})
+                getItems("horses?id="+ document.location.search.split("id=")[1])
             }
         </script>
 </body>

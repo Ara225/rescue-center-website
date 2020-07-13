@@ -1,17 +1,3 @@
-function getCredsUnAuth(callback) {
-    if (AWS.config.credentials.expired) {
-        console.log("Unsuccessful auth")
-        // If we come here from /admin, auth doesn't work properly unless the page is reloaded, so this is a work around.
-        // Assume the AWS stuff is being cached
-        window.location.reload(true)
-    }
-    else {
-        console.log("Successful auth")
-        if (callback) {
-            callback()
-        }
-    }
-}
 function getCognitoCreds(callback, withAuth) {
     AWS.config.region = 'eu-west-2';
     if (!withAuth) {
@@ -59,7 +45,6 @@ function getCredsAuth(callback) {
         }
     }
 }
-
 
 // Modal Image Gallery
 function onClick(element) {
@@ -112,7 +97,7 @@ function formToJSON(form) {
     }
     return data;
 }
-function onRehomerFormSubmit(token) {
+function onRehomerFormSubmit(token, isUpdate) {
     document.getElementById("submit").innerHTML = 'Submitting <i class="fa fa-spinner fa-spin"></i>'
     document.getElementById("submit").disabled = true
     try {
@@ -158,10 +143,14 @@ function onRehomerFormSubmit(token) {
             }
         }
         console.log(form)
-        fetch(APIEndpoint + "rehomers", {
-                  method: "POST", 
-                  body: JSON.stringify(form)
-                }).then(res => { console.log(res);
+        var details = {method: (isUpdate ? "PUT" : "POST"), body: JSON.stringify(form)}
+        if (isUpdate) {
+            if (!confirm("This action will edit a preexisting record. Is this OK?")) {
+                return alert("Operation cancelled at user request")
+            }
+            details.headers = { Authorization: window.sessionStorage.id_token }
+        }
+        fetch(APIEndpoint + "rehomers", details).then(res => { console.log(res);
                   res.json().then(jsonResult => {console.log(jsonResult);displayResult(jsonResult)})
                 });
     }
@@ -170,17 +159,23 @@ function onRehomerFormSubmit(token) {
     }
 }
 
-function onContactFormSubmit(token, endpoint) {
+async function onContactFormSubmit(token, endpoint, isUpdate) {
     try {
+        var details = {method: (isUpdate ? "PUT" : "POST")}
+        if (isUpdate) { 
+            if (!confirm("This action will edit a preexisting record. Is this OK?")) {
+                return alert("Operation cancelled at user request")
+            }
+            details.headers = { Authorization: window.sessionStorage.id_token }
+        }
         document.getElementById("submit").innerHTML = 'Submitting <i class="fa fa-spinner fa-spin"></i>'
         document.getElementById("submit").disabled = true
         var form = formToJSON(document.getElementsByClassName('FormField'));
-        fetch(APIEndpoint + endpoint, {
-                  method: "POST", 
-                  body: JSON.stringify(form)
-                }).then(res => { console.log(res);
-                  res.json().then(jsonResult => {console.log(jsonResult);displayResult(jsonResult)}).catch(e => displayError(e.message))
-                }).catch(e => displayError(e.message));
+        details.body = JSON.stringify(form)
+        var res = await fetch(APIEndpoint + endpoint, details)
+        var jsonResult = await res.json()
+        console.log(jsonResult)
+        displayResult(jsonResult)
     }
     catch(e) {
         displayError(e.message)
@@ -189,42 +184,48 @@ function onContactFormSubmit(token, endpoint) {
 
 function displayResult(result) {
     if (result.success) {
-        displaySuccess("  <p>Thanks for your query. Your reference is: " + result.id + "</p>" +
-                       "  <p>We'll try to get back to you within seven working days.</p>")
+        displaySuccess(document.location.href.search("/admin/") != -1 ? 
+        "  <p>The database was updated. The reference is: " + result.id + "</p>" :
+        "  <p>Thanks for your query. Your reference is: " + result.id + "</p>" +
+        "  <p>We'll try to get back to you within seven working days.</p>")
     }
     else if (!result.success) {
         displayError(result.error)
     }
 }
 
-function displaySuccess(text) {
+function displaySuccess(text, subject) {
     document.getElementById("alertDiv").innerHTML = "<header class=\"w3-container w3-teal\"> " +
                                                     "  <span onclick=\"document.getElementById('alertBox').style.display='none'\" " +
                                                     "  class=\"w3-button w3-display-topright\">&times;</span>" +
-                                                    "  <h2>Form Submitted Successfully</h2>" +
+                                                    "  <h2>" + (subject ? subject : "Form Submitted Successfully") + "</h2>" +
                                                     "</header>" +
                                                     "<div class=\"w3-container\">" +
                                                     text +
                                                     "</div>" 
-    document.getElementById("submit").innerText = 'Submit Form'
-    document.getElementById("submit").disabled = false
     document.getElementById('alertBox').style.display='block'
-    document.getElementById("Form").reset()
+    if (document.querySelector("#submit")) {
+        document.getElementById("submit").innerText = 'Submit Form'
+        document.getElementById("submit").disabled = false
+        document.getElementById("Form").reset()
+    }
 }
 
-function displayError(e) {
+function displayError(e, subject) {
     console.log(e)
-    document.getElementById("submit").innerText = 'Submit Form'
-    document.getElementById("submit").disabled = false
     document.getElementById("alertDiv").innerHTML = "<header class=\"w3-container w3-red\"> " +
                                                     "  <span onclick=\"document.getElementById('alertBox').style.display='none'\" " +
                                                     "  class=\"w3-button w3-display-topright\">&times;</span>" +
-                                                    "  <h2>Form submission failed</h2>" +
+                                                    "  <h2>" + (subject ? subject : "Form submission failed") + "</h2>" +
                                                     "</header>" +
                                                     "<div class=\"w3-container\">" +
-                                                    "  <p>Form submission failed due to the following error: " + e + "</p>" +
+                                                    "  <p>" + (subject ? subject : "Form submission failed") + " due to the following error: " + e + "</p>" +
                                                     "  <p>Please ensure that you're connected to the internet, and reach " +
                                                     "out to us if the behaviour continues</p>" +
                                                     "</div>" 
     document.getElementById('alertBox').style.display='block'
+    if (document.querySelector("#submit")) {
+       document.getElementById("submit").innerText = 'Submit Form'
+       document.getElementById("submit").disabled = false
+    }
 }

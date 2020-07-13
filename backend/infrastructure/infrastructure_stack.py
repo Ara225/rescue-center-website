@@ -32,7 +32,7 @@ class InfrastructureStack(core.Stack):
         # and create very simlar resources so this is the simplest way of doing it for me Minimizes effect of typos also
         resources = {
                     "rehomers": {"methodsNotRequiringAuth": ["POST"], "methodsToExclude": []},
-                    "horses": {"methodsNotRequiringAuth": ["GET"], "methodsToExclude": []},
+                    "horses": {"methodsNotRequiringAuth": ["GET"], "methodsToExclude": ["PUT"]},
                     "queries": {"methodsNotRequiringAuth": ["POST"], "methodsToExclude": ["PUT"]},
                     "volunteers": {"methodsNotRequiringAuth": ["POST"], "methodsToExclude": []}
                 }
@@ -115,9 +115,9 @@ class InfrastructureStack(core.Stack):
             lambda_function, proxy=True)
         if details.get("requiresAuth"):
             lambda_function.add_environment("requiresAuth", "True")
-            details["resource"].add_method(details["method"], lambda_integration,
-                                           authorization_type=AuthorizationType.COGNITO,
-                                           authorizer=auth)
+            details["resource"].add_method(details["method"], lambda_integration)#, 
+                                           #authorization_type=AuthorizationType.COGNITO,
+                                           #authorizer=auth)
             #authorization_scopes=["openid", "profile", "email"]
         else:
             details["resource"].add_method(
