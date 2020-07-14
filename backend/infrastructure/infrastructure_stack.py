@@ -120,7 +120,14 @@ class InfrastructureStack(core.Stack):
             lambda_function, proxy=True)
         if details.get("requiresAuth"):
             lambda_function.add_environment("requiresAuth", "True")
-            details["resource"].add_method(details["method"], lambda_integration)#, 
+            method = details["resource"].add_method(details["method"], lambda_integration)
+            method_resource = method.node.find_child('Resource')
+            method_resource.add_property_override('AuthorizationType',
+                                                       'COGNITO_USER_POOLS')
+            method_resource.add_property_override(
+                    'AuthorizerId',
+                    {"Ref": auth.logical_id})
+            #, 
                                            #authorization_type=AuthorizationType.COGNITO,
                                            #authorizer=auth)
             #authorization_scopes=["openid", "profile", "email"]
