@@ -127,10 +127,6 @@ class InfrastructureStack(core.Stack):
             method_resource.add_property_override(
                     'AuthorizerId',
                     {"Ref": auth.logical_id})
-            #, 
-                                           #authorization_type=AuthorizationType.COGNITO,
-                                           #authorizer=auth)
-            #authorization_scopes=["openid", "profile", "email"]
         else:
             details["resource"].add_method(
                 details["method"], lambda_integration)
