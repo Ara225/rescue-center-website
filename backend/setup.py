@@ -6,21 +6,30 @@ with open("README.md") as fp:
 
 
 setuptools.setup(
-    name="backend",
-    version="0.0.1",
+    name="LeighRescueCentreInfrastructure",
+    version="1.0.0",
 
-    description="An empty CDK Python app",
+    description="Leigh Rescue Centre Infrastructure",
     long_description=long_description,
     long_description_content_type="text/markdown",
 
     author="author",
 
-    package_dir={"": "backend"},
-    packages=setuptools.find_packages(where="backend"),
+    package_dir={"": "infrastructure"},
+    packages=setuptools.find_packages(where="infrastructure"),
 
     install_requires=[
         "aws-cdk.core==1.45.0",
+        "aws-cdk.aws_apigateway",
+        "aws-cdk.aws_lambda",
+        "aws-cdk.aws_s3",
+        "aws-cdk.aws_dynamodb",
+        "aws-cdk.aws_s3_deployment",
+        "aws-cdk.aws_cloudfront",
+        "aws-cdk.aws_sns",
+        "aws-cdk.aws_sns_subscriptions"
     ],
+
 
     python_requires=">=3.6",
 

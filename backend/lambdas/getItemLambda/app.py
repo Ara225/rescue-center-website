@@ -9,8 +9,12 @@ from boto3.dynamodb.conditions import Key
 
 def lambda_handler(event, context):
     """
-    Get either all items, a specified number of items or a specific poll. See README.md for more
-
+    Get either all items, or a specific item.
+    Supports three query string parameters:
+        * id - ID of a specific item in the DB, when provided, the function only gets that item
+        * limit - Limits the amount of items retrieved
+        * continueKey - Can be used to continue a previous request from where we left off
+        If not all items have been returned from the DB, this allows simple pagenation of results
     Parameters
     ----------
     event: dict, required
@@ -37,7 +41,7 @@ def lambda_handler(event, context):
         if 'local' == os.environ.get('APP_STAGE'):
             dynamodb = boto3.resource(
                 'dynamodb', endpoint_url='http://localhost:8000')
-            table = dynamodb.Table("horsesTable")
+            table = dynamodb.Table("rescueCentreTable")
         else:
             dynamodb = boto3.resource('dynamodb')
             table = dynamodb.Table(os.environ["TABLE_NAME"])
@@ -47,6 +51,7 @@ def lambda_handler(event, context):
             return getResponse(json.dumps({"success": False, "error": "Authentication required"}), 403)
     except Exception as e:
         return getResponse(json.dumps({"success": False, "error": str(e)}), 500)
+
     # Handle request for individual item
     if event.get("queryStringParameters"):
         if event["queryStringParameters"].get("id"):
@@ -63,12 +68,12 @@ def lambda_handler(event, context):
             except BaseException as e:
                 print(e)
                 return getResponse(json.dumps({"success": False, "error": "Unable to retrieve items"}), 500)
-    # Handle multiple item requests
+
+    # Handle requests for multiple or all items in the DB
     try:
         response = None
         # Large requests are truncated by the DB. The continueKey param provides a way for the client-side code to get the next keys
-        # Limit simply limits the amount of keys. This can be used to only retrieve the amount of items we need, so these work together
-        # to minmize DB load
+        # Limit simply limits the amount of keys. This can be used to only retrieve the amount of items we need.
         if event.get("queryStringParameters"):
             print(event["queryStringParameters"])
             if event["queryStringParameters"].get("continueKey") and event["queryStringParameters"].get("limit"):
@@ -89,7 +94,8 @@ def lambda_handler(event, context):
                         "success": False,
                         "error": "Database query returned an empty body. If an ID was supplied, this means there was no matching item"
                     }), 500)
-        # If a last evaluated key is provided, we return this so the client app can use it to get the next items later
+                    
+        # If a last evaluated key is provided, we return this so the client app can use it to get the rest of the items later
         if response.get("LastEvaluatedKey"):
             key = response["LastEvaluatedKey"]['id']
         else:
