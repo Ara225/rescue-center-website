@@ -99,14 +99,21 @@ class InfrastructureStack(core.Stack):
 
         # ******* CloudFront distribution
         distribution = aws_cloudfront.CloudFrontWebDistribution(self, "websiteBucketDistribution",
-                                                                origin_configs=[aws_cloudfront.SourceConfiguration(
-                                                                    s3_origin_source=aws_cloudfront.S3OriginConfig(
-                                                                        s3_bucket_source=websiteBucket
-                                                                    ),
-                                                                    behaviors=[aws_cloudfront.Behavior(
-                                                                        is_default_behavior=True)]
-                                                                )
-                                                                ]
+                                                                        origin_configs=[aws_cloudfront.SourceConfiguration(
+                                                                            s3_origin_source=aws_cloudfront.S3OriginConfig(
+                                                                                s3_bucket_source=websiteBucket
+                                                                            ),
+                                                                            behaviors=[aws_cloudfront.Behavior(
+                                                                                is_default_behavior=True)]
+                                                                        ),
+                                                                        aws_cloudfront.SourceConfiguration(
+                                                                            s3_origin_source=aws_cloudfront.S3OriginConfig(
+                                                                                s3_bucket_source=imagesBucket
+                                                                            ),
+                                                                            behaviors=[aws_cloudfront.Behavior(
+                                                                                path_pattern="media/")]
+                                                                        )
+                                                                    ]
                                                                 )
 
         # ******* Code to automatically deploy the frontend code to the website bucket
