@@ -6,32 +6,6 @@ import string
 from datetime import datetime, timedelta
 from decimal import Decimal
 from requests import post
-# A random string used as an ID for the item in the DB
-randomString = ''.join([random.choice(string.ascii_letters
-                                      + string.digits) for n in range(32)])
-
-# Dictionaries for validating the body of the request
-# The top-level keys are the name of the API endpoints. The required key in the inner dict is a list of the
-# required keys in the request body, and the other key is a list of keys to add to the item in the DB
-validation = {
-    "rehomers": {"required": ["Name", "EmailAddress", "PrimaryPhoneNumber", "SecondaryPhoneNumber", "HomeAddress", "AgeRange",
-                              "HeightRange", "OtherHorseDetails", "HorseAddress", "HorseAddressType", "FarrierDetails",
-                              "VetDetails", "experience", "notes", "preferredSex", "preferredSuitableFor", "OtherRefreeDetails"],
-                 "other": {"id": randomString, "date": Decimal(datetime.now().timestamp()), "accepted": "N/A", "internalNotes": ""}
-                 },
-    "queries": {"required": ["Name", "EmailAddress", "Message"],
-                "other": {"id":  randomString, "date": Decimal(datetime.now().timestamp()), "expires": Decimal((datetime.now() +
-                                                                                                                timedelta(days=30)).timestamp())}
-                },
-    "volunteers": {"required": ["Name", "EmailAddress", "PhoneNumber", "volunteerWhy", "volunteerExperience", "volunteerTransport"],
-                   "other": {"id": randomString, "date": Decimal(datetime.now().timestamp())}
-                   },
-    "horses": {"required": ['Name', 'Age', 'Breed', 'Sex', 'SuitableFor', 'Height', 'Description', 'RehomingFee', 'images', 'videos'],
-               "other": {"id": randomString, "date": Decimal(datetime.now().timestamp())}
-               }
-
-}
-
 
 def lambda_handler(event, context):
     """
@@ -52,6 +26,31 @@ def lambda_handler(event, context):
 
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
+    # A random string used as an ID for the item in the DB
+    randomString = ''.join([random.choice(string.ascii_letters
+                                      + string.digits) for n in range(32)])
+    
+    # Dictionaries for validating the body of the request
+    # The top-level keys are the name of the API endpoints. The required key in the inner dict is a list of the
+    # required keys in the request body, and the other key is a list of keys to add to the item in the DB
+    validation = {
+        "rehomers": {"required": ["Name", "EmailAddress", "PrimaryPhoneNumber", "SecondaryPhoneNumber", "HomeAddress", "AgeRange",
+                                  "HeightRange", "OtherHorseDetails", "HorseAddress", "HorseAddressType", "FarrierDetails",
+                                  "VetDetails", "experience", "notes", "preferredSex", "preferredSuitableFor", "OtherRefreeDetails"],
+                     "other": {"id": randomString, "date": Decimal(datetime.now().timestamp()), "accepted": "N/A", "internalNotes": ""}
+                     },
+        "queries": {"required": ["Name", "EmailAddress", "Message"],
+                    "other": {"id":  randomString, "date": Decimal(datetime.now().timestamp()), "expires": Decimal((datetime.now() +
+                                                                                                                    timedelta(days=30)).timestamp())}
+                    },
+        "volunteers": {"required": ["Name", "EmailAddress", "PhoneNumber", "volunteerWhy", "volunteerExperience", "volunteerTransport"],
+                       "other": {"id": randomString, "date": Decimal(datetime.now().timestamp())}
+                       },
+        "horses": {"required": ['Name', 'Age', 'Breed', 'Sex', 'SuitableFor', 'Height', 'Description', 'RehomingFee', 'images', 'videos'],
+                   "other": {"id": randomString, "date": Decimal(datetime.now().timestamp())}
+                   }
+    
+    }
     # Log the request headers and authorization context
     print(event["headers"])
     print(event['requestContext'])
