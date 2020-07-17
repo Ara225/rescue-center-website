@@ -1,4 +1,6 @@
-// Slideshows
+/**
+ * This file contains functions for working with image/video slideshows
+ */
 var slideIndex = 1;
 
 function plusDivs(n) {

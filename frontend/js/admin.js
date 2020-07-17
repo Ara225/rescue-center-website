@@ -1,3 +1,70 @@
+/**
+ * This file contains functions specifically related to the admin area of the site
+ */
+
+/**
+ * Gets credentials from Cognito
+ * @param {Function} callback Callback to call when finished
+ * @param {*} withAuth If we want to authenticate the users
+ */
+function getCognitoCreds(callback, withAuth) {
+    AWS.config.region = 'eu-west-2';
+    if (!withAuth) {
+        // Configure the credentials provider to use your identity pool for unauthenticated users
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: 'eu-west-2:62a15244-4f5a-4f12-b9e6-cb87ce7b5806'
+        });
+    }
+    else {
+        if ((document.location.hash && document.location.hash.search('id_token') != -1) || window.sessionStorage.id_token) {
+            // Configure the credentials provider to use the identity pool for authenticated users
+            AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: 'eu-west-2:62a15244-4f5a-4f12-b9e6-cb87ce7b5806',
+                Logins: { "cognito-idp.eu-west-2.amazonaws.com/eu-west-2_3T4vtfKJE": 
+                document.location.hash ?
+                document.location.hash.split('id_token=')[1].split('&access_token=')[0] :
+                window.sessionStorage.id_token }
+            });
+        }
+        else {
+            redirect()
+        }
+    }
+    // Make the call to AWS to actually get the credentials
+    AWS.config.credentials.get(callback);
+}
+
+/**
+ * Designed to be used as a callback for getCognitoCreds. Stores Cognito ID in session storage and sets timeouts to let 
+ * the user know when their creds will expire in two minutes and finally to redirect them.
+ * @param {Function} callback 
+ */
+function getCredsAuth(callback) {
+    if (AWS.config.credentials.expired) {
+        redirect()
+    }
+    else {
+        window.sessionStorage.id_token = document.location.hash ?
+        document.location.hash.split('id_token=')[1].split('&access_token=')[0] :
+        window.sessionStorage.id_token
+        console.log("Successful auth")
+        setTimeout(function () {
+            if (confirm("Your credentials will expire in two minutes. Would you like to re-login now? ")) {
+                redirect()
+            }
+        }, 3480000);
+        setTimeout(function () {
+            redirect()
+        }, 3600000);
+        if (callback) {
+            callback()
+        }
+    }
+}
+
+/**
+ * Redirects to the Cognito authentication page or to the main /admin/ page if we're not there ()
+ */
 function redirect() {
     if (document.location.pathname.endsWith("index.html") || document.location.pathname.endsWith("/admin/")) {
         document.body.innerHTML = '<h2 class="w3-center">Login Required</h2><p  class="w3-center">If not redirected, please click <a href="' +
@@ -7,11 +74,6 @@ function redirect() {
     else {
         window.location.href = document.location.origin + "/admin/";
     }
-}
-
-function getHtml(template) {
-    console.log(template.join('\n'))
-    return template.join('\n');
 }
 
 var s3 = null
@@ -183,6 +245,7 @@ async function onCreateHorseFormSubmit(event) {
         statusField.innerText = "Status: Database insert succeeded "
         document.getElementById("files").innerHTML = ""
         filesToUpload = []
+        form = null
     }
     catch (e) {
         console.log(e)

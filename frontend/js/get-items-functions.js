@@ -1,4 +1,6 @@
-
+/**
+ * This file contains functions related to getting items from the API endpoints
+ */
 async function getItems(endpoint, options, returnJSON) {
     options = options ? options : {method: "GET"}
     try {
@@ -27,7 +29,7 @@ async function getItems(endpoint, options, returnJSON) {
             '      <div class="w3-col l3 m6 w3-margin-bottom" style="height:100%;">' +
             '        <div class="w3-card w3-white">' +
             '    <div style="height: 14em;overflow: hidden;">                    ' +
-            '          <img src="http://media.leighrescuecentre.co.uk.s3-website.eu-west-2.amazonaws.com' + encodeURI(json.items[i].images[0]) + '" onerror="this.onerror=null; this.src=\'\'" style="width:100%">' +
+            '          <img src="' + encodeURI(json.items[i].images[0]) + '" onerror="this.onerror=null; this.src=\'\'" style="width:100%">' +
             '          </div><div class="w3-container">' +
             '            <h3>' + json.items[i].Name + '</h3>' +
             '            <p style="overflow: hidden;height:7em">' + json.items[i].Description + '</p>' +
@@ -67,18 +69,18 @@ async function getItems(endpoint, options, returnJSON) {
 async function renderItem(data) {
     document.getElementById("name").innerText = data.items[0].Name
     for (image in data.items[0].images) {
-        document.getElementById("media").innerHTML += '<img class="mySlides w3-animate-opacity" src="http://media.leighrescuecentre.co.uk.s3-website.eu-west-2.amazonaws.com' + encodeURI(data.items[0].images[image]) + '" style="width:100%">'
+        document.getElementById("media").innerHTML += '<img class="mySlides w3-animate-opacity" src="' + encodeURI(data.items[0].images[image]) + '" style="width:100%">'
     }
     showDivs(1);
     for (video in data.items[0].videos) {
         document.getElementById("media").innerHTML += '<video class="mySlides w3-animate-opacity" controls style="width: 100%;">' +
-            '    <source src="http://media.leighrescuecentre.co.uk.s3-website.eu-west-2.amazonaws.com' + 
+            '    <source src="' + 
             encodeURI(data.items[0].videos[video]) + '" type="video/' + data.items[0].videos[video].split(".")[data.items[0].videos[video].split(".").length-1] + '">' +
             '    Your browser does not support the video tag.' +
             '</video>'
 
     }
-
+     
     document.getElementById("details").innerText = "Age: " + data.items[0].Age + " | Breed: " + data.items[0].Breed + " | " + data.items[0].Sex + " | Height: " +
         data.items[0].Height + " | Suitable as a: " + data.items[0].SuitableFor + " | Rehoming Fee: " + data.items[0].RehomingFee
     for (var i = 1; i < (data.items[0].videos.length + data.items[0].images.length + 1); i++) {
