@@ -29,7 +29,7 @@ async function getItems(endpoint, options, returnJSON) {
             '      <div class="w3-col l3 m6 w3-margin-bottom" style="height:100%;">' +
             '        <div class="w3-card w3-white">' +
             '    <div style="height: 14em;overflow: hidden;">                    ' +
-            '          <img src="' + encodeURI(json.items[i].images[0]) + '" onerror="this.onerror=null; this.src=\'\'" style="width:100%">' +
+            '          <img src="' + encodeURI(json.items[i].images[0]) + '" onerror="this.onerror=null; console.log(this.src); this.src=\'\'" style="width:100%">' +
             '          </div><div class="w3-container">' +
             '            <h3>' + json.items[i].Name + '</h3>' +
             '            <p style="overflow: hidden;height:7em">' + json.items[i].Description + '</p>' +
