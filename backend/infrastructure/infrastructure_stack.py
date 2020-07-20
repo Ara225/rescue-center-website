@@ -111,7 +111,7 @@ class InfrastructureStack(core.Stack):
                                                                                 s3_bucket_source=imagesBucket
                                                                             ),
                                                                             behaviors=[aws_cloudfront.Behavior(
-                                                                                path_pattern="media/")]
+                                                                                path_pattern="*")]
                                                                         )
                                                                     ]
                                                                 )
