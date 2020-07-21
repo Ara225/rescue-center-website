@@ -77,6 +77,7 @@ class InfrastructureStack(core.Stack):
         websiteBucket = aws_s3.Bucket(self, "websiteBucket", bucket_name="www.leighrescuecentre.co.uk",
                                       public_read_access=True,
                                       website_index_document="index.html",
+                                      access_control=aws_s3.BucketAccessControl.PUBLIC_READ,
                                       cors=[{
                                           "allowedMethods": [aws_s3.HttpMethods.GET, aws_s3.HttpMethods.PUT, aws_s3.HttpMethods.HEAD, aws_s3.HttpMethods.POST, aws_s3.HttpMethods.DELETE],
                                           "allowedOrigins": ["*"],
@@ -84,11 +85,12 @@ class InfrastructureStack(core.Stack):
                                           "exposeHeader": ["ETag"]
                                       }]
                                       )
+        
         # ******* S3 bucket for image and video content
         imagesBucket = aws_s3.Bucket(self, "imagesBucket",
                                      bucket_name="media.leighrescuecentre.co.uk",
                                      public_read_access=True,
-                                     website_index_document="index.html",
+                                     access_control=aws_s3.BucketAccessControl.PUBLIC_READ,
                                      cors=[{
                                          "allowedMethods": [aws_s3.HttpMethods.GET, aws_s3.HttpMethods.PUT, aws_s3.HttpMethods.HEAD, aws_s3.HttpMethods.POST, aws_s3.HttpMethods.DELETE],
                                          "allowedOrigins": ["*"],
@@ -99,20 +101,21 @@ class InfrastructureStack(core.Stack):
 
         # ******* CloudFront distribution
         distribution = aws_cloudfront.CloudFrontWebDistribution(self, "websiteBucketDistribution",
-                                                                        origin_configs=[aws_cloudfront.SourceConfiguration(
-                                                                            s3_origin_source=aws_cloudfront.S3OriginConfig(
-                                                                                s3_bucket_source=websiteBucket
+                                                                        origin_configs=[
+                                                                            aws_cloudfront.SourceConfiguration(
+                                                                                s3_origin_source=aws_cloudfront.S3OriginConfig(
+                                                                                    s3_bucket_source=websiteBucket
+                                                                                ),
+                                                                                behaviors=[aws_cloudfront.Behavior(
+                                                                                    is_default_behavior=True)]
                                                                             ),
-                                                                            behaviors=[aws_cloudfront.Behavior(
-                                                                                is_default_behavior=True)]
-                                                                        ),
-                                                                        aws_cloudfront.SourceConfiguration(
-                                                                            s3_origin_source=aws_cloudfront.S3OriginConfig(
-                                                                                s3_bucket_source=imagesBucket
-                                                                            ),
-                                                                            behaviors=[aws_cloudfront.Behavior(
-                                                                                path_pattern="*")]
-                                                                        )
+                                                                            aws_cloudfront.SourceConfiguration(
+                                                                                s3_origin_source=aws_cloudfront.S3OriginConfig(
+                                                                                    s3_bucket_source=imagesBucket
+                                                                                ),
+                                                                                behaviors=[aws_cloudfront.Behavior(
+                                                                                    path_pattern="/media/*")]
+                                                                            )
                                                                     ]
                                                                 )
 

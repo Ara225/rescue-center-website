@@ -1,3 +1,3 @@
 var cognitoURL = "https://leighrescuecentre.auth.eu-west-2.amazoncognito.com/login?response_type=token&client_id=5id64a9o4k4bcq0r9mk8s7r3op&redirect_uri="
-var APIEndpoint = "https://5udwlrvsqh.execute-api.eu-west-2.amazonaws.com/prod/"
+var APIEndpoint = "https://r10mlezgg9.execute-api.eu-west-2.amazonaws.com/prod/"
 var horseBucketName = "media.leighrescuecentre.co.uk"
