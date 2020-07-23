@@ -90,10 +90,9 @@ var filesToDelete = []
  */
 function handleFileSelect(event) {
     for (i in event.originalTarget.files) {
-        console.log((event.originalTarget.files[i]))
         // Some simple validation on the File objects
         if (typeof (event.originalTarget.files[i]) == "object") {
-            if (filesToUpload[i].type.search("image") != -1 || filesToUpload[i].type.search("video") != -1) {
+            if (event.originalTarget.files[i].type.search("image") != -1 && event.originalTarget.files[i].type.search("video") != -1) {
                 alert("The file " + event.originalTarget.files[i].name + "is not a image or video. Cancelling upload. ")
             }
             else if (filesToUpload.findIndex((item) => {return item.name == event.originalTarget.files[i].name}) != -1) {
@@ -264,7 +263,7 @@ async function onCreateHorseFormSubmit(event) {
     if (fileResults) {
         var uploadedPhotoURLs = fileResults[0]
         var uploadedVideoURLs = fileResults[1]
-        if (fileResults[2].length == 0) {
+        if (fileResults[2].length != 0) {
             if (!confirm("The following files failed upload: " + fileResults[2].toString() + " would you like to continue? ")) {
                 return
             }
