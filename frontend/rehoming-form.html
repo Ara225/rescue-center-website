@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
     <link rel="stylesheet" href="css/index.css">
     <script src="/js/config.js"></script>
-    <script src="/js/form-submission-functions.js"></script>
+    <script src="/js/form-submission-functions.js" async></script>
     <script src="/js/utility-functions.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async></script>
     <script>
         function onSubmit(token) {
             onRehomerFormSubmit(token);return false;
@@ -191,7 +191,7 @@
                             <label for="OtherHorseDetails">
                                 If you're interested in specific horse(s) or have other requirements, please let us know
                             </label>
-                            <textarea class="w3-input FormField" id="OtherHorseDetails"></textarea>
+                            <textarea rows=4 class="w3-input FormField" id="OtherHorseDetails"></textarea>
                         </div>
                         <br>
                         <div class="w3-section">
@@ -241,13 +241,13 @@
                         <div class="w3-section">
                             <label for="OtherRefreeDetails">Details of anybody else you'd like us to get a reference
                                 from</label>
-                            <input class="w3-input FormField" type="text" id="OtherRefreeDetails" required>
+                            <input class="w3-input FormField" type="text" id="OtherRefreeDetails">
                         </div>
                         <div class="w3-section">
                             <label for="experience"><span style="color:red">*</span>Please tell us about your experience
                                 with
                                 horses and if you currently own horses.</label>
-                            <textarea class="w3-input FormField" type="text" id="experience" required></textarea>
+                            <textarea rows=4 class="w3-input FormField" type="text" id="experience" required></textarea>
                         </div>
                         <br>
                         <div class="w3-section">
@@ -257,7 +257,7 @@
                         </div>
                         <div class="w3-section">
                             <label for="notes">Please tell us anything else you'd like us to know.</label>
-                            <textarea class="w3-input FormField" type="text" id="notes"></textarea>
+                            <textarea rows=4 class="w3-input FormField" type="text" id="notes"></textarea>
                         </div>
                         <div class="w3-section">
                             <input class="w3-check FormFieldConfirmation" type="checkbox" required id="Over18">
@@ -266,30 +266,12 @@
                                 this form are mine.</label>
                         </div>
                         <div class="w3-section">
-                            <input class="w3-check FormFieldConfirmation" type="checkbox" required id="castration">
-                            <label for="castration">
-                                <span style="color:red">*</span>
-                                If I rehome a colt too young for castration I agree to have him castrated as soon as he
-                                is
-                                ready.
-                            </label>
-                        </div>
-                        <div class="w3-section">
                             <input class="w3-check FormFieldConfirmation" type="checkbox" required id="permanent">
                             <label for="permanent">
                                 <span style="color:red">*</span>
-                                I am interested in offering a rescue pony from the charity a permanent home. I understand 
-                                that the charity's horses are not to be resold or given away and that I need to meet all 
-                                welfare needs and contact the charity if I am no longer able to care for a horse rehomed 
-                                to me.
-                        </div>
-                        <div class="w3-section">
-                            <input class="w3-check FormFieldConfirmation" type="checkbox" required id="seize">
-                            <label for="seize">
-                                <span style="color:red">*</span>
-                                I understand that the charity reserve the right to seize the rescue pony if there is
-                                a breach of the rehoming T&Cs
-                            </label>
+                                I have read the <a style="color:blue" href="rehoming-terms-and-conditions.html">Rehoming Terms and Conditions</a> and agree to them. I understand 
+                                that the charity's horses are not to be resold or given away, that I would need to pay a rehoming fee, meet all 
+                                welfare needs of any horses rehomed to me, and that the charity reserve the right to seize the equine where the circumstances require it.
                         </div>
                         <div class="w3-section">
                             <label>
