@@ -9,17 +9,29 @@ from aws_cdk import aws_sns
 from aws_cdk import aws_sns_subscriptions
 from os import environ
 from aws_cdk.aws_apigateway import AuthorizationType
+import boto3
 
-
+client = boto3.client('ssm')
+emails_list = client.get_parameter(
+    Name='rescue-centre-emails-list'
+)
+recaptcha_v3 = client.get_parameter(
+    Name='recaptcha-v3-private-key'
+)
+recaptcha_v2 = client.get_parameter(
+    Name='recaptcha-v2-private-key'
+)
 class InfrastructureStack(core.Stack):
 
     def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
-        #
+        # Add SNS Topic for emails list
         sns_topic = aws_sns.Topic(self, "RescueCentreAPISNS")
-        for i in open("emails.txt"):
+        
+        for email in emails_list["Parameter"]["Value"].split(","):
             sns_topic.add_subscription(
-                aws_sns_subscriptions.EmailSubscription(i.replace("\r\n", "").replace("\n", "").replace(" ", "")))
+                aws_sns_subscriptions.EmailSubscription(email)
+            )
 
         # ******* API gateway
         # Create simple, publically available API gateway resource, with CORS on preflight requests
@@ -177,3 +189,6 @@ class InfrastructureStack(core.Stack):
             lambda_function.add_environment(
                 "TOPIC_ARN", details["topic"].topic_arn)
             details["topic"].grant_publish(lambda_function)
+        if details.get("requiresAuth") and details["method"] == "POST":
+            lambda_function.add_environment("RECAPTCHA_V2", recaptcha_v2["Parameter"]["Value"])
+            lambda_function.add_environment("RECAPTCHA_V3", recaptcha_v3["Parameter"]["Value"])
