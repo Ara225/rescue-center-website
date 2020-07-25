@@ -18,7 +18,7 @@ python3 -m pip install --system -r requirements.txt -t ./
 ```
 in each subfolder of backend/lambdas to install dependencies (only works on Linux (inc WSL and Docker container))
 4. Replace the values in config.js with your own (might have to do this after deploying)
-5. Populate backend/emails.txt with a list of emails for the SNS topic targets
-6. Put a ReCaptcha V2 key in backend/lambda/createItemLambda/keyV2.txt
-7. Put a ReCaptcha V3 key in backend/lambda/createItemLambda/keyV3.txt
+5. Add a parameter called rescue-centre-emails-list to SSM Parameter Store, containing a comma separated email list
+5. Add a parameter called recaptcha-v3-private-key to SSM Parameter Store, containing a recaptcha V3 private key
+5. Add a parameter called recaptcha-v2-private-key to SSM Parameter Store, containing a recaptcha V2 private key
 8. Run cdk deploy
