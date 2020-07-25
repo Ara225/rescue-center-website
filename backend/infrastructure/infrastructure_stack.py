@@ -189,6 +189,6 @@ class InfrastructureStack(core.Stack):
             lambda_function.add_environment(
                 "TOPIC_ARN", details["topic"].topic_arn)
             details["topic"].grant_publish(lambda_function)
-        if details.get("requiresAuth") and details["method"] == "POST":
+        if not details.get("requiresAuth") and details["method"] == "POST":
             lambda_function.add_environment("RECAPTCHA_V2", recaptcha_v2["Parameter"]["Value"])
             lambda_function.add_environment("RECAPTCHA_V3", recaptcha_v3["Parameter"]["Value"])

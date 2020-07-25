@@ -177,9 +177,9 @@ def checkReCaptcha(event, resource):
         return getResponse(json.dumps({"success": False, "message": "No reCaptcha key provided"}), 500, resource)
     else:
         if event["queryStringParameters"].get("isV2"):
-            secret = os.environ("RECAPTCHA_V2")
+            secret = os.environ["RECAPTCHA_V2"]
         else:
-            secret = os.environ("RECAPTCHA_V3")
+            secret = os.environ["RECAPTCHA_V3"]
         responseFromGoogle = post("https://www.google.com/recaptcha/api/siteverify", {"secret": secret,
                                                                                       "response": event["queryStringParameters"]["token"]})
         
