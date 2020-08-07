@@ -68,13 +68,13 @@ function getCredsAuth(callback) {
  * that page)
  */
 function redirect() {
-    if (document.location.pathname.endsWith("index.html") || document.location.pathname.endsWith("/admin/")) {
+    if (document.location.pathname.endsWith("/admin/index.html")) {
         document.body.innerHTML = '<h2 class="w3-center">Login Required</h2><p  class="w3-center">If not redirected, please click <a href="' +
-            cognitoURL + document.location.href.split("?")[0].replace("index.html", "") + '">here</a> to go to the login page</p>'
-        window.location.href = cognitoURL + document.location.href.split("#")[0].replace("index.html", "");
+            cognitoURL + document.location.href.split("?")[0] + '">here</a> to go to the login page</p>'
+        window.location.href = cognitoURL + document.location.href.split("#")[0];
     }
     else {
-        window.location.href = document.location.origin + "/admin/";
+        window.location.href = document.location.origin + "/admin/index.html";
     }
 }
 
