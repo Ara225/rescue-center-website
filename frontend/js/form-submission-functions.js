@@ -13,7 +13,6 @@
 function formToJSON(form) {
     var data = {}
     for (var i = 0; i < form.length; i++) {
-        console.log(form[i].id)
         // This allows us to skip fields in the input if we need to
         if (form[i].id == "") {
             continue
@@ -22,6 +21,7 @@ function formToJSON(form) {
             if (form[i].value == "" && form[i].required) {
                 document.getElementById("submit").innerText = 'Submit Form'
                 document.getElementById("submit").disabled = false
+                console.log(form[i].id)
                 alert("Unable to validate form. Please ensure all required fields are completed")
                 return false;
             }

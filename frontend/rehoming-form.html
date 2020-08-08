@@ -7,13 +7,13 @@
     <meta id="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
     <link rel="stylesheet" href="css/index.css">
     <script src="/js/config.js"></script>
-    <script src="/js/form-submission-functions.js"></script>
+    <script src="/js/form-submission-functions.js" async></script>
     <script src="/js/utility-functions.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async></script>
     <script>
         function onSubmit(token) {
             onRehomerFormSubmit(token);return false;
@@ -31,9 +31,9 @@
             <div class="w3-right w3-hide-small">
                 <a href="about.html" class="w3-bar-item w3-button"> ABOUT</a>
                 <a href="rehome.html" class="w3-bar-item w3-button"><i class="fa fa-heart"></i> REHOME</a>
-                <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i>VOLUNTEER</a>
+                <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i> VOLUNTEER</a>
                 <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
-                <a href="donations.html" class="w3-bar-item w3-button"><i class="fa fa-money"></i> DONATE</a>
+                <a href="donations.html" class="w3-bar-item w3-button"><i class="fa fa-donate"></i> DONATE</a>
             </div>
             <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
@@ -52,9 +52,9 @@
         <a href="/" class="w3-bar-item w3-button"><i class="fa fa-home"></i>HOME</a>
         <a href="about.html" class="w3-bar-item w3-button"> ABOUT</a>
         <a href="rehome.html" class="w3-bar-item w3-button"><i class="fa fa-heart"></i> REHOME</a>
-        <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i>VOLUNTEER</a>
+        <a href="volunteer.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i> VOLUNTEER</a>
         <a href="contact.html" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
-        <a href="donations.html" class="w3-bar-item w3-button"><i class="fa fa-money"></i> DONATE</a>
+        <a href="donations.html" class="w3-bar-item w3-button"><i class="fa fa-donate"></i> DONATE</a>
     </nav>
     <div class="w3-container w3-theme-l5 w3-center w3-padding-64">
         <div><span class="w3-xxlarge w3-hide-small w3-border-teal w3-bottombar">Rehoming Form</span></div>
@@ -105,6 +105,7 @@
                             <label for="HomeAddress"><span style="color:red">*</span>Your Home Address</label>
                             <input class="w3-input FormField" type="text" id="HomeAddress" required>
                         </div>
+                        <br>
                         <div class="w3-section">
                             <label>
                                 <h5><b>Your Preferences</b></h5>
@@ -190,8 +191,9 @@
                             <label for="OtherHorseDetails">
                                 If you're interested in specific horse(s) or have other requirements, please let us know
                             </label>
-                            <textarea class="w3-input FormField" id="OtherHorseDetails"></textarea>
+                            <textarea rows=4 class="w3-input FormField" id="OtherHorseDetails"></textarea>
                         </div>
+                        <br>
                         <div class="w3-section">
                             <label>
                                 <h5><b>Your stabling/grazing facilities</b></h5>
@@ -220,6 +222,7 @@
                                 </option>
                             </select>
                         </div>
+                        <br>
                         <div class="w3-section">
                             <label>
                                 <h5><b>Providing Care</b></h5>
@@ -238,14 +241,15 @@
                         <div class="w3-section">
                             <label for="OtherRefreeDetails">Details of anybody else you'd like us to get a reference
                                 from</label>
-                            <input class="w3-input FormField" type="text" id="OtherRefreeDetails" required>
+                            <input class="w3-input FormField" type="text" id="OtherRefreeDetails">
                         </div>
                         <div class="w3-section">
                             <label for="experience"><span style="color:red">*</span>Please tell us about your experience
                                 with
                                 horses and if you currently own horses.</label>
-                            <textarea class="w3-input FormField" type="text" id="experience" required></textarea>
+                            <textarea rows=4 class="w3-input FormField" type="text" id="experience" required></textarea>
                         </div>
+                        <br>
                         <div class="w3-section">
                             <label>
                                 <h5><b>Other</b></h5>
@@ -253,7 +257,7 @@
                         </div>
                         <div class="w3-section">
                             <label for="notes">Please tell us anything else you'd like us to know.</label>
-                            <textarea class="w3-input FormField" type="text" id="notes"></textarea>
+                            <textarea rows=4 class="w3-input FormField" type="text" id="notes"></textarea>
                         </div>
                         <div class="w3-section">
                             <input class="w3-check FormFieldConfirmation" type="checkbox" required id="Over18">
@@ -262,32 +266,12 @@
                                 this form are mine.</label>
                         </div>
                         <div class="w3-section">
-                            <input class="w3-check FormFieldConfirmation" type="checkbox" required id="castration">
-                            <label for="castration">
-                                <span style="color:red">*</span>
-                                If I rehome a colt too young for castration I agree to have him castrated as soon as he
-                                is
-                                ready.
-                            </label>
-                        </div>
-                        <div class="w3-section">
                             <input class="w3-check FormFieldConfirmation" type="checkbox" required id="permanent">
                             <label for="permanent">
                                 <span style="color:red">*</span>
-                                I am offering a rescue pony from the charity a permanent home and will not resell it,
-                                give it
-                                away or attempt to do either without written permission. I will meet all welfare needs
-                                of the
-                                equine and contact the charity if I am ever in need of help or my circumstances should
-                                change.
-                        </div>
-                        <div class="w3-section">
-                            <input class="w3-check FormFieldConfirmation" type="checkbox" required id="seize">
-                            <label for="seize">
-                                <span style="color:red">*</span>
-                                I understand that the charity reserve the right to seize the rescue pony if there are
-                                concerns
-                                about welfare, dealing, giving away or breeding.</label>
+                                I have read the <a style="color:blue" href="rehoming-terms-and-conditions.html">Rehoming Terms and Conditions</a> and agree to them. I understand 
+                                that the charity's horses are not to be resold or given away, that I would need to pay a rehoming fee, meet all 
+                                welfare needs of any horses rehomed to me, and that the charity reserve the right to seize the equine where the circumstances require it.
                         </div>
                         <div class="w3-section">
                             <label>
@@ -298,31 +282,16 @@
                             <input class="w3-check FormFieldConfirmation" type="checkbox" required id="Compliance">
                             <label for="Compliance">
                                 <span style="color:red">*</span>
-                                I understand that my data will be stored under the the GPDR legitimate interests ground,
-                                and
-                                will be used for purposes related to rehoming and protecting the horse after it's
-                                rehomed
-                                including
-                                exercising the charity's legal right to seize the horse (see FAQ below for more
-                                details).
-                            </label>
-                        </div>
-                        <div class="w3-section">
-                            <input class="w3-check FormFieldConfirmation" type="checkbox" required id="Compliance2">
-                            <label for="Compliance2">
-                                <span style="color:red">*</span>
-                                I understand that my data will be retained until no longer required, that the grounds
-                                for
-                                keeping it will be regularly
-                                reviewed, and that I can request to have it removed.
+                                I understand that my data will be stored under the GPDR legitimate interests ground,
+                                and used to assist in rehoming and protecting the horse after it's rehomed.
+                                It will be retained until no longer required, but grounds
+                                for keeping it will be regularly reviewed.
                             </label>
                         </div>
                         <button class="w3-button w3-right w3-green g-recaptcha" id="submit" 
                         data-sitekey="6Lf5X_sUAAAAAOFAZ57hlJzp49WBmypDf3T8Kk7z" 
                         data-callback="onSubmit" 
                         data-action='submit'>Submit Form</button>
-                        <button type="reset" class="w3-button w3-right w3-red" style="margin-right:2%">Clear
-                            Form</button>
                         <br>
                         <br>
 
