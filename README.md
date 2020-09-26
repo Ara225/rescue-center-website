@@ -4,7 +4,7 @@ services including Cognito to control access to the admin area, S3 & CloudFront 
 DynamoDB and Lambda. 
 
 It's a small project I started partly to help my family, who run the rescue, as they were struggling to get horses 
-rehomed and partly to get some real world experience.
+rehomed and partly to get some real world experience. Unfortunally, I'm still waiting on the copy for it
 
 The frontend is built using w3.css, a simple CSS framework, plain old HTML and vanilla JavaScript. It's hosted 
 in S3 with CloudFront distribution, separate bucket for uploading images (deploying the frontend via CDK 
